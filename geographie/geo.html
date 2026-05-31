@@ -4,80 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Geographie Lernhilfe – Klausur</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600;700&display=swap');
-  :root {
-    --bg:#f8f6f1; --card:#fff; --border:#e2ddd5; --text:#1a1a1a; --muted:#6b6760;
-    --blue:#1a5276; --orange:#d35400; --green:#1e8449; --purple:#6c3483;
-    --red:#c0392b; --teal:#117a65; --yellow:#b7950b;
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{background:var(--bg);color:var(--text);font-family:'Source Sans 3',sans-serif;font-size:15px;}
-
-  /* HEADER */
-  .hdr{background:linear-gradient(135deg,#1a3a2a,#2d5016);padding:20px 20px 0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.18);}
-  .hdr-inner{max-width:840px;margin:0 auto;}
-  .hdr-eye{font-size:10px;letter-spacing:3px;color:#a8c89a;text-transform:uppercase;margin-bottom:3px;}
-  .hdr h1{font-size:22px;color:#fff;font-family:'Playfair Display',serif;}
-  .hdr-sub{color:#8fb882;font-size:12px;margin-top:3px;}
-
-  /* TABS */
-  .tabs{display:flex;gap:3px;margin-top:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:0;}
-  .tabs::-webkit-scrollbar{display:none;}
-  .tb{padding:8px 13px;border-radius:7px 7px 0 0;border:none;cursor:pointer;
-      font-family:'Source Sans 3',sans-serif;font-size:11.5px;font-weight:700;
-      background:rgba(255,255,255,.15);color:#c8e6c0;white-space:nowrap;flex-shrink:0;transition:all .2s;}
-  .tb.active{background:var(--bg);color:var(--text);}
-  .tb:hover:not(.active){background:rgba(255,255,255,.25);}
-
-  /* MAIN */
-  .main{max-width:840px;margin:0 auto;padding:22px 14px 60px;}
-  .sec{display:none;} .sec.active{display:block;}
-
-  /* SECTION HEADER */
-  .sec-hdr{background:var(--card);border:1px solid var(--border);border-radius:11px;
-           padding:14px 18px;margin-bottom:18px;display:flex;gap:12px;align-items:flex-start;
-           box-shadow:0 1px 4px rgba(0,0,0,.05);}
-  .sec-hdr-icon{font-size:28px;flex-shrink:0;}
-  .sec-hdr h2{font-family:'Playfair Display',serif;font-size:17px;margin-bottom:3px;}
-  .sec-hdr p{color:var(--muted);font-size:12.5px;line-height:1.55;}
-
-  /* SUBSECTION */
-  .subsec-title{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-                color:var(--muted);margin:22px 0 10px;padding-bottom:6px;
-                border-bottom:2px solid var(--border);}
-
-  /* CARDS */
-  .k{margin-bottom:12px;border-radius:9px;padding:14px 16px;border:1px solid var(--border);
-     background:var(--card);box-shadow:0 1px 3px rgba(0,0,0,.04);}
-  .klabel{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px;}
-  .ktitle{font-weight:700;color:var(--text);margin-bottom:7px;font-size:14.5px;font-family:'Playfair Display',serif;}
-  .ktext{color:#333;line-height:1.65;font-size:13.5px;}
-  .klist{margin:0;padding-left:18px;color:#333;font-size:13.5px;}
-  .klist li{margin-bottom:4px;line-height:1.55;}
-
-  .k-def{border-left:4px solid var(--blue);} .k-def .klabel{color:var(--blue);}
-  .k-sch{border-left:4px solid var(--purple);} .k-sch .klabel{color:var(--purple);}
-  .k-bsp{border-left:4px solid var(--orange);} .k-bsp .klabel{color:var(--orange);}
-  .k-mer{background:#fef9e7;border-left:4px solid #f1c40f;border-color:#e8d44d;}
-  .k-mer .klabel{color:var(--yellow);}
-  .k-img{background:#f9f9f9;border-left:4px solid #bbb;} .k-img .klabel{color:#777;}
-  .k-img img{width:100%;border-radius:5px;margin-top:7px;border:1px solid #ddd;}
-  .k-grn{border-left:4px solid var(--green);} .k-grn .klabel{color:var(--green);}
-
-  /* TABLE */
-  .tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:7px;}
-  .tbl th{background:#f0ede8;padding:7px 9px;text-align:left;font-weight:700;border-bottom:2px solid var(--border);}
-  .tbl td{padding:6px 9px;border-bottom:1px solid var(--border);vertical-align:top;}
-  .tbl tr:last-child td{border-bottom:none;}
-
-  /* MERKE */
-  .merke{background:#fef9e7;border:2px solid #f1c40f;border-radius:9px;padding:12px 16px;
-         margin-bottom:12px;font-size:13.5px;line-height:1.65;color:#333;}
-  .merke strong{color:var(--yellow);}
-
-  @media(max-width:540px){.hdr h1{font-size:18px;} .tb{font-size:10.5px;padding:7px 10px;}}
-</style>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../design.css">
 </head>
 <body>
 
@@ -741,14 +670,6 @@
 
 </div><!-- /main -->
 
-<script>
-function show(id, btn) {
-  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tb').forEach(b => b.classList.remove('active'));
-  document.getElementById('sec-' + id).classList.add('active');
-  btn.classList.add('active');
-  window.scrollTo(0, 0);
-}
-</script>
+ <script src="../design.js"></script>
 </body>
 </html>
