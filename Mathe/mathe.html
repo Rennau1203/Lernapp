@@ -1,40 +1,152 @@
  <!DOCTYPE html>
-<html lang="de" data-theme="dunkel">
+<html lang="de" data-mode="dark" data-theme="dunkel">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mathe Klausur – Analysis</title>
+<title>Mathe – Analysis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../design.css">
+<style>
+/* ── INHALTSSPEZIFISCHE STYLES ── */
+.hero{padding:88px 24px 28px;max-width:880px;margin:0 auto}
+.hero-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.hero h1{font-family:'Instrument Serif',serif;font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;margin-bottom:12px}
+.hero-sub{color:var(--muted);font-size:.95rem}
+
+.tab-nav{display:flex;gap:6px;flex-wrap:wrap;padding:0 24px 24px;max-width:880px;margin:0 auto}
+.tab-btn{padding:8px 18px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'Syne',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s}
+.tab-btn:hover{background:var(--surface2);color:var(--text)}
+.tab-btn.active{background:var(--accent);color:var(--accent-fg);border-color:transparent}
+
+.content-wrap{max-width:880px;margin:0 auto;padding:0 24px 80px}
+.tab-section{display:none}
+.tab-section.active{display:block}
+
+/* Cards — cursor default, kein Hover-Effekt vom design.css */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;cursor:default}
+.card::before{display:none}
+.card h2{font-family:'Instrument Serif',serif;font-size:1.4rem;margin-bottom:6px}
+.card .sub{color:var(--muted);font-size:.85rem;margin-bottom:16px}
+
+.step-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.step-item{display:flex;align-items:flex-start;gap:14px;background:var(--surface2);border-radius:10px;padding:14px 16px;border:1px solid var(--border)}
+.step-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-fg);font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+.step-body h4{font-size:.9rem;font-weight:700;margin-bottom:3px}
+.step-body p{font-size:.82rem;color:var(--muted);line-height:1.5}
+
+.accordion{display:flex;flex-direction:column;gap:8px}
+.acc-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.acc-header{width:100%;background:none;border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:.9rem;font-weight:600;display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;text-align:left;transition:background .2s}
+.acc-header:hover{background:var(--surface2)}
+.acc-header .arrow{transition:transform .25s;color:var(--accent);font-size:1.1rem;flex-shrink:0}
+.acc-item.open .acc-header .arrow{transform:rotate(90deg)}
+.acc-body{display:none;padding:0 18px 18px}
+.acc-item.open .acc-body{display:block}
+.acc-body p,.acc-body li{font-size:.85rem;color:var(--muted);line-height:1.65}
+.acc-body ul{padding-left:18px;margin-top:6px}
+.acc-body li{margin-bottom:4px}
+.acc-body strong{color:var(--text)}
+
+.formula{background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:12px 16px;font-size:.88rem;font-family:monospace;margin:10px 0;color:var(--text);overflow-x:auto;white-space:pre-line}
+.formula-label{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:4px}
+
+.krit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.krit-box{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.krit-box .krit-title{font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.krit-box p{font-size:.82rem;line-height:1.55;color:var(--text)}
+
+.example-block{background:var(--surface2);border-radius:12px;padding:20px;margin-top:16px;border:1px solid var(--border)}
+.example-block .ex-title{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.ex-step{margin-bottom:14px}
+.ex-step h5{font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:4px}
+
+.highlight{background:rgba(200,241,53,.06);border:1px solid rgba(200,241,53,.18);border-radius:10px;padding:14px 16px;margin:12px 0}
+.highlight p{font-size:.85rem;line-height:1.6}
+.highlight strong{color:var(--text)}
+
+.zuord-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.zuord-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.zuord-item .tag{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.zuord-item p{font-size:.82rem;line-height:1.5;color:var(--text)}
+
+.regel-table{width:100%;border-collapse:collapse;margin-top:12px}
+.regel-table th{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.regel-table td{padding:10px 12px;font-size:.83rem;font-family:monospace;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text)}
+.regel-table tr:last-child td{border-bottom:none}
+.regel-table tr:hover td{background:var(--surface2)}
+.regel-table .td-name{font-family:'Syne',sans-serif;font-weight:600;font-size:.8rem;color:var(--muted)}
+
+.quiz-q{margin-bottom:20px;background:var(--surface2);border-radius:12px;padding:18px;border:1px solid var(--border)}
+.quiz-q .q-text{font-size:.9rem;font-weight:600;margin-bottom:12px}
+.quiz-options{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:.83rem;cursor:pointer;text-align:left;color:var(--text);font-family:'Syne',sans-serif;transition:background .2s,border-color .2s}
+.quiz-opt:hover:not([disabled]){border-color:var(--accent)}
+.quiz-opt.correct{background:rgba(94,201,106,.15);border-color:#5ec96a;color:#5ec96a}
+.quiz-opt.wrong{background:rgba(255,107,107,.12);border-color:#ff6b6b;color:#ff6b6b}
+.quiz-feedback{font-size:.8rem;margin-top:8px;padding:8px 12px;border-radius:8px;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:rgba(94,201,106,.12);color:#5ec96a}
+.quiz-feedback.err{background:rgba(255,107,107,.1);color:#ff6b6b}
+.quiz-reset{margin-top:16px;padding:9px 20px;border-radius:8px;background:var(--accent);color:var(--accent-fg);border:none;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:opacity .2s}
+.quiz-reset:hover{opacity:.85}
+
+@media(max-width:600px){
+  .hero{padding:80px 16px 20px}
+  .tab-nav{padding:0 16px 20px}
+  .content-wrap{padding:0 16px 60px}
+  .zuord-grid{grid-template-columns:1fr}
+  .krit-grid{grid-template-columns:1fr}
+  .regel-table th,.regel-table td{padding:8px 8px;font-size:.78rem}
+}
+</style>
 </head>
 <body>
 
-<!-- TOPBAR -->
-<nav class="topbar">
-  <a class="back-btn" href="../index.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-    Zurück
-  </a>
-  <div class="topbar-center">
-    <div class="brand"><span class="brand-dot"></span> LERNAPP</div>
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a class="back-btn" href="../index.html">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Zurück</span>
+    </a>
+    <div class="nav-divider"></div>
+    <span class="nav-fach">Mathematik</span>
   </div>
-  <div class="topbar-right">
-    <button class="mode-btn" id="btnDark" title="Dunkles Theme">🌙</button>
-    <button class="mode-btn" id="btnLight" title="Helles Theme">☀️</button>
-    <button class="design-btn" id="designBtn">🎨 Design</button>
+  <div class="nav-right">
+    <button class="mode-btn" id="mode-btn" onclick="toggleMode()">🌙</button>
+    <button class="design-btn" onclick="togglePanel()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M7 1v1.5M7 11.5V13M1 7h1.5M11.5 7H13M2.93 2.93l1.06 1.06M10.01 10.01l1.06 1.06M2.93 11.07l1.06-1.06M10.01 3.99l1.06-1.06" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span>Design</span>
+    </button>
   </div>
 </nav>
 
-<!-- THEME PANEL -->
-<div class="theme-panel" id="themePanel">
-  <div class="theme-section-label">Dunkle Themes</div>
-  <div class="theme-grid" id="darkGrid"></div>
-  <div class="theme-section-label">Helle Themes</div>
-  <div class="theme-grid" id="lightGrid"></div>
+<!-- DESIGN PANEL -->
+<div id="design-panel">
+  <div>
+    <div class="p-title">Dunkle Themes</div>
+    <div class="theme-grid">
+      <button class="theme-btn active" data-theme="dunkel" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#c8f135"></span><span style="background:#444"></span><span style="background:#111"></span></div>Dunkel</button>
+      <button class="theme-btn" data-theme="ozean" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#4db8ff"></span><span style="background:#1a5a99"></span><span style="background:#050d1a"></span></div>Ozean</button>
+      <button class="theme-btn" data-theme="wald" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#5ec96a"></span><span style="background:#2a7030"></span><span style="background:#0b110d"></span></div>Wald</button>
+      <button class="theme-btn" data-theme="rose-dark" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#ff6b9d"></span><span style="background:#aa2050"></span><span style="background:#1a0a10"></span></div>Rose</button>
+      <button class="theme-btn" data-theme="schiefer" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#7ba7e8"></span><span style="background:#3a6099"></span><span style="background:#10141c"></span></div>Schiefer</button>
+      <button class="theme-btn" data-theme="sand-dark" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#e8a020"></span><span style="background:#8a6010"></span><span style="background:#1c1710"></span></div>Sand</button>
+    </div>
+  </div>
+  <div>
+    <div class="p-title">Helle Themes</div>
+    <div class="theme-grid">
+      <button class="theme-btn" data-theme="licht" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#1a6b3c"></span><span style="background:#999"></span><span style="background:#ddd;border:1px solid #ccc"></span></div>Licht</button>
+      <button class="theme-btn" data-theme="himmel" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#1870e0"></span><span style="background:#7aade8"></span><span style="background:#ddeeff;border:1px solid #cce"></span></div>Himmel</button>
+      <button class="theme-btn" data-theme="mint" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#0d8c3c"></span><span style="background:#6ec98a"></span><span style="background:#d8f5e0;border:1px solid #bde"></span></div>Mint</button>
+      <button class="theme-btn" data-theme="pfirsich" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#e05020"></span><span style="background:#e89070"></span><span style="background:#ffe8e0;border:1px solid #fdd"></span></div>Pfirsich</button>
+      <button class="theme-btn" data-theme="lavendel" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#6c3ce0"></span><span style="background:#aa88e8"></span><span style="background:#ece4ff;border:1px solid #ddf"></span></div>Lavendel</button>
+      <button class="theme-btn" data-theme="papier" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#8b5e20"></span><span style="background:#c09850"></span><span style="background:#faf7f0;border:1px solid #e8e0d0"></span></div>Papier</button>
+    </div>
+  </div>
 </div>
 
 <!-- HERO -->
@@ -57,9 +169,8 @@
 
 <div class="content-wrap">
 
-<!-- ══ TAB 1: KURVENDISKUSSION ══ -->
+<!-- TAB 1 -->
 <section class="tab-section active" id="tab-kurvendiskussion">
-
   <div class="card">
     <h2>Die 7 Schritte der Kurvendiskussion</h2>
     <p class="sub">Bei einer vollständigen Funktionsuntersuchung werden folgende Eigenschaften untersucht:</p>
@@ -73,65 +184,28 @@
       <li class="step-item"><div class="step-num">7</div><div class="step-body"><h4>Graph</h4><p>Alle berechneten Punkte einzeichnen und verbinden.</p></div></li>
     </ul>
   </div>
-
   <div class="card">
     <h2>Durchgerechnetes Beispiel</h2>
     <p class="sub">f(x) = –x³ + 12x² – 21x – 34 = –(x+1)(x²–13x+34)</p>
     <div class="accordion">
-      <div class="acc-item open">
-        <button class="acc-header">1. Definitionsbereich <span class="arrow">▶</span></button>
-        <div class="acc-body"><div class="formula">D = ℝ</div></div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">2. Symmetrie <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">f(–x) = x³ + 12x² + 21x – 34 ≠ f(x)  →  keine Achsensymmetrie
-–f(–x) = –x³ – 12x² – 21x + 34 ≠ f(x)  →  keine Punktsymmetrie</div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">3. Grenzverhalten <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <p>Höchste Potenz: –x³</p>
-          <div class="formula">lim(x→+∞) f(x) = –∞
-lim(x→–∞) f(x) = +∞</div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">4. Achsenschnittpunkte <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula-label">y-Achse</div>
-          <div class="formula">f(0) = –34  →  P(0|–34)</div>
-          <div class="formula-label">Nullstellen</div>
-          <div class="formula">0 = –(x+1)(x²–13x+34)
+      <div class="acc-item open"><button class="acc-header">1. Definitionsbereich <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">D = ℝ</div></div></div>
+      <div class="acc-item"><button class="acc-header">2. Symmetrie <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">f(–x) = x³ + 12x² + 21x – 34 ≠ f(x)  →  keine Achsensymmetrie
+–f(–x) = –x³ – 12x² – 21x + 34 ≠ f(x)  →  keine Punktsymmetrie</div></div></div>
+      <div class="acc-item"><button class="acc-header">3. Grenzverhalten <span class="arrow">▶</span></button><div class="acc-body"><p>Höchste Potenz: –x³</p><div class="formula">lim(x→+∞) f(x) = –∞
+lim(x→–∞) f(x) = +∞</div></div></div>
+      <div class="acc-item"><button class="acc-header">4. Achsenschnittpunkte <span class="arrow">▶</span></button><div class="acc-body"><div class="formula-label">y-Achse</div><div class="formula">f(0) = –34  →  P(0|–34)</div><div class="formula-label">Nullstellen</div><div class="formula">0 = –(x+1)(x²–13x+34)
 x₁ = –1  →  N₁(–1|0)
 x₂ ≈ 9,37  →  N₂(9,37|0)
-x₃ ≈ 3,63  →  N₃(3,63|0)</div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">5. Extrempunkte <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">f'(x) = –3x² + 24x – 21
-f''(x) = –6x + 24</div>
-          <div class="formula">f'(x) = 0  →  –3x² + 24x – 21 = 0  →  x² – 8x + 7 = 0
-x₁ = 1,  x₂ = 7</div>
-          <div class="formula">f''(1) = 18 > 0  →  Tiefpunkt  T(1|–34)
-f''(7) = –18 < 0  →  Hochpunkt  H(7|64)</div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">6. Wendepunkte <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">f''(x) = –6x + 24 = 0  →  x = 4
+x₃ ≈ 3,63  →  N₃(3,63|0)</div></div></div>
+      <div class="acc-item"><button class="acc-header">5. Extrempunkte <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">f'(x) = –3x² + 24x – 21
+f''(x) = –6x + 24</div><div class="formula">f'(x) = 0  →  x² – 8x + 7 = 0  →  x₁ = 1, x₂ = 7</div><div class="formula">f''(1) = 18 > 0  →  Tiefpunkt  T(1|–34)
+f''(7) = –18 < 0  →  Hochpunkt  H(7|64)</div></div></div>
+      <div class="acc-item"><button class="acc-header">6. Wendepunkte <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">f''(x) = –6x + 24 = 0  →  x = 4
 f'''(x) = –6 ≠ 0  →  Wendepunkt bestätigt
-f'''(4) = –6 < 0  →  Links-Rechts-Wendepunkt (LR-W)
-f(4) = 10  →  W(4|10)</div>
-        </div>
-      </div>
+f'''(4) = –6 < 0  →  LR-Wendepunkt
+f(4) = 10  →  W(4|10)</div></div></div>
     </div>
   </div>
-
   <div class="card">
     <h2>Symmetrie – Kurzregel</h2>
     <div class="krit-grid">
@@ -139,24 +213,15 @@ f(4) = 10  →  W(4|10)</div>
       <div class="krit-box"><div class="krit-title">Punktsymmetrie (Ursprung)</div><p>f(–x) = –f(x)<br>Nur ungerade Potenzen → alle Exponenten ungerade</p></div>
     </div>
   </div>
-
 </section>
 
-<!-- ══ TAB 2: ABLEITUNGEN ══ -->
+<!-- TAB 2 -->
 <section class="tab-section" id="tab-ableitungen">
-
   <div class="card">
     <h2>Ableitungsregeln</h2>
     <p class="sub">Grundregeln zum Ableiten von Funktionen</p>
-
     <table class="regel-table">
-      <thead>
-        <tr>
-          <th>Regel</th>
-          <th>f(x)</th>
-          <th>f'(x)</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Regel</th><th>f(x)</th><th>f'(x)</th></tr></thead>
       <tbody>
         <tr><td class="td-name">Potenzregel</td><td>xⁿ</td><td>n · xⁿ⁻¹</td></tr>
         <tr><td class="td-name">Faktorregel</td><td>c · f(x)</td><td>c · f'(x)</td></tr>
@@ -166,203 +231,80 @@ f(4) = 10  →  W(4|10)</div>
       </tbody>
     </table>
   </div>
-
   <div class="card">
     <h2>Ableitungen höherer Ordnung</h2>
-    <p class="sub">Man kann eine Funktion mehrfach ableiten — das ist wichtig für Extrem- und Wendepunkte</p>
+    <p class="sub">Man kann eine Funktion mehrfach ableiten — wichtig für Extrem- und Wendepunkte</p>
     <div class="accordion">
-      <div class="acc-item open">
-        <button class="acc-header">Beispiel: f(x) = x⁴ – 8x³ + x <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">f(x)   = x⁴ – 8x³ + x
-f'(x)  = 4x³ – 24x² + 1       (1. Ableitung)
-f''(x) = 12x² – 48x           (2. Ableitung)
-f'''(x)= 24x – 48             (3. Ableitung)</div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">Beispiel: f(x) = –⅓x³ – x² + 3x <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">f(x)   = –⅓x³ – x² + 3x
+      <div class="acc-item open"><button class="acc-header">Beispiel: f(x) = x⁴ – 8x³ + x <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">f(x)   = x⁴ – 8x³ + x
+f'(x)  = 4x³ – 24x² + 1
+f''(x) = 12x² – 48x
+f'''(x)= 24x – 48</div></div></div>
+      <div class="acc-item"><button class="acc-header">Beispiel: f(x) = –⅓x³ – x² + 3x <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">f(x)   = –⅓x³ – x² + 3x
 f'(x)  = –x² – 2x + 3
 f''(x) = –2x – 2
-f'''(x)= –2</div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">Beispiel: f(x) = 0,25(x⁴ – x) <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">f(x)    = 0,25x⁴ – 0,25x
+f'''(x)= –2</div></div></div>
+      <div class="acc-item"><button class="acc-header">Beispiel: f(x) = 0,25(x⁴ – x) <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">f(x)    = 0,25x⁴ – 0,25x
 f'(x)   = x³ – 0,25
 f''(x)  = 3x²
 f'''(x) = 6x
-f⁽⁴⁾(x) = 6</div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">Beispiel: f(x) = 4/x (negativer Exponent) <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">f(x)   = 4x⁻¹
+f⁽⁴⁾(x) = 6</div></div></div>
+      <div class="acc-item"><button class="acc-header">Beispiel: f(x) = 4/x (negativer Exponent) <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">f(x)   = 4x⁻¹
 f'(x)  = –4x⁻²  =  –4/x²
-f''(x) = 8x⁻³   =  8/x³</div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">Beispiel mit Parameter: g(x) = ⅕x⁵ – ax⁴ <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">g(x)   = ⅕x⁵ – ax⁴
+f''(x) = 8x⁻³   =  8/x³</div></div></div>
+      <div class="acc-item"><button class="acc-header">Beispiel mit Parameter: g(x) = ⅕x⁵ – ax⁴ <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">g(x)   = ⅕x⁵ – ax⁴
 g'(x)  = x⁴ – 4ax³
-g''(x) = 4x³ – 12ax²</div>
-        </div>
-      </div>
+g''(x) = 4x³ – 12ax²</div></div></div>
     </div>
-    <div class="highlight" style="margin-top:16px">
-      <p><strong>Merke:</strong> Die 2. Ableitung f'' wird beim f''-Kriterium für Extrempunkte verwendet. Die 3. Ableitung f''' wird beim f'''-Kriterium für Wendepunkte verwendet.</p>
-    </div>
+    <div class="highlight" style="margin-top:16px"><p><strong>Merke:</strong> Die 2. Ableitung f'' wird beim f''-Kriterium für Extrempunkte verwendet. Die 3. Ableitung f''' wird beim f'''-Kriterium für Wendepunkte verwendet.</p></div>
   </div>
-
 </section>
 
-<!-- ══ TAB 3: AUFLEITUNGEN ══ -->
+<!-- TAB 3 -->
 <section class="tab-section" id="tab-aufleitungen">
-
   <div class="card">
     <h2>Was ist eine Aufleitung?</h2>
     <p class="sub">Die Aufleitung (Stammfunktion) ist das Gegenteil der Ableitung</p>
-    <div class="highlight">
-      <p>Zu einer Funktion f(x) sucht man eine Funktion F(x), sodass gilt: <strong>F'(x) = f(x)</strong></p>
-      <p style="margin-top:8px">F(x) heißt <strong>Stammfunktion</strong> von f(x). Man schreibt: <strong>F(x) = ∫ f(x) dx</strong></p>
-    </div>
-    <div class="highlight" style="margin-top:8px">
-      <p><strong>Wichtig: +C</strong> — Da beim Ableiten jede Konstante wegfällt, kommt beim Aufleiten immer eine unbekannte Konstante C hinzu. Jede Stammfunktion lautet daher F(x) + C.</p>
-    </div>
+    <div class="highlight"><p>Zu einer Funktion f(x) sucht man eine Funktion F(x), sodass gilt: <strong>F'(x) = f(x)</strong></p><p style="margin-top:8px">F(x) heißt <strong>Stammfunktion</strong> von f(x). Man schreibt: <strong>F(x) = ∫ f(x) dx</strong></p></div>
+    <div class="highlight" style="margin-top:8px"><p><strong>Wichtig: +C</strong> — Da beim Ableiten jede Konstante wegfällt, kommt beim Aufleiten immer eine unbekannte Konstante C hinzu.</p></div>
   </div>
-
   <div class="card">
     <h2>Aufleitungsregeln</h2>
     <p class="sub">Die Umkehrung der Ableitungsregeln</p>
-
     <table class="regel-table">
-      <thead>
-        <tr>
-          <th>Regel</th>
-          <th>f(x)</th>
-          <th>F(x) = ∫ f(x) dx</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Regel</th><th>f(x)</th><th>F(x) = ∫ f(x) dx</th></tr></thead>
       <tbody>
-        <tr>
-          <td class="td-name">Potenzregel</td>
-          <td>xⁿ  (n ≠ –1)</td>
-          <td>xⁿ⁺¹ / (n+1) + C</td>
-        </tr>
-        <tr>
-          <td class="td-name">Faktorregel</td>
-          <td>c · f(x)</td>
-          <td>c · F(x) + C</td>
-        </tr>
-        <tr>
-          <td class="td-name">Summenregel</td>
-          <td>f(x) + g(x)</td>
-          <td>F(x) + G(x) + C</td>
-        </tr>
-        <tr>
-          <td class="td-name">Konstante</td>
-          <td>c</td>
-          <td>c · x + C</td>
-        </tr>
-        <tr>
-          <td class="td-name">Lineare Fkt.</td>
-          <td>ax + b</td>
-          <td>½ax² + bx + C</td>
-        </tr>
+        <tr><td class="td-name">Potenzregel</td><td>xⁿ (n ≠ –1)</td><td>xⁿ⁺¹ / (n+1) + C</td></tr>
+        <tr><td class="td-name">Faktorregel</td><td>c · f(x)</td><td>c · F(x) + C</td></tr>
+        <tr><td class="td-name">Summenregel</td><td>f(x) + g(x)</td><td>F(x) + G(x) + C</td></tr>
+        <tr><td class="td-name">Konstante</td><td>c</td><td>c · x + C</td></tr>
+        <tr><td class="td-name">Lineare Fkt.</td><td>ax + b</td><td>½ax² + bx + C</td></tr>
       </tbody>
     </table>
   </div>
-
   <div class="card">
     <h2>Potenzregel Aufleitung – Schritt für Schritt</h2>
-    <p class="sub">Das Gegenteil von „Exponent runter, Exponent –1": hier Exponent +1, dann durch neuen Exponenten teilen</p>
     <div class="example-block">
       <div class="ex-title">Vorgehen</div>
-      <div class="ex-step">
-        <h5>Schritt 1 — Exponenten um 1 erhöhen</h5>
-        <div class="formula">xⁿ  →  xⁿ⁺¹</div>
-      </div>
-      <div class="ex-step">
-        <h5>Schritt 2 — Durch den neuen Exponenten teilen</h5>
-        <div class="formula">xⁿ⁺¹  →  xⁿ⁺¹ / (n+1)</div>
-      </div>
-      <div class="ex-step">
-        <h5>Schritt 3 — +C nicht vergessen!</h5>
-        <div class="formula">F(x) = xⁿ⁺¹ / (n+1) + C</div>
-      </div>
+      <div class="ex-step"><h5>Schritt 1 — Exponenten um 1 erhöhen</h5><div class="formula">xⁿ  →  xⁿ⁺¹</div></div>
+      <div class="ex-step"><h5>Schritt 2 — Durch den neuen Exponenten teilen</h5><div class="formula">xⁿ⁺¹  →  xⁿ⁺¹ / (n+1)</div></div>
+      <div class="ex-step"><h5>Schritt 3 — +C nicht vergessen!</h5><div class="formula">F(x) = xⁿ⁺¹ / (n+1) + C</div></div>
     </div>
   </div>
-
   <div class="card">
     <h2>Beispiele</h2>
     <div class="accordion">
-      <div class="acc-item open">
-        <button class="acc-header">f(x) = x³ <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">F(x) = x³⁺¹ / (3+1) + C  =  x⁴/4 + C</div>
-          <p>Probe: F'(x) = 4 · x³/4 = x³ ✓</p>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">f(x) = x² <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">F(x) = x³/3 + C</div>
-          <p>Probe: F'(x) = 3 · x²/3 = x² ✓</p>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">f(x) = 5x⁴ <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">F(x) = 5 · x⁵/5 + C  =  x⁵ + C</div>
-          <p>Probe: F'(x) = 5x⁴ ✓</p>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">f(x) = 3x² – 6x + 2 <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">F(x) = 3 · x³/3 – 6 · x²/2 + 2x + C
-     = x³ – 3x² + 2x + C</div>
-          <p>Jeder Summand wird einzeln aufgeleitet (Summenregel).</p>
-          <p>Probe: F'(x) = 3x² – 6x + 2 ✓</p>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">f(x) = –⅓x³ – x² + 3x <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">F(x) = –⅓ · x⁴/4 – x³/3 + 3 · x²/2 + C
-     = –x⁴/12 – x³/3 + 3x²/2 + C</div>
-          <p>Probe durch Ableiten von F(x) ergibt f(x) ✓</p>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">f(x) = 6 (Konstante) <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">F(x) = 6x + C</div>
-          <p>Eine Konstante c wird zu c·x aufgeleitet.</p>
-          <p>Probe: F'(x) = 6 ✓</p>
-        </div>
-      </div>
+      <div class="acc-item open"><button class="acc-header">f(x) = x³ <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">F(x) = x⁴/4 + C</div><p>Probe: F'(x) = 4 · x³/4 = x³ ✓</p></div></div>
+      <div class="acc-item"><button class="acc-header">f(x) = x² <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">F(x) = x³/3 + C</div><p>Probe: F'(x) = 3 · x²/3 = x² ✓</p></div></div>
+      <div class="acc-item"><button class="acc-header">f(x) = 5x⁴ <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">F(x) = x⁵ + C</div><p>Probe: F'(x) = 5x⁴ ✓</p></div></div>
+      <div class="acc-item"><button class="acc-header">f(x) = 3x² – 6x + 2 <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">F(x) = x³ – 3x² + 2x + C</div><p>Probe: F'(x) = 3x² – 6x + 2 ✓</p></div></div>
+      <div class="acc-item"><button class="acc-header">f(x) = –⅓x³ – x² + 3x <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">F(x) = –x⁴/12 – x³/3 + 3x²/2 + C</div><p>Probe durch Ableiten von F(x) ergibt f(x) ✓</p></div></div>
+      <div class="acc-item"><button class="acc-header">f(x) = 6 (Konstante) <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">F(x) = 6x + C</div><p>Probe: F'(x) = 6 ✓</p></div></div>
     </div>
   </div>
-
   <div class="card">
     <h2>Ableitung vs. Aufleitung – Vergleich</h2>
-    <p class="sub">Die wichtigsten Unterschiede auf einen Blick</p>
     <table class="regel-table">
-      <thead>
-        <tr>
-          <th>f(x)</th>
-          <th>Ableitung f'(x)</th>
-          <th>Aufleitung F(x)</th>
-        </tr>
-      </thead>
+      <thead><tr><th>f(x)</th><th>Ableitung f'(x)</th><th>Aufleitung F(x)</th></tr></thead>
       <tbody>
         <tr><td>x⁴</td><td>4x³</td><td>x⁵/5 + C</td></tr>
         <tr><td>x³</td><td>3x²</td><td>x⁴/4 + C</td></tr>
@@ -374,54 +316,24 @@ g''(x) = 4x³ – 12ax²</div>
       </tbody>
     </table>
   </div>
-
 </section>
 
-<!-- ══ TAB 4: EXTREMPUNKTE ══ -->
+<!-- TAB 4 -->
 <section class="tab-section" id="tab-extrempunkte">
-
   <div class="card">
     <h2>Notwendige Bedingung</h2>
-    <div class="highlight">
-      <p>Wenn bei x<sub>E</sub> ein lokales Extremum von f liegt, dann gilt: <strong>f'(x<sub>E</sub>) = 0</strong></p>
-      <p style="margin-top:6px">Umkehrung gilt nicht! → f'(x<sub>E</sub>) = 0 bedeutet nur <em>potentielles</em> Extremum (könnte auch Sattelpunkt sein).</p>
-    </div>
+    <div class="highlight"><p>Wenn bei x<sub>E</sub> ein lokales Extremum von f liegt, dann gilt: <strong>f'(x<sub>E</sub>) = 0</strong></p><p style="margin-top:6px">Umkehrung gilt nicht! → f'(x<sub>E</sub>) = 0 bedeutet nur <em>potentielles</em> Extremum.</p></div>
   </div>
-
   <div class="card">
     <h2>Hinreichende Bedingung – zwei Methoden</h2>
     <div class="accordion">
-      <div class="acc-item open">
-        <button class="acc-header">Methode 1: f''-Kriterium (bevorzugt) <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="krit-grid">
-            <div class="krit-box"><div class="krit-title">Hochpunkt</div><p>f'(x<sub>E</sub>) = 0 <strong>und</strong> f''(x<sub>E</sub>) &lt; 0</p></div>
-            <div class="krit-box"><div class="krit-title">Tiefpunkt</div><p>f'(x<sub>E</sub>) = 0 <strong>und</strong> f''(x<sub>E</sub>) &gt; 0</p></div>
-            <div class="krit-box"><div class="krit-title">Sattelpunkt</div><p>f'(x<sub>E</sub>) = 0 <strong>und</strong> f''(x<sub>E</sub>) = 0 → VZW-Kriterium nötig!</p></div>
-          </div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">Methode 2: VZW-Kriterium (Fallback) <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <p>Teststellen links und rechts von x<sub>E</sub> in f' einsetzen:</p>
-          <div class="krit-grid">
-            <div class="krit-box"><div class="krit-title">Hochpunkt</div><p>f' wechselt von <strong>+ nach –</strong></p></div>
-            <div class="krit-box"><div class="krit-title">Tiefpunkt</div><p>f' wechselt von <strong>– nach +</strong></p></div>
-            <div class="krit-box"><div class="krit-title">Sattelpunkt</div><p>f' hat keinen Vorzeichenwechsel</p></div>
-          </div>
-          <div class="example-block" style="margin-top:14px">
-            <div class="ex-title">Beispiel Sattelpunkt – f(x) = x³</div>
-            <div class="formula">f'(x) = 3x² = 0  →  x = 0
+      <div class="acc-item open"><button class="acc-header">Methode 1: f''-Kriterium (bevorzugt) <span class="arrow">▶</span></button><div class="acc-body"><div class="krit-grid"><div class="krit-box"><div class="krit-title">Hochpunkt</div><p>f'(x<sub>E</sub>) = 0 und f''(x<sub>E</sub>) &lt; 0</p></div><div class="krit-box"><div class="krit-title">Tiefpunkt</div><p>f'(x<sub>E</sub>) = 0 und f''(x<sub>E</sub>) &gt; 0</p></div><div class="krit-box"><div class="krit-title">Sattelpunkt</div><p>f'(x<sub>E</sub>) = 0 und f''(x<sub>E</sub>) = 0 → VZW-Kriterium nötig!</p></div></div></div></div>
+      <div class="acc-item"><button class="acc-header">Methode 2: VZW-Kriterium (Fallback) <span class="arrow">▶</span></button><div class="acc-body"><p>Teststellen links und rechts von x<sub>E</sub> in f' einsetzen:</p><div class="krit-grid"><div class="krit-box"><div class="krit-title">Hochpunkt</div><p>f' wechselt von + nach –</p></div><div class="krit-box"><div class="krit-title">Tiefpunkt</div><p>f' wechselt von – nach +</p></div><div class="krit-box"><div class="krit-title">Sattelpunkt</div><p>f' hat keinen Vorzeichenwechsel</p></div></div><div class="example-block" style="margin-top:14px"><div class="ex-title">Beispiel Sattelpunkt – f(x) = x³</div><div class="formula">f'(x) = 3x² = 0  →  x = 0
 f''(0) = 0  →  keine Entscheidung
 Teststellen: f'(–1) = 3 > 0,  f'(1) = 3 > 0
-→  kein VZW  →  Sattelpunkt bei (0|0)</div>
-          </div>
-        </div>
-      </div>
+→  kein VZW  →  Sattelpunkt bei (0|0)</div></div></div></div>
     </div>
   </div>
-
   <div class="card">
     <h2>Vorgehen Schritt für Schritt</h2>
     <ul class="step-list">
@@ -431,233 +343,140 @@ Teststellen: f'(–1) = 3 > 0,  f'(1) = 3 > 0
       <li class="step-item"><div class="step-num">4</div><div class="step-body"><h4>y-Koordinate</h4><p>f(x<sub>E</sub>) einsetzen → Punkt angeben.</p></div></li>
     </ul>
   </div>
-
 </section>
 
-<!-- ══ TAB 5: WENDEPUNKTE ══ -->
+<!-- TAB 5 -->
 <section class="tab-section" id="tab-wendepunkte">
-
   <div class="card">
     <h2>Notwendige Bedingung</h2>
-    <div class="highlight">
-      <p>Wenn bei x<sub>W</sub> ein Wendepunkt von f liegt, dann gilt: <strong>f''(x<sub>W</sub>) = 0</strong></p>
-    </div>
+    <div class="highlight"><p>Wenn bei x<sub>W</sub> ein Wendepunkt von f liegt, dann gilt: <strong>f''(x<sub>W</sub>) = 0</strong></p></div>
     <div class="krit-grid" style="margin-top:12px">
-      <div class="krit-box"><div class="krit-title">Links-Rechts-Wendepunkt (LR-W)</div><p>f zuerst linksgekrümmt, dann rechtsgekrümmt<br>f'' wechselt von + nach –<br>f' hat ein Maximum bei x<sub>W</sub></p></div>
-      <div class="krit-box"><div class="krit-title">Rechts-Links-Wendepunkt (RL-W)</div><p>f zuerst rechtsgekrümmt, dann linksgekrümmt<br>f'' wechselt von – nach +<br>f' hat ein Minimum bei x<sub>W</sub></p></div>
+      <div class="krit-box"><div class="krit-title">Links-Rechts-Wendepunkt (LR-W)</div><p>f'' wechselt von + nach –. f' hat Maximum bei x<sub>W</sub>.</p></div>
+      <div class="krit-box"><div class="krit-title">Rechts-Links-Wendepunkt (RL-W)</div><p>f'' wechselt von – nach +. f' hat Minimum bei x<sub>W</sub>.</p></div>
     </div>
   </div>
-
   <div class="card">
     <h2>Hinreichende Bedingung – zwei Methoden</h2>
     <div class="accordion">
-      <div class="acc-item open">
-        <button class="acc-header">Methode 1: f'''-Kriterium <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="krit-grid">
-            <div class="krit-box"><div class="krit-title">LR-Wendepunkt</div><p>f''(x<sub>W</sub>) = 0 <strong>und</strong> f'''(x<sub>W</sub>) &lt; 0</p></div>
-            <div class="krit-box"><div class="krit-title">RL-Wendepunkt</div><p>f''(x<sub>W</sub>) = 0 <strong>und</strong> f'''(x<sub>W</sub>) &gt; 0</p></div>
-          </div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">Methode 2: VZW-Kriterium von f'' <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="krit-grid">
-            <div class="krit-box"><div class="krit-title">LR-Wendepunkt</div><p>f'' wechselt von <strong>+ nach –</strong></p></div>
-            <div class="krit-box"><div class="krit-title">RL-Wendepunkt</div><p>f'' wechselt von <strong>– nach +</strong></p></div>
-          </div>
-        </div>
-      </div>
+      <div class="acc-item open"><button class="acc-header">Methode 1: f'''-Kriterium <span class="arrow">▶</span></button><div class="acc-body"><div class="krit-grid"><div class="krit-box"><div class="krit-title">LR-Wendepunkt</div><p>f''(x<sub>W</sub>) = 0 und f'''(x<sub>W</sub>) &lt; 0</p></div><div class="krit-box"><div class="krit-title">RL-Wendepunkt</div><p>f''(x<sub>W</sub>) = 0 und f'''(x<sub>W</sub>) &gt; 0</p></div></div></div></div>
+      <div class="acc-item"><button class="acc-header">Methode 2: VZW-Kriterium von f'' <span class="arrow">▶</span></button><div class="acc-body"><div class="krit-grid"><div class="krit-box"><div class="krit-title">LR-Wendepunkt</div><p>f'' wechselt von + nach –</p></div><div class="krit-box"><div class="krit-title">RL-Wendepunkt</div><p>f'' wechselt von – nach +</p></div></div></div></div>
     </div>
   </div>
-
   <div class="card">
     <h2>Durchgerechnete Beispiele</h2>
     <div class="accordion">
-      <div class="acc-item open">
-        <button class="acc-header">f(x) = ½x³ – 3/2 x² <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">f''(x) = 3x – 3 = 0  →  x = 1
-f'''(x) = 3  →  f'''(1) = 3 > 0  →  RL-W
-f(1) = –1  →  W(1|–1)</div>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">f(x) = 1/30 x⁴ – 4/5 x² <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="formula">f''(x) = 0,4x² – 1,6 = 0  →  x = ±2
-f'''(x) = 0,8x
+      <div class="acc-item open"><button class="acc-header">f(x) = ½x³ – 3/2 x² <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">f''(x) = 3x – 3 = 0  →  x = 1
+f'''(1) = 3 > 0  →  RL-W
+f(1) = –1  →  W(1|–1)</div></div></div>
+      <div class="acc-item"><button class="acc-header">f(x) = 1/30 x⁴ – 4/5 x² <span class="arrow">▶</span></button><div class="acc-body"><div class="formula">f''(x) = 0,4x² – 1,6 = 0  →  x = ±2
 f'''(2)  =  1,6 > 0  →  RL-W  →  W(2|–8/5)
-f'''(–2) = –1,6 < 0  →  LR-W  →  W(–2|–8/5)</div>
-        </div>
-      </div>
+f'''(–2) = –1,6 < 0  →  LR-W  →  W(–2|–8/5)</div></div></div>
     </div>
   </div>
-
 </section>
 
-<!-- ══ TAB 6: GRAPH-ZUORDNUNG ══ -->
+<!-- TAB 6 -->
 <section class="tab-section" id="tab-graphen">
-
   <div class="card">
     <h2>f und f'' einander zuordnen</h2>
     <div class="accordion">
-      <div class="acc-item open">
-        <button class="acc-header">Wendepunkt ↔ Nullstelle von f'' <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <ul>
-            <li>An einem <strong>Wendepunkt</strong> von f hat f'' eine <strong>Nullstelle</strong>.</li>
-            <li>Nullstelle von f'' und Wendepunkt von f haben den <strong>gleichen x-Wert</strong>.</li>
-            <li>f'' kreuzt x-Achse von + nach – → <strong>LR-Wendepunkt</strong> bei f.</li>
-            <li>f'' kreuzt x-Achse von – nach + → <strong>RL-Wendepunkt</strong> bei f.</li>
-          </ul>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">Extrempunkt ↔ f' und f'' <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <ul>
-            <li>Hochpunkt von f → Nullstelle von f' mit VZW + nach –</li>
-            <li>Tiefpunkt von f → Nullstelle von f' mit VZW – nach +</li>
-            <li>Extremstelle von f' → Wendepunkt von f</li>
-          </ul>
-        </div>
-      </div>
-      <div class="acc-item">
-        <button class="acc-header">Krümmungsverhalten <span class="arrow">▶</span></button>
-        <div class="acc-body">
-          <div class="krit-grid">
-            <div class="krit-box"><div class="krit-title">f'' > 0</div><p>f ist rechtsgekrümmt (konkav nach oben)</p></div>
-            <div class="krit-box"><div class="krit-title">f'' &lt; 0</div><p>f ist linksgekrümmt (konkav nach unten)</p></div>
-          </div>
-        </div>
-      </div>
+      <div class="acc-item open"><button class="acc-header">Wendepunkt ↔ Nullstelle von f'' <span class="arrow">▶</span></button><div class="acc-body"><ul><li>An einem <strong>Wendepunkt</strong> von f hat f'' eine <strong>Nullstelle</strong>.</li><li>f'' kreuzt x-Achse von + nach – → <strong>LR-Wendepunkt</strong> bei f.</li><li>f'' kreuzt x-Achse von – nach + → <strong>RL-Wendepunkt</strong> bei f.</li></ul></div></div>
+      <div class="acc-item"><button class="acc-header">Extrempunkt ↔ f' und f'' <span class="arrow">▶</span></button><div class="acc-body"><ul><li>Hochpunkt von f → Nullstelle von f' mit VZW + nach –</li><li>Tiefpunkt von f → Nullstelle von f' mit VZW – nach +</li><li>Extremstelle von f' → Wendepunkt von f</li></ul></div></div>
+      <div class="acc-item"><button class="acc-header">Krümmungsverhalten <span class="arrow">▶</span></button><div class="acc-body"><div class="krit-grid"><div class="krit-box"><div class="krit-title">f'' > 0</div><p>f ist rechtsgekrümmt (konkav nach oben)</p></div><div class="krit-box"><div class="krit-title">f'' &lt; 0</div><p>f ist linksgekrümmt (konkav nach unten)</p></div></div></div></div>
     </div>
   </div>
-
   <div class="card">
     <h2>Zuordnungsaufgabe – Lösung</h2>
     <p class="sub">Graphen I, II, III (f) werden A, B, C (f'') zugeordnet</p>
     <div class="zuord-grid">
-      <div class="zuord-item"><div class="tag">Graph I → f'' = B (Gerade)</div><p>Polynom 3. Grades, zunächst linksgekrümmt dann rechtsgekrümmt (LR-W). f'' muss VZW von + nach – haben → Gerade B. Nullstelle von f'' = Wendepunkt von f teilen x-Wert.</p></div>
+      <div class="zuord-item"><div class="tag">Graph I → f'' = B (Gerade)</div><p>Polynom 3. Grades, zunächst linksgekrümmt dann rechtsgekrümmt (LR-W). f'' muss VZW von + nach – haben → Gerade B.</p></div>
       <div class="zuord-item"><div class="tag">Graph II → f'' = C (Parabel)</div><p>Polynom 4. Grades: erst RL-W, dann LR-W. f'' hat VZW – nach + und danach + nach –. Das trifft auf Parabel C zu.</p></div>
-      <div class="zuord-item"><div class="tag">Graph III → f'' = A (neg. Parabel)</div><p>Nach unten geöffnete Parabel, überall rechtsgekrümmt → f'' überall negativ und konstant → negative Parabel A unterhalb x-Achse.</p></div>
+      <div class="zuord-item"><div class="tag">Graph III → f'' = A (neg. Parabel)</div><p>Nach unten geöffnete Parabel, überall rechtsgekrümmt → f'' überall negativ → negative Parabel A.</p></div>
     </div>
   </div>
-
   <div class="card">
     <h2>Wie skizziert man f aus f'?</h2>
     <ul class="step-list">
       <li class="step-item"><div class="step-num">1</div><div class="step-body"><h4>Nullstellen von f' finden</h4><p>→ Extrempunkte von f. VZW + nach – = Hochpunkt. VZW – nach + = Tiefpunkt.</p></div></li>
       <li class="step-item"><div class="step-num">2</div><div class="step-body"><h4>Extrema von f' finden</h4><p>→ Wendepunkte von f.</p></div></li>
-      <li class="step-item"><div class="step-num">3</div><div class="step-body"><h4>Vorzeichen von f' beachten</h4><p>f' > 0 → f steigt. f' < 0 → f fällt.</p></div></li>
+      <li class="step-item"><div class="step-num">3</div><div class="step-body"><h4>Vorzeichen von f' beachten</h4><p>f' > 0 → f steigt. f' &lt; 0 → f fällt.</p></div></li>
       <li class="step-item"><div class="step-num">4</div><div class="step-body"><h4>Unendlich viele Lösungen möglich</h4><p>Da beim Ableiten Konstanten wegfallen, kann f beliebig in y-Richtung verschoben sein.</p></div></li>
     </ul>
   </div>
-
 </section>
 
-<!-- ══ TAB 7: QUIZ ══ -->
+<!-- TAB 7: QUIZ -->
 <section class="tab-section" id="tab-quiz">
   <div class="card">
     <h2>Mini-Quiz</h2>
     <p class="sub">Teste dein Wissen — klicke auf die richtige Antwort.</p>
-
-    <div class="quiz-q" data-correct="1">
-      <div class="q-text">1. Was ist die notwendige Bedingung für einen Extrempunkt?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-idx="0">f''(x<sub>E</sub>) = 0</button>
-        <button class="quiz-opt" data-idx="1">f'(x<sub>E</sub>) = 0</button>
-        <button class="quiz-opt" data-idx="2">f(x<sub>E</sub>) = 0</button>
-        <button class="quiz-opt" data-idx="3">f'''(x<sub>E</sub>) ≠ 0</button>
-      </div>
-      <div class="quiz-feedback"></div>
-    </div>
-
-    <div class="quiz-q" data-correct="2">
-      <div class="q-text">2. f'(x<sub>E</sub>) = 0 und f''(x<sub>E</sub>) > 0 – welcher Punkt liegt vor?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-idx="0">Hochpunkt</button>
-        <button class="quiz-opt" data-idx="1">Wendepunkt</button>
-        <button class="quiz-opt" data-idx="2">Tiefpunkt</button>
-        <button class="quiz-opt" data-idx="3">Sattelpunkt</button>
-      </div>
-      <div class="quiz-feedback"></div>
-    </div>
-
-    <div class="quiz-q" data-correct="0">
-      <div class="q-text">3. Was ist die notwendige Bedingung für einen Wendepunkt?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-idx="0">f''(x<sub>W</sub>) = 0</button>
-        <button class="quiz-opt" data-idx="1">f'(x<sub>W</sub>) = 0</button>
-        <button class="quiz-opt" data-idx="2">f'''(x<sub>W</sub>) = 0</button>
-        <button class="quiz-opt" data-idx="3">f(x<sub>W</sub>) = 0</button>
-      </div>
-      <div class="quiz-feedback"></div>
-    </div>
-
-    <div class="quiz-q" data-correct="3">
-      <div class="q-text">4. Wie lautet die Aufleitung von f(x) = x³?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-idx="0">F(x) = 3x² + C</button>
-        <button class="quiz-opt" data-idx="1">F(x) = x⁴ + C</button>
-        <button class="quiz-opt" data-idx="2">F(x) = x²/2 + C</button>
-        <button class="quiz-opt" data-idx="3">F(x) = x⁴/4 + C</button>
-      </div>
-      <div class="quiz-feedback"></div>
-    </div>
-
-    <div class="quiz-q" data-correct="1">
-      <div class="q-text">5. Warum kommt beim Aufleiten immer ein +C hinzu?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-idx="0">Weil der Exponent erhöht wird</button>
-        <button class="quiz-opt" data-idx="1">Weil beim Ableiten jede Konstante wegfällt und man sie nicht mehr kennt</button>
-        <button class="quiz-opt" data-idx="2">Weil die Stammfunktion immer größer ist</button>
-        <button class="quiz-opt" data-idx="3">Das stimmt nicht, +C ist optional</button>
-      </div>
-      <div class="quiz-feedback"></div>
-    </div>
-
-    <div class="quiz-q" data-correct="2">
-      <div class="q-text">6. Wie lautet die Aufleitung von f(x) = 6?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-idx="0">F(x) = 0 + C</button>
-        <button class="quiz-opt" data-idx="1">F(x) = 6x² + C</button>
-        <button class="quiz-opt" data-idx="2">F(x) = 6x + C</button>
-        <button class="quiz-opt" data-idx="3">F(x) = 3x² + C</button>
-      </div>
-      <div class="quiz-feedback"></div>
-    </div>
-
-    <div class="quiz-q" data-correct="0">
-      <div class="q-text">7. Was bedeutet f'' > 0 für den Graphen von f?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-idx="0">f ist rechtsgekrümmt</button>
-        <button class="quiz-opt" data-idx="1">f ist linksgekrümmt</button>
-        <button class="quiz-opt" data-idx="2">f hat einen Hochpunkt</button>
-        <button class="quiz-opt" data-idx="3">f ist fallend</button>
-      </div>
-      <div class="quiz-feedback"></div>
-    </div>
-
-    <div class="quiz-q" data-correct="1">
-      <div class="q-text">8. f'''(x<sub>W</sub>) < 0 und f''(x<sub>W</sub>) = 0 – welcher Wendepunkt?</div>
-      <div class="quiz-options">
-        <button class="quiz-opt" data-idx="0">RL-Wendepunkt</button>
-        <button class="quiz-opt" data-idx="1">LR-Wendepunkt</button>
-        <button class="quiz-opt" data-idx="2">Sattelpunkt</button>
-        <button class="quiz-opt" data-idx="3">Tiefpunkt</button>
-      </div>
-      <div class="quiz-feedback"></div>
-    </div>
-
+    <div class="quiz-q" data-correct="1"><div class="q-text">1. Was ist die notwendige Bedingung für einen Extrempunkt?</div><div class="quiz-options"><button class="quiz-opt" data-idx="0">f''(xE) = 0</button><button class="quiz-opt" data-idx="1">f'(xE) = 0</button><button class="quiz-opt" data-idx="2">f(xE) = 0</button><button class="quiz-opt" data-idx="3">f'''(xE) ≠ 0</button></div><div class="quiz-feedback"></div></div>
+    <div class="quiz-q" data-correct="2"><div class="q-text">2. f'(xE) = 0 und f''(xE) > 0 – welcher Punkt liegt vor?</div><div class="quiz-options"><button class="quiz-opt" data-idx="0">Hochpunkt</button><button class="quiz-opt" data-idx="1">Wendepunkt</button><button class="quiz-opt" data-idx="2">Tiefpunkt</button><button class="quiz-opt" data-idx="3">Sattelpunkt</button></div><div class="quiz-feedback"></div></div>
+    <div class="quiz-q" data-correct="0"><div class="q-text">3. Was ist die notwendige Bedingung für einen Wendepunkt?</div><div class="quiz-options"><button class="quiz-opt" data-idx="0">f''(xW) = 0</button><button class="quiz-opt" data-idx="1">f'(xW) = 0</button><button class="quiz-opt" data-idx="2">f'''(xW) = 0</button><button class="quiz-opt" data-idx="3">f(xW) = 0</button></div><div class="quiz-feedback"></div></div>
+    <div class="quiz-q" data-correct="3"><div class="q-text">4. Wie lautet die Aufleitung von f(x) = x³?</div><div class="quiz-options"><button class="quiz-opt" data-idx="0">F(x) = 3x² + C</button><button class="quiz-opt" data-idx="1">F(x) = x⁴ + C</button><button class="quiz-opt" data-idx="2">F(x) = x²/2 + C</button><button class="quiz-opt" data-idx="3">F(x) = x⁴/4 + C</button></div><div class="quiz-feedback"></div></div>
+    <div class="quiz-q" data-correct="1"><div class="q-text">5. Warum kommt beim Aufleiten immer ein +C hinzu?</div><div class="quiz-options"><button class="quiz-opt" data-idx="0">Weil der Exponent erhöht wird</button><button class="quiz-opt" data-idx="1">Weil beim Ableiten jede Konstante wegfällt und man sie nicht mehr kennt</button><button class="quiz-opt" data-idx="2">Weil die Stammfunktion immer größer ist</button><button class="quiz-opt" data-idx="3">Das stimmt nicht, +C ist optional</button></div><div class="quiz-feedback"></div></div>
+    <div class="quiz-q" data-correct="2"><div class="q-text">6. Wie lautet die Aufleitung von f(x) = 6?</div><div class="quiz-options"><button class="quiz-opt" data-idx="0">F(x) = 0 + C</button><button class="quiz-opt" data-idx="1">F(x) = 6x² + C</button><button class="quiz-opt" data-idx="2">F(x) = 6x + C</button><button class="quiz-opt" data-idx="3">F(x) = 3x² + C</button></div><div class="quiz-feedback"></div></div>
+    <div class="quiz-q" data-correct="0"><div class="q-text">7. Was bedeutet f'' > 0 für den Graphen von f?</div><div class="quiz-options"><button class="quiz-opt" data-idx="0">f ist rechtsgekrümmt</button><button class="quiz-opt" data-idx="1">f ist linksgekrümmt</button><button class="quiz-opt" data-idx="2">f hat einen Hochpunkt</button><button class="quiz-opt" data-idx="3">f ist fallend</button></div><div class="quiz-feedback"></div></div>
+    <div class="quiz-q" data-correct="1"><div class="q-text">8. f'''(xW) &lt; 0 und f''(xW) = 0 – welcher Wendepunkt?</div><div class="quiz-options"><button class="quiz-opt" data-idx="0">RL-Wendepunkt</button><button class="quiz-opt" data-idx="1">LR-Wendepunkt</button><button class="quiz-opt" data-idx="2">Sattelpunkt</button><button class="quiz-opt" data-idx="3">Tiefpunkt</button></div><div class="quiz-feedback"></div></div>
     <button class="quiz-reset" id="quizReset">Quiz zurücksetzen</button>
   </div>
 </section>
 
-</div><!-- /content-wrap -->
+</div>
 
- <script src="../design.js"></script>
+<footer>Lernapp · Alle Inhalte für den privaten Schulgebrauch</footer>
+
+<script src="../design.js"></script>
+<script>
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+// Accordion
+document.querySelectorAll('.acc-header').forEach(h => {
+  h.addEventListener('click', () => h.closest('.acc-item').classList.toggle('open'));
+});
+
+// Quiz — in DOMContentLoaded damit design.js fertig geladen ist
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.quiz-q').forEach(q => {
+    const correct = parseInt(q.dataset.correct);
+    const fb = q.querySelector('.quiz-feedback');
+    q.querySelectorAll('.quiz-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (opt.disabled) return;
+        q.querySelectorAll('.quiz-opt').forEach(o => o.disabled = true);
+        const idx = parseInt(opt.dataset.idx);
+        if (idx === correct) {
+          opt.classList.add('correct');
+          fb.textContent = '✓ Richtig!';
+          fb.className = 'quiz-feedback show ok';
+        } else {
+          opt.classList.add('wrong');
+          q.querySelectorAll('.quiz-opt')[correct].classList.add('correct');
+          fb.textContent = '✗ Leider falsch. Die richtige Antwort ist markiert.';
+          fb.className = 'quiz-feedback show err';
+        }
+      });
+    });
+  });
+  document.getElementById('quizReset').addEventListener('click', () => {
+    document.querySelectorAll('.quiz-q').forEach(q => {
+      q.querySelectorAll('.quiz-opt').forEach(o => {
+        o.disabled = false; o.classList.remove('correct','wrong');
+      });
+      const fb = q.querySelector('.quiz-feedback');
+      fb.className = 'quiz-feedback'; fb.textContent = '';
+    });
+  });
+});
+</script>
 </body>
 </html>
