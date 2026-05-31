@@ -49,28 +49,61 @@
   </div>
 </nav>
 
- <div id="design-panel">
-  <div>
-    <div class="p-title">Dunkle Themes</div>
-    <div class="theme-grid">
-      <button class="theme-btn active" data-theme="dunkel" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#c8f135"></span><span style="background:#444"></span><span style="background:#111"></span></div>Dunkel</button>
-      <button class="theme-btn" data-theme="ozean" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#4db8ff"></span><span style="background:#1a5a99"></span><span style="background:#050d1a"></span></div>Ozean</button>
-      <button class="theme-btn" data-theme="wald" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#5ec96a"></span><span style="background:#2a7030"></span><span style="background:#0b110d"></span></div>Wald</button>
-      <button class="theme-btn" data-theme="rose-dark" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#ff6b9d"></span><span style="background:#aa2050"></span><span style="background:#1a0a10"></span></div>Rose</button>
-      <button class="theme-btn" data-theme="schiefer" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#7ba7e8"></span><span style="background:#3a6099"></span><span style="background:#10141c"></span></div>Schiefer</button>
-      <button class="theme-btn" data-theme="sand-dark" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#e8a020"></span><span style="background:#8a6010"></span><span style="background:#1c1710"></span></div>Sand</button>
-    </div>
-  </div>
-  <div>
-    <div class="p-title">Helle Themes</div>
-    <div class="theme-grid">
-      <button class="theme-btn" data-theme="licht" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#1a6b3c"></span><span style="background:#999"></span><span style="background:#ddd;border:1px solid #ccc"></span></div>Licht</button>
-      <button class="theme-btn" data-theme="himmel" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#1870e0"></span><span style="background:#7aade8"></span><span style="background:#ddeeff;border:1px solid #cce"></span></div>Himmel</button>
-      <button class="theme-btn" data-theme="mint" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#0d8c3c"></span><span style="background:#6ec98a"></span><span style="background:#d8f5e0;border:1px solid #bde"></span></div>Mint</button>
-      <button class="theme-btn" data-theme="pfirsich" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#e05020"></span><span style="background:#e89070"></span><span style="background:#ffe8e0;border:1px solid #fdd"></span></div>Pfirsich</button>
-      <button class="theme-btn" data-theme="lavendel" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#6c3ce0"></span><span style="background:#aa88e8"></span><span style="background:#ece4ff;border:1px solid #ddf"></span></div>Lavendel</button>
-      <button class="theme-btn" data-theme="papier" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#8b5e20"></span><span style="background:#c09850"></span><span style="background:#faf7f0;border:1px solid #e8e0d0"></span></div>Papier</button>
-    </div>
+<!-- DESIGN PANEL — diesen Block in allen HTML-Dateien ersetzen -->
+<div id="design-panel">
+  <div class="p-title">Theme wählen</div>
+  <div class="theme-grid">
+
+    <button class="theme-btn active" data-theme="dunkel" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#c8f135"></span><span style="background:#444"></span><span style="background:#111"></span></div>
+      Dunkel
+    </button>
+
+    <button class="theme-btn" data-theme="ozean" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#4db8ff"></span><span style="background:#1a5a99"></span><span style="background:#050d1a"></span></div>
+      Ozean
+    </button>
+
+    <button class="theme-btn" data-theme="wald" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#5ec96a"></span><span style="background:#2a7030"></span><span style="background:#0b110d"></span></div>
+      Wald
+    </button>
+
+    <button class="theme-btn" data-theme="rose" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#ff6b9d"></span><span style="background:#aa2050"></span><span style="background:#1a0a10"></span></div>
+      Rose
+    </button>
+
+    <button class="theme-btn" data-theme="schiefer" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#7ba7e8"></span><span style="background:#3a6099"></span><span style="background:#10141c"></span></div>
+      Schiefer
+    </button>
+
+    <button class="theme-btn" data-theme="sand" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#e8a020"></span><span style="background:#8a6010"></span><span style="background:#1c1710"></span></div>
+      Sand
+    </button>
+
+    <button class="theme-btn" data-theme="lavendel" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#a87fff"></span><span style="background:#6040bb"></span><span style="background:#110d1a"></span></div>
+      Lavendel
+    </button>
+
+    <button class="theme-btn" data-theme="pfirsich" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#ff8c42"></span><span style="background:#cc5010"></span><span style="background:#1a0e08"></span></div>
+      Pfirsich
+    </button>
+
+    <button class="theme-btn" data-theme="mint" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#3ecf8e"></span><span style="background:#0a7a40"></span><span style="background:#081410"></span></div>
+      Mint
+    </button>
+
+    <button class="theme-btn" data-theme="himmel" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#5599ff"></span><span style="background:#1455c0"></span><span style="background:#080e1a"></span></div>
+      Himmel
+    </button>
+
   </div>
 </div>
 
