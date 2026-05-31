@@ -361,25 +361,39 @@ document.querySelectorAll('.acc-header').forEach(h => {
   h.addEventListener('click', () => h.closest('.acc-item').classList.toggle('open'));
 });
 // Quiz
-document.querySelectorAll('.quiz-q').forEach(q => {
-  const correct = parseInt(q.dataset.correct);
-  const fb = q.querySelector('.quiz-feedback');
-  q.querySelectorAll('.quiz-opt').forEach(opt => {
-    opt.addEventListener('click', () => {
-      if (opt.disabled) return;
-      q.querySelectorAll('.quiz-opt').forEach(o => o.disabled = true);
-      const idx = parseInt(opt.dataset.idx);
-      if (idx === correct) { opt.classList.add('correct'); fb.textContent = '✓ Correct!'; fb.className = 'quiz-feedback show ok'; }
-      else { opt.classList.add('wrong'); q.querySelectorAll('.quiz-opt')[correct].classList.add('correct'); fb.textContent = '✗ Not quite. The correct answer is highlighted.'; fb.className = 'quiz-feedback show err'; }
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.quiz-q').forEach(q => {
+    const correct = parseInt(q.dataset.correct);
+    const fb = q.querySelector('.quiz-feedback');
+    q.querySelectorAll('.quiz-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (opt.disabled) return;
+        q.querySelectorAll('.quiz-opt').forEach(o => o.disabled = true);
+        const idx = parseInt(opt.dataset.idx);
+        if (idx === correct) {
+          opt.classList.add('correct');
+          fb.textContent = '✓ Correct!';
+          fb.className = 'quiz-feedback show ok';
+        } else {
+          opt.classList.add('wrong');
+          q.querySelectorAll('.quiz-opt')[correct].classList.add('correct');
+          fb.textContent = '✗ Not quite. The correct answer is highlighted.';
+          fb.className = 'quiz-feedback show err';
+        }
+      });
     });
   });
-});
-document.getElementById('quizReset').addEventListener('click', () => {
-  document.querySelectorAll('.quiz-q').forEach(q => {
-    q.querySelectorAll('.quiz-opt').forEach(o => { o.disabled = false; o.classList.remove('correct','wrong'); });
-    const fb = q.querySelector('.quiz-feedback'); fb.className = 'quiz-feedback'; fb.textContent = '';
+  document.getElementById('quizReset').addEventListener('click', () => {
+    document.querySelectorAll('.quiz-q').forEach(q => {
+      q.querySelectorAll('.quiz-opt').forEach(o => {
+        o.disabled = false;
+        o.classList.remove('correct', 'wrong');
+      });
+      const fb = q.querySelector('.quiz-feedback');
+      fb.className = 'quiz-feedback';
+      fb.textContent = '';
+    });
   });
-});
-</script>
+}); 
 </body>
 </html>
