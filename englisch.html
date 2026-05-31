@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dunkel">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Englisch – Mediation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ── THEMES ── */
+[data-theme="dunkel"]    { --bg:#0c0c0d; --surface:#141415; --surface2:#1e1e20; --border:rgba(255,255,255,0.07); --text:#f0ede8; --muted:rgba(240,237,232,0.38); --accent:#c8f135; --accent-fg:#0c0c0d; --panel-bg:#101011; }
+[data-theme="ozean"]     { --bg:#050d1a; --surface:#0a1628; --surface2:#112038; --border:rgba(100,180,255,0.10); --text:#d6eeff; --muted:rgba(214,238,255,0.38); --accent:#4db8ff; --accent-fg:#050d1a; --panel-bg:#040b15; }
+[data-theme="wald"]      { --bg:#0b110d; --surface:#111a12; --surface2:#192318; --border:rgba(100,180,100,0.10); --text:#d8edda; --muted:rgba(216,237,218,0.38); --accent:#5ec96a; --accent-fg:#0b110d; --panel-bg:#090f0a; }
+[data-theme="rose-dark"] { --bg:#1a0a10; --surface:#25101a; --surface2:#301520; --border:rgba(255,150,180,0.10); --text:#fce8f0; --muted:rgba(252,232,240,0.38); --accent:#ff6b9d; --accent-fg:#1a0a10; --panel-bg:#140810; }
+[data-theme="schiefer"]  { --bg:#10141c; --surface:#181e28; --surface2:#202838; --border:rgba(140,160,200,0.10); --text:#dde4f0; --muted:rgba(221,228,240,0.38); --accent:#7ba7e8; --accent-fg:#10141c; --panel-bg:#0c1016; }
+[data-theme="sand-dark"] { --bg:#1c1710; --surface:#26200f; --surface2:#2e2810; --border:rgba(210,180,100,0.12); --text:#f0e8d0; --muted:rgba(240,232,208,0.38); --accent:#e8a020; --accent-fg:#1c1710; --panel-bg:#161208; }
+[data-theme="licht"]     { --bg:#f5f3ef; --surface:#ffffff; --surface2:#eceae6; --border:rgba(0,0,0,0.08); --text:#141312; --muted:rgba(20,19,18,0.40); --accent:#1a6b3c; --accent-fg:#fff; --panel-bg:#ece9e4; }
+[data-theme="himmel"]    { --bg:#edf4ff; --surface:#ffffff; --surface2:#ddeeff; --border:rgba(0,80,180,0.09); --text:#0a1a30; --muted:rgba(10,26,48,0.40); --accent:#1870e0; --accent-fg:#fff; --panel-bg:#deeaf8; }
+[data-theme="mint"]      { --bg:#edfaf0; --surface:#ffffff; --surface2:#d8f5e0; --border:rgba(0,120,60,0.09); --text:#0a2015; --muted:rgba(10,32,21,0.40); --accent:#0d8c3c; --accent-fg:#fff; --panel-bg:#d6f0de; }
+[data-theme="pfirsich"]  { --bg:#fff5f0; --surface:#ffffff; --surface2:#ffe8e0; --border:rgba(200,80,40,0.09); --text:#2a100a; --muted:rgba(42,16,10,0.40); --accent:#e05020; --accent-fg:#fff; --panel-bg:#fde0d4; }
+[data-theme="lavendel"]  { --bg:#f5f0ff; --surface:#ffffff; --surface2:#ece4ff; --border:rgba(100,60,200,0.09); --text:#1a0e30; --muted:rgba(26,14,48,0.40); --accent:#6c3ce0; --accent-fg:#fff; --panel-bg:#e8deff; }
+[data-theme="papier"]    { --bg:#faf7f0; --surface:#fff8ec; --surface2:#f0e8d4; --border:rgba(120,80,20,0.10); --text:#2a2018; --muted:rgba(42,32,24,0.40); --accent:#8b5e20; --accent-fg:#fff8ec; --panel-bg:#ede4d2; }
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+body {
+  font-family:'Syne',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  transition:background .3s,color .3s;
+  line-height:1.6;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 24px;
+  background:var(--panel-bg);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(12px);
+}
+.brand {
+  display:flex;align-items:center;gap:8px;
+  font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);
+}
+.brand-dot {
+  width:8px;height:8px;border-radius:50%;
+  background:var(--accent);display:inline-block;
+}
+.back-btn {
+  display:flex;align-items:center;gap:8px;
+  text-decoration:none;color:var(--muted);
+  font-size:.85rem;font-weight:600;letter-spacing:.04em;
+  transition:color .2s;
+}
+.back-btn:hover{color:var(--accent)}
+.back-btn svg{width:16px;height:16px;flex-shrink:0}
+.topbar-center{ flex:1; display:flex; justify-content:center; }
+.topbar-right{display:flex;align-items:center;gap:8px}
+
+/* ── HELL/DUNKEL BUTTONS (wie Original-App) ── */
+.mode-btn {
+  width:44px;height:44px;border-radius:10px;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);font-size:1.2rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background .2s;
+}
+.mode-btn:hover{background:var(--surface)}
+.mode-btn.active{background:var(--surface);border-color:var(--accent)}
+
+.design-btn {
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);border-radius:10px;padding:0 14px;height:44px;
+  cursor:pointer;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;
+  letter-spacing:.04em;transition:background .2s;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}
+.design-btn:hover{background:var(--surface)}
+
+/* ── THEME PANEL (identisch zur Original-App) ── */
+.theme-panel {
+  position:fixed;top:66px;right:16px;z-index:200;
+  background:var(--panel-bg);border:1px solid var(--border);
+  border-radius:16px;padding:20px;width:300px;
+  display:none;box-shadow:0 12px 40px rgba(0,0,0,.4);
+}
+.theme-panel.open{display:block}
+
+.theme-section-label {
+  font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px;margin-top:16px;
+}
+.theme-section-label:first-child{margin-top:0}
+
+.theme-grid {
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+  margin-bottom:4px;
+}
+.theme-card {
+  border-radius:12px;padding:12px 14px;
+  border:2px solid transparent;cursor:pointer;
+  transition:border-color .18s, transform .15s;
+  display:flex;flex-direction:column;gap:8px;
+}
+.theme-card:hover{transform:scale(1.02)}
+.theme-card.active{border-color:var(--accent)}
+.theme-card-dots{display:flex;gap:5px;align-items:center}
+.theme-card-dot{width:10px;height:10px;border-radius:50%}
+.theme-card-name{font-size:.78rem;font-weight:600;letter-spacing:.02em}
+
+/* ── HERO ── */
+.hero {
+  padding:48px 24px 28px;
+  max-width:880px;margin:0 auto;
+}
+.hero-label {
+  font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:10px;
+}
+.hero h1 {
+  font-family:'Instrument Serif',serif;
+  font-size:clamp(2rem,5vw,3.2rem);
+  line-height:1.15;margin-bottom:12px;
+}
+.hero-sub{color:var(--muted);font-size:.95rem}
+
+/* ── TAB NAV ── */
+.tab-nav {
+  display:flex;gap:6px;flex-wrap:wrap;
+  padding:0 24px 24px;max-width:880px;margin:0 auto;
+}
+.tab-btn {
+  padding:8px 18px;border-radius:20px;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--muted);font-family:'Syne',sans-serif;
+  font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;
+}
+.tab-btn:hover{background:var(--surface2);color:var(--text)}
+.tab-btn.active{background:var(--accent);color:var(--accent-fg);border-color:transparent}
+
+/* ── CONTENT ── */
+.content-wrap{max-width:880px;margin:0 auto;padding:0 24px 80px}
+.tab-section{display:none}
+.tab-section.active{display:block}
+
+/* ── CARDS ── */
+.card {
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:24px;margin-bottom:16px;
+}
+.card h2 {
+  font-family:'Instrument Serif',serif;
+  font-size:1.4rem;margin-bottom:6px;
+}
+.card .sub{color:var(--muted);font-size:.85rem;margin-bottom:16px}
+
+/* ── STEPS ── */
+.step-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.step-item {
+  display:flex;align-items:flex-start;gap:14px;
+  background:var(--surface2);border-radius:10px;padding:14px 16px;
+  border:1px solid var(--border);
+}
+.step-num {
+  flex-shrink:0;width:28px;height:28px;border-radius:50%;
+  background:var(--accent);color:var(--accent-fg);
+  font-size:.75rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+}
+.step-body h4{font-size:.9rem;font-weight:700;margin-bottom:3px}
+.step-body p{font-size:.82rem;color:var(--muted);line-height:1.5}
+
+/* ── ACCORDION ── */
+.accordion{display:flex;flex-direction:column;gap:8px}
+.acc-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.acc-header {
+  width:100%;background:none;border:none;color:var(--text);
+  font-family:'Syne',sans-serif;font-size:.9rem;font-weight:600;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 18px;cursor:pointer;text-align:left;transition:background .2s;
+}
+.acc-header:hover{background:var(--surface2)}
+.acc-header .arrow{transition:transform .25s;color:var(--accent);font-size:1.1rem;flex-shrink:0}
+.acc-item.open .acc-header .arrow{transform:rotate(90deg)}
+.acc-body{display:none;padding:0 18px 18px}
+.acc-item.open .acc-body{display:block}
+.acc-body p,.acc-body li{font-size:.85rem;color:var(--muted);line-height:1.65}
+.acc-body ul{padding-left:18px;margin-top:6px}
+.acc-body li{margin-bottom:4px}
+.acc-body strong{color:var(--text)}
+
+/* ── COMPARE TABLE ── */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.compare-col{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px}
+.compare-col .col-title{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.compare-col ul{list-style:none;padding:0}
+.compare-col li{font-size:.83rem;color:var(--text);padding:5px 0;border-bottom:1px solid var(--border);line-height:1.45}
+.compare-col li:last-child{border-bottom:none}
+.compare-col li::before{content:"— ";color:var(--accent)}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight{background:rgba(200,241,53,.06);border:1px solid rgba(200,241,53,.18);border-radius:10px;padding:14px 16px;margin:12px 0}
+.highlight p{font-size:.85rem;line-height:1.6}
+.highlight strong{color:var(--text)}
+
+/* ── CHECKLIST ── */
+.checklist{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;line-height:1.5;color:var(--muted)}
+.checklist li .check{color:var(--accent);font-size:1rem;flex-shrink:0;margin-top:1px}
+.checklist li strong{color:var(--text)}
+
+/* ── PHRASE BLOCKS ── */
+.phrase-section{margin-top:16px}
+.phrase-section h4{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.phrase-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px}
+.phrase-chip {
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:10px 14px;
+  font-size:.82rem;color:var(--text);line-height:1.4;
+  font-style:italic;
+}
+
+/* ── EXAMPLE LETTER ── */
+.letter-box{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:12px}
+.letter-box .letter-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.letter-body{font-size:.85rem;line-height:1.8;color:var(--text)}
+.letter-body .letter-annotation{color:var(--accent);font-size:.75rem;font-weight:700;margin-left:8px;font-style:normal}
+
+/* ── QUIZ ── */
+.quiz-q{margin-bottom:20px;background:var(--surface2);border-radius:12px;padding:18px;border:1px solid var(--border)}
+.quiz-q .q-text{font-size:.9rem;font-weight:600;margin-bottom:12px}
+.quiz-options{display:flex;flex-direction:column;gap:8px}
+.quiz-opt {
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:10px 14px;
+  font-size:.83rem;cursor:pointer;text-align:left;
+  color:var(--text);font-family:'Syne',sans-serif;
+  transition:background .2s,border-color .2s;
+}
+.quiz-opt:hover:not([disabled]){background:var(--surface);border-color:var(--accent)}
+.quiz-opt.correct{background:rgba(94,201,106,.15);border-color:#5ec96a;color:#5ec96a}
+.quiz-opt.wrong{background:rgba(255,107,107,.12);border-color:#ff6b6b;color:#ff6b6b}
+.quiz-feedback{font-size:.8rem;margin-top:8px;padding:8px 12px;border-radius:8px;display:none}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:rgba(94,201,106,.12);color:#5ec96a}
+.quiz-feedback.err{background:rgba(255,107,107,.1);color:#ff6b6b}
+.quiz-reset{margin-top:16px;padding:9px 20px;border-radius:8px;background:var(--accent);color:var(--accent-fg);border:none;font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:opacity .2s}
+.quiz-reset:hover{opacity:.85}
+
+/* ── TASK BOX ── */
+.task-box{background:var(--surface2);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:14px 16px;margin:10px 0;font-size:.85rem;line-height:1.6}
+
+@media(max-width:600px){
+  .hero{padding:32px 16px 20px}
+  .tab-nav{padding:0 16px 20px}
+  .content-wrap{padding:0 16px 60px}
+  .compare-grid{grid-template-columns:1fr}
+  .theme-panel{width:calc(100vw - 32px);right:16px}
+  .topbar{padding:12px 16px}
+  .brand{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <a class="back-btn" href="../index.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    Zurück
+  </a>
+  <div class="topbar-center">
+    <div class="brand"><span class="brand-dot"></span> LERNAPP</div>
+  </div>
+  <div class="topbar-right">
+    <button class="mode-btn" id="btnDark" title="Dunkles Theme">🌙</button>
+    <button class="mode-btn" id="btnLight" title="Helles Theme">☀️</button>
+    <button class="design-btn" id="designBtn">🎨 Design</button>
+  </div>
+</nav>
+
+<!-- THEME PANEL -->
+<div class="theme-panel" id="themePanel">
+  <div class="theme-section-label">Dunkle Themes</div>
+  <div class="theme-grid" id="darkGrid"></div>
+  <div class="theme-section-label">Helle Themes</div>
+  <div class="theme-grid" id="lightGrid"></div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-label">Englisch · Klausurvorbereitung</div>
+  <h1>Mediation &amp; Writing</h1>
+  <p class="hero-sub">Sprachmittlung, Formal vs. Informal, Useful Phrases, Exam Practice</p>
+</header>
+
+<!-- TAB NAV -->
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="what">What is Mediation?</button>
+  <button class="tab-btn" data-tab="steps">4 Steps</button>
+  <button class="tab-btn" data-tab="formal">Formal vs. Informal</button>
+  <button class="tab-btn" data-tab="phrases">Useful Phrases</button>
+  <button class="tab-btn" data-tab="checklist">Checklist</button>
+  <button class="tab-btn" data-tab="example">Example Text</button>
+  <button class="tab-btn" data-tab="quiz">Quiz</button>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+<!-- ══ TAB 1: WHAT IS MEDIATION ══ -->
+<section class="tab-section active" id="tab-what">
+  <div class="card">
+    <h2>What is Mediation?</h2>
+    <p class="sub">The core concept you need to understand for the exam</p>
+    <div class="highlight">
+      <p>You provide the <strong>mediating link</strong> between two languages and normally also between two different text types or (cultural) situations.</p>
+    </div>
+    <ul class="step-list" style="margin-top:14px">
+      <li class="step-item"><div class="step-num">!</div><div class="step-body"><h4>You start with a task</h4><p>You are given a new situation (context, text type, addressee, style, intention…). You pick out particular information from an original text.</p></div></li>
+      <li class="step-item"><div class="step-num">!</div><div class="step-body"><h4>Never translate word for word</h4><p>You never just translate every sentence of the original text exactly. Paraphrase, summarise, repackage.</p></div></li>
+      <li class="step-item"><div class="step-num">!</div><div class="step-body"><h4>Repackage for the new situation</h4><p>Format the text correctly, use appropriate register (formal/informal/semi-formal), beginning &amp; ending.</p></div></li>
+      <li class="step-item"><div class="step-num">!</div><div class="step-body"><h4>Don't mix in your own opinion</h4><p>In a mediation situation, don't mix the information with your own knowledge or opinion.</p></div></li>
+      <li class="step-item"><div class="step-num">!</div><div class="step-body"><h4>Cultural concepts may need explanation</h4><p>Idiomatic terms like CDU, FAZ, <em>Fernweh</em> may need to be explained. Use your intercultural competence.</p></div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>The No-Go's</h2>
+    <p class="sub">Avoid these common mistakes</p>
+    <div class="accordion">
+      <div class="acc-item open">
+        <button class="acc-header">Word-for-word translation <span class="arrow">▶</span></button>
+        <div class="acc-body"><p>Never translate sentence by sentence. Always summarise and repackage using your own words. Aim for approximately <strong>1/3 of the original text length</strong>.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Adding personal opinion <span class="arrow">▶</span></button>
+        <div class="acc-body"><p>The mediation text must only contain information from the original source. Do <strong>not</strong> add what you personally think, believe, or know.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Including unimportant information <span class="arrow">▶</span></button>
+        <div class="acc-body"><p>Don't stop after finding one point. But also leave out anything that is irrelevant to the task. Only include what is needed for the addressee.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Wrong register <span class="arrow">▶</span></button>
+        <div class="acc-body"><p>Always check the task: Who are you writing to? A friend (informal) or a teacher/company (formal)? Use the right language style throughout.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TAB 2: 4 STEPS ══ -->
+<section class="tab-section" id="tab-steps">
+  <div class="card">
+    <h2>The 4 Mediation Techniques</h2>
+    <p class="sub">Follow these steps during your exam</p>
+    <ul class="step-list">
+      <li class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Looking carefully at the task</h4>
+          <p>Check what relevant points you need to find. It will affect how you read the text. Ask: What is the task? Who am I writing to? What text type?</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Reading the original text</h4>
+          <p>After reading/listening once for gist, note the text title, type and purpose, and if necessary, the author's/speaker's name, intention and tone. Mark only task-relevant keywords.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Preparing your mediation</h4>
+          <p>Check the new situation: text type and length, addressee, purpose, relationship between you and the addressee (for your text's register/style). Mark only task-relevant keywords in the original. Search for more than one point. Leave unimportant info out.</p>
+        </div>
+      </li>
+      <li class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Writing your mediation text</h4>
+          <p>Use suitable language and 'packaging' sentences for the new task situation and mention the source. Sum up relevant points in your own words. Paraphrase/explain if you don't know the exact translation. Check for false friends, incorrect tense, spelling, prepositions, word order and style. Your text should sound natural.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Step 4 in detail — Writing the text</h2>
+    <div class="accordion">
+      <div class="acc-item open">
+        <button class="acc-header">Mention the source <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <p>Always reference the original article/source with <strong>title, author, source and date</strong>. Example:</p>
+          <div class="task-box">I found an article which refers to the topic we discussed last time. The article is named "Ausstieg aus 'Erasmus plus'", written by Annette Weber and published on the website of "Rheinpfalz" on 25.03.2021.</div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Appropriate beginning &amp; ending <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <p><strong>Informal:</strong> Hi [Name], / Dear [Name], … I hope I could help you. / Best wishes, [Name]</p>
+          <p style="margin-top:8px"><strong>Formal:</strong> Dear Sir or Madam, / Dear Mr/Ms [Name], … I look forward to hearing from you. / Yours faithfully / Yours sincerely</p>
+          <p style="margin-top:8px"><strong>Semi-formal:</strong> Dear [first name], … Best regards, [Name]</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Concluding sentence <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <p>Add an appropriate concluding sentence, e.g.:</p>
+          <div class="task-box"><em>"It looks like the situation in the country is not favourable at the moment but I hope you'll be able to enjoy your trip nonetheless."</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TAB 3: FORMAL vs INFORMAL ══ -->
+<section class="tab-section" id="tab-formal">
+  <div class="card">
+    <h2>Formal vs. Informal</h2>
+    <p class="sub">Key differences you must know for the exam</p>
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div class="col-title">Formal ✉️</div>
+        <ul>
+          <li>No short forms (I am, not I'm)</li>
+          <li>No colloquial language</li>
+          <li>Academic / professional-sounding words</li>
+          <li>Be polite throughout</li>
+          <li>Full verb forms</li>
+          <li>Passive verbs common</li>
+          <li>Longer, complex sentences</li>
+          <li>Polite phrases</li>
+          <li>Participles, gerunds</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <div class="col-title">Informal 💬</div>
+        <ul>
+          <li>Short forms (I'm, it's, don't…)</li>
+          <li>Colloquial language OK</li>
+          <li>Abbreviations possible</li>
+          <li>Active verbs</li>
+          <li>Personal tone</li>
+          <li>Shorter sentences</li>
+          <li>Phrasal verbs common</li>
+          <li>Casual greetings &amp; closings</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Word Pairs — Formal vs. Informal</h2>
+    <p class="sub">From your worksheet — know these pairs!</p>
+    <div class="accordion">
+      <div class="acc-item open">
+        <button class="acc-header">Greetings &amp; Openings <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <div class="compare-grid" style="margin-top:0">
+            <div class="compare-col"><div class="col-title">Formal</div><ul><li>Dear Sir or Madam</li><li>I am writing to confirm…</li><li>I would like to…</li><li>I will be attending…</li><li>Would it be possible…</li><li>I am afraid that…</li></ul></div>
+            <div class="compare-col"><div class="col-title">Informal</div><ul><li>Dear Jack / Hi [Name]</li><li>This is just a note to…</li><li>I want to…</li><li>I'm going to pop into…</li><li>Is it all right…</li><li>I think that…</li></ul></div>
+          </div>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Connectors &amp; Phrases <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <div class="compare-grid" style="margin-top:0">
+            <div class="compare-col"><div class="col-title">Formal</div><ul><li>Furthermore / Moreover</li><li>However / Nevertheless</li><li>Unfortunately</li><li>I am unable to provide…</li><li>I will contact you…</li><li>I look forward to meeting you</li><li>Yours faithfully / Yours sincerely</li></ul></div>
+            <div class="compare-col"><div class="col-title">Informal</div><ul><li>Also / And</li><li>But</li><li>I'm sorry…</li><li>I can't give you…</li><li>I'll drop you a line</li><li>See you on…</li><li>Best wishes / Cheers</li></ul></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TAB 4: USEFUL PHRASES ══ -->
+<section class="tab-section" id="tab-phrases">
+  <div class="card">
+    <h2>Useful Phrases for Mediation</h2>
+    <p class="sub">Learn these — you can use them in every mediation task</p>
+
+    <div class="phrase-section">
+      <h4>Introducing the source</h4>
+      <div class="phrase-grid">
+        <div class="phrase-chip">I found an article which refers to…</div>
+        <div class="phrase-chip">The article is called "…", written by … and published on … on …</div>
+        <div class="phrase-chip">I read a German newspaper article "…" by … in which …</div>
+        <div class="phrase-chip">The information are from a … survey / study.</div>
+        <div class="phrase-chip">It was published in "…" on the … of …</div>
+      </div>
+    </div>
+
+    <div class="phrase-section">
+      <h4>Summarising content</h4>
+      <div class="phrase-grid">
+        <div class="phrase-chip">The article shows / reveals / states that…</div>
+        <div class="phrase-chip">According to the article / survey…</div>
+        <div class="phrase-chip">The results make it clear that…</div>
+        <div class="phrase-chip">The trend in Germany goes to…</div>
+        <div class="phrase-chip">It has been estimated that…</div>
+        <div class="phrase-chip">To answer your question, in Germany they…</div>
+        <div class="phrase-chip">The survey shows that…</div>
+      </div>
+    </div>
+
+    <div class="phrase-section">
+      <h4>Adding information</h4>
+      <div class="phrase-grid">
+        <div class="phrase-chip">Furthermore, / Moreover, …</div>
+        <div class="phrase-chip">In addition to this, …</div>
+        <div class="phrase-chip">It is also mentioned that…</div>
+        <div class="phrase-chip">All in all, I can say that…</div>
+        <div class="phrase-chip">However, there are also…</div>
+      </div>
+    </div>
+
+    <div class="phrase-section">
+      <h4>Closing / Concluding</h4>
+      <div class="phrase-grid">
+        <div class="phrase-chip">I hope I could be of some help.</div>
+        <div class="phrase-chip">I hope this information will be useful for…</div>
+        <div class="phrase-chip">I hope I could help you.</div>
+        <div class="phrase-chip">Please let me know if you need anything else.</div>
+        <div class="phrase-chip">I look forward to hearing from you.</div>
+      </div>
+    </div>
+
+    <div class="phrase-section">
+      <h4>Explaining / Paraphrasing</h4>
+      <div class="phrase-grid">
+        <div class="phrase-chip">… which means / which refers to…</div>
+        <div class="phrase-chip">… also known as… / … roughly translated as…</div>
+        <div class="phrase-chip">In other words, …</div>
+        <div class="phrase-chip">This basically means that…</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TAB 5: CHECKLIST ══ -->
+<section class="tab-section" id="tab-checklist">
+  <div class="card">
+    <h2>Mediation — My Checklist</h2>
+    <p class="sub">Go through this before you hand in your exam</p>
+    <ul class="checklist">
+      <li><span class="check">✓</span><div><strong>Length</strong> — Usually about 1/3 of the original text</div></li>
+      <li><span class="check">✓</span><div><strong>Type of text</strong> — Have you used the correct text type (e-mail, letter, WhatsApp, blog post…)?</div></li>
+      <li><span class="check">✓</span><div><strong>Addressee</strong> — Who are you writing to/for? Does your register match?</div></li>
+      <li><span class="check">✓</span><div><strong>Appropriate register</strong> — Formal / informal / semi-formal throughout?</div></li>
+      <li><span class="check">✓</span><div><strong>Appropriate beginning</strong> — Sometimes a headline is required (e.g. blog post, article)</div></li>
+      <li><span class="check">✓</span><div><strong>Reference to the task/scenario</strong> — Have you referred to the context (term paper, trip, conference, project…)?</div></li>
+      <li><span class="check">✓</span><div><strong>Reference to the article/source</strong> — Title, author, source, year and its relevance (main idea)</div></li>
+      <li><span class="check">✓</span><div><strong>All relevant information</strong> — Have you included all aspects required in the assignment?</div></li>
+      <li><span class="check">✓</span><div><strong>Appropriate ending</strong> — e.g. concluding sentence like "It looks like the situation in the country is not favourable at the moment but I hope you'll be able to enjoy your trip nonetheless."</div></li>
+      <li><span class="check">✓</span><div><strong>Language check</strong> — False friends, tense, spelling, prepositions, word order, style, short forms</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Key features — Quick Reference</h2>
+    <div class="compare-grid">
+      <div class="compare-col">
+        <div class="col-title">Informal letter / email</div>
+        <ul>
+          <li>Shorter sentences</li>
+          <li>Personal tone</li>
+          <li>Active verbs</li>
+          <li>Phrasal verbs</li>
+          <li>Abbreviated forms</li>
+          <li>Colloquial language</li>
+        </ul>
+      </div>
+      <div class="compare-col">
+        <div class="col-title">Formal letter / email</div>
+        <ul>
+          <li>Longer sentences</li>
+          <li>Impersonal tone</li>
+          <li>Passive verbs</li>
+          <li>Full verb forms</li>
+          <li>Polite phrases</li>
+          <li>Participles &amp; gerunds</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TAB 6: EXAMPLE TEXT ══ -->
+<section class="tab-section" id="tab-example">
+  <div class="card">
+    <h2>Example Task — Brexit &amp; Erasmus</h2>
+    <p class="sub">Based on the Landesabitur 2024 (NT) practice material</p>
+    <div class="task-box">
+      <strong>Task:</strong> You have recently talked to an American friend about your plans to study in the UK and the British government's decision not to be part of the Erasmus programme any longer. Now you have found the article below. Write an email to your friend outlining the reactions of British universities and of their students to this decision. (100 BE)
+    </div>
+    <div class="highlight" style="margin-top:12px">
+      <p><strong>Key content points</strong> the examiner expects (from Erwartungshorizont):</p>
+      <ul style="padding-left:18px;margin-top:6px;font-size:.85rem;color:var(--muted)">
+        <li>Universities: not happy, fear loss of cultural diversity, letter of complaint, some offer more scholarships</li>
+        <li>Students in UK: can't afford to continue (visa, health insurance, no Erasmus), financial ruin</li>
+        <li>British students: sad &amp; angry, afraid future generations miss out on cultural experiences</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Model Answer (informal e-mail)</h2>
+    <p class="sub">Example based on your own exam attempt — annotated</p>
+    <div class="letter-box">
+      <div class="letter-label">Informal E-mail to American friend — Model</div>
+      <div class="letter-body">
+        <p>Hi Robert,<span class="letter-annotation">← informal greeting ✓</span></p>
+        <br>
+        <p>I found an article which refers to the topic we discussed last time — about the Erasmus programme which the British government doesn't support any more. The article is named "Ausstieg aus 'Erasmus plus': Der Jugend die Zukunft verbaut", written by Annette Weber and published on the website of "Rheinpfalz" on 25.03.2021.<span class="letter-annotation">← source with title, author, date ✓</span></p>
+        <br>
+        <p>The text was interesting to read because it mentions the reactions of British universities and of their students. The universities are shocked that the government made this decision. They think that the variety from the people and the different cultures gets lost. They even complained about it in a letter to the government. Some universities have announced they will expand their own scholarship programmes for Europeans.<span class="letter-annotation">← university reactions ✓</span></p>
+        <br>
+        <p>For the students, the decision is a financial ruin or even the destruction of their study and dreams. Many students can't afford to study in Britain anymore, as they now need a visa and additional health insurance. Furthermore, the Erasmus funding simply falls away.<span class="letter-annotation">← student reactions ✓</span></p>
+        <br>
+        <p>I hope I could help you.<span class="letter-annotation">← appropriate closing ✓</span></p>
+        <br>
+        <p>Best wishes,<br>Simon</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Example Task — Fashion &amp; Mediation</h2>
+    <p class="sub">Practice material from class</p>
+    <div class="task-box">
+      <strong>Task 1:</strong> Your Irish friend is writing a term paper on "Overconsumption in Fashion Industry". She has asked you to provide information on the situation in Germany. Write her an e-mail outlining the attitude people have to the fashion industry as given in the article.
+    </div>
+    <div class="letter-box" style="margin-top:12px">
+      <div class="letter-label">Informal model — Dear Clara</div>
+      <div class="letter-body">
+        <p>Dear Clara,</p><br>
+        <p>The topic of your term paper is quite challenging and I'm glad I've found a perfect article to provide you with some information. It's called "Greenpeace-Umfrage: Deutsche sehen Kleidung als Wegwerfware" and was published on the website www.n-tv.de in November 2015. It shows the results of the Greenpeace survey about how Germans treat their clothing.</p>
+        <br>
+        <p>The results make it clear that Germans are fond of the latest trends and because of this clothing has become a disposable product. It is really interesting that especially women from the West have a lot of clothes in their wardrobes, the majority of which are often sorted out and/or thrown away. Half of the interviewees don't even hide that they've never been to a tailor. Moreover, the majority of German youth have never been to a shoemaker.</p>
+        <br>
+        <p>I hope I could be of some help.</p>
+        <p>Best wishes,<br>Mark</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TAB 7: QUIZ ══ -->
+<section class="tab-section" id="tab-quiz">
+  <div class="card">
+    <h2>Quiz — Test yourself</h2>
+    <p class="sub">Click the correct answer</p>
+
+    <div class="quiz-q" data-correct="2">
+      <div class="q-text">1. In a mediation text, how long should your text roughly be compared to the original?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" data-idx="0">The same length</button>
+        <button class="quiz-opt" data-idx="1">Twice as long</button>
+        <button class="quiz-opt" data-idx="2">About 1/3 of the original</button>
+        <button class="quiz-opt" data-idx="3">Half the original</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-q" data-correct="1">
+      <div class="q-text">2. Which of the following is a NO-GO in mediation?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" data-idx="0">Mentioning the source of the original text</button>
+        <button class="quiz-opt" data-idx="1">Adding your personal opinion</button>
+        <button class="quiz-opt" data-idx="2">Using your own words</button>
+        <button class="quiz-opt" data-idx="3">Adapting the register to the addressee</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-q" data-correct="0">
+      <div class="q-text">3. Which opening is appropriate for a FORMAL letter?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" data-idx="0">Dear Sir or Madam, I am writing to confirm…</button>
+        <button class="quiz-opt" data-idx="1">Hi Jack, This is just a note to…</button>
+        <button class="quiz-opt" data-idx="2">Hey! So I wanted to tell you…</button>
+        <button class="quiz-opt" data-idx="3">Yo, what's up?</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-q" data-correct="3">
+      <div class="q-text">4. When is "Yours faithfully" the correct closing?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" data-idx="0">In an informal e-mail to a friend</button>
+        <button class="quiz-opt" data-idx="1">When you know the person's name (Dear Mr Smith)</button>
+        <button class="quiz-opt" data-idx="2">In a WhatsApp message</button>
+        <button class="quiz-opt" data-idx="3">When you don't know the name (Dear Sir or Madam)</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-q" data-correct="1">
+      <div class="q-text">5. Which is the correct FORMAL equivalent of "I want to book a room"?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" data-idx="0">I wanna get a room</button>
+        <button class="quiz-opt" data-idx="1">I would like to reserve a room</button>
+        <button class="quiz-opt" data-idx="2">Can I have a room?</button>
+        <button class="quiz-opt" data-idx="3">Give me a room please</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-q" data-correct="2">
+      <div class="q-text">6. What must you ALWAYS include when introducing the source in a mediation text?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" data-idx="0">Your personal opinion on the article</button>
+        <button class="quiz-opt" data-idx="1">A word-for-word quote from the original</button>
+        <button class="quiz-opt" data-idx="2">Title, author, source and date</button>
+        <button class="quiz-opt" data-idx="3">The full original text in translation</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-q" data-correct="0">
+      <div class="q-text">7. What is the correct order of the 4 mediation steps?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" data-idx="0">Analyse task → Read original → Prepare → Write</button>
+        <button class="quiz-opt" data-idx="1">Write → Read original → Prepare → Analyse task</button>
+        <button class="quiz-opt" data-idx="2">Read original → Analyse task → Write → Prepare</button>
+        <button class="quiz-opt" data-idx="3">Prepare → Write → Analyse task → Read original</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <div class="quiz-q" data-correct="3">
+      <div class="q-text">8. Which phrase is INFORMAL?</div>
+      <div class="quiz-options">
+        <button class="quiz-opt" data-idx="0">I look forward to meeting you.</button>
+        <button class="quiz-opt" data-idx="1">I am unable to provide you with any definite dates.</button>
+        <button class="quiz-opt" data-idx="2">I would like to confirm my reservation.</button>
+        <button class="quiz-opt" data-idx="3">I'll drop you a line as soon as possible.</button>
+      </div>
+      <div class="quiz-feedback"></div>
+    </div>
+
+    <button class="quiz-reset" id="quizReset">Reset Quiz</button>
+  </div>
+</section>
+
+</div><!-- /content-wrap -->
+
+<script>
+// ── THEME DATA ──
+const darkThemes = [
+  { id:'dunkel',    name:'Dunkel',   bg:'#0c0c0d', d1:'#c8f135', d2:'#555', d3:'#333' },
+  { id:'ozean',     name:'Ozean',    bg:'#050d1a', d1:'#4db8ff', d2:'#3388cc', d3:'#555' },
+  { id:'wald',      name:'Wald',     bg:'#0b110d', d1:'#5ec96a', d2:'#3a8c3f', d3:'#555' },
+  { id:'rose-dark', name:'Rose',     bg:'#1a0a10', d1:'#ff6b9d', d2:'#cc4477', d3:'#555' },
+  { id:'schiefer',  name:'Schiefer', bg:'#10141c', d1:'#7ba7e8', d2:'#4d7ab8', d3:'#555' },
+  { id:'sand-dark', name:'Sand',     bg:'#1c1710', d1:'#e8a020', d2:'#b87c18', d3:'#555' },
+];
+const lightThemes = [
+  { id:'licht',    name:'Licht',    bg:'#f5f3ef', d1:'#1a6b3c', d2:'#888', d3:'#bbb' },
+  { id:'himmel',   name:'Himmel',   bg:'#edf4ff', d1:'#1870e0', d2:'#5599ee', d3:'#aaccff' },
+  { id:'mint',     name:'Mint',     bg:'#edfaf0', d1:'#0d8c3c', d2:'#3aaa5a', d3:'#90e0a8' },
+  { id:'pfirsich', name:'Pfirsich', bg:'#fff5f0', d1:'#e05020', d2:'#ee7755', d3:'#ffbbaa' },
+  { id:'lavendel', name:'Lavendel', bg:'#f5f0ff', d1:'#6c3ce0', d2:'#9966dd', d3:'#ccaaff' },
+  { id:'papier',   name:'Papier',   bg:'#faf7f0', d1:'#8b5e20', d2:'#bb8844', d3:'#eeeeee' },
+];
+const allDark  = darkThemes.map(t=>t.id);
+
+function buildCards(themes, gridId) {
+  const grid = document.getElementById(gridId);
+  themes.forEach(t => {
+    const card = document.createElement('button');
+    card.className = 'theme-card';
+    card.dataset.theme = t.id;
+    card.style.background = t.bg;
+    card.innerHTML = `
+      <div class="theme-card-dots">
+        <div class="theme-card-dot" style="background:${t.d1}"></div>
+        <div class="theme-card-dot" style="background:${t.d2}"></div>
+        <div class="theme-card-dot" style="background:${t.d3}"></div>
+      </div>
+      <div class="theme-card-name" style="color:${t.d1}">${t.name}</div>`;
+    card.addEventListener('click', () => applyTheme(t.id));
+    grid.appendChild(card);
+  });
+}
+buildCards(darkThemes,  'darkGrid');
+buildCards(lightThemes, 'lightGrid');
+
+function applyTheme(id) {
+  document.documentElement.setAttribute('data-theme', id);
+  localStorage.setItem('lernapp-theme', id);
+  updateActiveCard();
+  updateModeButtons(id);
+}
+function updateActiveCard() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  document.querySelectorAll('.theme-card').forEach(c =>
+    c.classList.toggle('active', c.dataset.theme === cur));
+}
+function updateModeButtons(id) {
+  const isDark = allDark.includes(id);
+  document.getElementById('btnDark').classList.toggle('active', isDark);
+  document.getElementById('btnLight').classList.toggle('active', !isDark);
+}
+
+// panel toggle
+const panel = document.getElementById('themePanel');
+document.getElementById('designBtn').addEventListener('click', e => {
+  e.stopPropagation(); panel.classList.toggle('open');
+});
+document.addEventListener('click', () => panel.classList.remove('open'));
+panel.addEventListener('click', e => e.stopPropagation());
+
+// mode buttons
+document.getElementById('btnDark').addEventListener('click', () => applyTheme('dunkel'));
+document.getElementById('btnLight').addEventListener('click', () => applyTheme('licht'));
+
+// load saved
+const saved = localStorage.getItem('lernapp-theme');
+applyTheme(saved && [...darkThemes,...lightThemes].find(t=>t.id===saved) ? saved : 'dunkel');
+
+// ── TABS ──
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// ── ACCORDION ──
+document.querySelectorAll('.acc-header').forEach(h => {
+  h.addEventListener('click', () => h.closest('.acc-item').classList.toggle('open'));
+});
+
+// ── QUIZ ──
+document.querySelectorAll('.quiz-q').forEach(q => {
+  const correct = parseInt(q.dataset.correct);
+  const fb = q.querySelector('.quiz-feedback');
+  q.querySelectorAll('.quiz-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      if (opt.disabled) return;
+      q.querySelectorAll('.quiz-opt').forEach(o => o.disabled = true);
+      const idx = parseInt(opt.dataset.idx);
+      if (idx === correct) {
+        opt.classList.add('correct');
+        fb.textContent = '✓ Correct!';
+        fb.className = 'quiz-feedback show ok';
+      } else {
+        opt.classList.add('wrong');
+        q.querySelectorAll('.quiz-opt')[correct].classList.add('correct');
+        fb.textContent = '✗ Not quite. The correct answer is highlighted.';
+        fb.className = 'quiz-feedback show err';
+      }
+    });
+  });
+});
+document.getElementById('quizReset').addEventListener('click', () => {
+  document.querySelectorAll('.quiz-q').forEach(q => {
+    q.querySelectorAll('.quiz-opt').forEach(o => {
+      o.disabled = false;
+      o.classList.remove('correct', 'wrong');
+    });
+    const fb = q.querySelector('.quiz-feedback');
+    fb.className = 'quiz-feedback'; fb.textContent = '';
+  });
+});
+</script>
+</body>
+</html>
