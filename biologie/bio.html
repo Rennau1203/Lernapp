@@ -1,189 +1,617 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="de" data-mode="dark" data-theme="dunkel">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bio Lernhilfe – Klausur 18.05.2026</title>
- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<title>Biologie – Lernzettel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../design.css">
+<style>
+/* ── INHALTSSPEZIFISCHE STYLES ── */
+.hero{padding:88px 24px 28px;max-width:880px;margin:0 auto}
+.hero-label{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.hero h1{font-family:'Instrument Serif',serif;font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;margin-bottom:12px}
+.hero-sub{color:var(--muted);font-size:.95rem}
+
+.tab-nav{display:flex;gap:6px;flex-wrap:wrap;padding:0 24px 24px;max-width:880px;margin:0 auto}
+.tab-btn{padding:8px 18px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'Syne',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s}
+.tab-btn:hover{background:var(--surface2);color:var(--text)}
+.tab-btn.active{background:var(--accent);color:var(--accent-fg);border-color:transparent}
+
+.content-wrap{max-width:880px;margin:0 auto;padding:0 24px 80px}
+.tab-section{display:none}
+.tab-section.active{display:block}
+
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:16px;cursor:default}
+.card::before{display:none}
+.card h2{font-family:'Instrument Serif',serif;font-size:1.4rem;margin-bottom:6px}
+.card .sub{color:var(--muted);font-size:.85rem;margin-bottom:16px}
+
+/* Lernzettel-Karten-Typen */
+.karte{border-radius:12px;padding:16px 18px;margin-bottom:10px;border:1px solid var(--border)}
+.karte-def{background:rgba(200,241,53,.05);border-color:rgba(200,241,53,.2)}
+.karte-kon{background:var(--surface2);border-color:var(--border)}
+.karte-sch{background:rgba(77,184,255,.04);border-color:rgba(77,184,255,.15)}
+.karte-mer{background:rgba(255,107,157,.05);border-color:rgba(255,107,157,.2)}
+
+.karte-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.karte-def .karte-label{color:var(--accent)}
+.karte-kon .karte-label{color:var(--muted)}
+.karte-sch .karte-label{color:#4db8ff}
+.karte-mer .karte-label{color:#ff6b9d}
+
+.karte-title{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.karte-body{font-size:.83rem;color:var(--muted);line-height:1.65}
+.karte-body strong{color:var(--text)}
+.karte-body ul{padding-left:18px;margin-top:4px}
+.karte-body li{margin-bottom:4px}
+
+/* Detail-Header */
+.detail-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.detail-header-icon{font-size:1.8rem;line-height:1}
+.detail-header h2{font-family:'Instrument Serif',serif;font-size:1.5rem;margin:0}
+
+/* Accordion */
+.accordion{display:flex;flex-direction:column;gap:8px}
+.acc-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.acc-header{width:100%;background:none;border:none;color:var(--text);font-family:'Syne',sans-serif;font-size:.9rem;font-weight:600;display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;text-align:left;transition:background .2s}
+.acc-header:hover{background:var(--surface2)}
+.acc-header .arrow{transition:transform .25s;color:var(--accent);font-size:1.1rem;flex-shrink:0}
+.acc-item.open .acc-header .arrow{transform:rotate(90deg)}
+.acc-body{display:none;padding:0 18px 18px}
+.acc-item.open .acc-body{display:block}
+.acc-body p,.acc-body li{font-size:.85rem;color:var(--muted);line-height:1.65}
+.acc-body ul{padding-left:18px;margin-top:6px}
+.acc-body li{margin-bottom:4px}
+.acc-body strong{color:var(--text)}
+
+/* Step-Liste */
+.step-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.step-item{display:flex;align-items:flex-start;gap:14px;background:var(--surface2);border-radius:10px;padding:14px 16px;border:1px solid var(--border)}
+.step-num{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--accent-fg);font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+.step-body h4{font-size:.9rem;font-weight:700;margin-bottom:3px;color:var(--text)}
+.step-body p{font-size:.82rem;color:var(--muted);line-height:1.5}
+.step-body strong{color:var(--text)}
+
+/* Vergleichs-Grid */
+.vergl-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.vergl-item{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.vergl-item .tag{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.vergl-item p{font-size:.82rem;line-height:1.5;color:var(--text)}
+
+/* Highlight-Box */
+.highlight{background:rgba(200,241,53,.06);border:1px solid rgba(200,241,53,.18);border-radius:10px;padding:14px 16px;margin:12px 0}
+.highlight p{font-size:.85rem;line-height:1.6;color:var(--muted)}
+.highlight strong{color:var(--text)}
+
+/* Tabelle */
+.vergl-table{width:100%;border-collapse:collapse;margin-top:12px}
+.vergl-table th{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.vergl-table td{padding:10px 12px;font-size:.83rem;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text)}
+.vergl-table tr:last-child td{border-bottom:none}
+.vergl-table tr:hover td{background:var(--surface2)}
+.vergl-table .td-label{font-family:'Syne',sans-serif;font-weight:600;font-size:.8rem;color:var(--muted)}
+
+@media(max-width:600px){
+  .hero{padding:80px 16px 20px}
+  .tab-nav{padding:0 16px 20px}
+  .content-wrap{padding:0 16px 60px}
+  .vergl-grid{grid-template-columns:1fr}
+}
+</style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-inner">
-    <div class="header-eyebrow">Klausur · 18.05.2026 · Biologie 11</div>
-    <h1>🧪 Bio Lernhilfe</h1>
-    <p class="header-sub">Enzymatik · Meiose · Embryogenese · Proteinstrukturen</p>
-    <div class="tabs">
-      <button class="tab-btn active" onclick="showSection('plan', this)">📅 Lernplan</button>
-      <button class="tab-btn" onclick="showSection('zettel', this)">📖 Lernzettel</button>
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a class="back-btn" href="../index.html">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Zurück</span>
+    </a>
+    <div class="nav-divider"></div>
+    <span class="nav-fach">Biologie</span>
+  </div>
+  <div class="nav-right">
+    <button class="mode-btn" id="mode-btn" onclick="toggleMode()">🌙</button>
+    <button class="design-btn" onclick="togglePanel()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M7 1v1.5M7 11.5V13M1 7h1.5M11.5 7H13M2.93 2.93l1.06 1.06M10.01 10.01l1.06 1.06M2.93 11.07l1.06-1.06M10.01 3.99l1.06-1.06" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span>Design</span>
+    </button>
+  </div>
+</nav>
+
+<!-- DESIGN PANEL -->
+<div id="design-panel">
+  <div>
+    <div class="p-title">Dunkle Themes</div>
+    <div class="theme-grid">
+      <button class="theme-btn active" data-theme="dunkel" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#c8f135"></span><span style="background:#444"></span><span style="background:#111"></span></div>Dunkel</button>
+      <button class="theme-btn" data-theme="ozean" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#4db8ff"></span><span style="background:#1a5a99"></span><span style="background:#050d1a"></span></div>Ozean</button>
+      <button class="theme-btn" data-theme="wald" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#5ec96a"></span><span style="background:#2a7030"></span><span style="background:#0b110d"></span></div>Wald</button>
+      <button class="theme-btn" data-theme="rose" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#ff6b9d"></span><span style="background:#aa2050"></span><span style="background:#1a0a10"></span></div>Rose</button>
+      <button class="theme-btn" data-theme="schiefer" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#7ba7e8"></span><span style="background:#3a6099"></span><span style="background:#10141c"></span></div>Schiefer</button>
+      <button class="theme-btn" data-theme="sand" data-mode="dark" onclick="setTheme(this)"><div class="tdots"><span style="background:#e8a020"></span><span style="background:#8a6010"></span><span style="background:#1c1710"></span></div>Sand</button>
+    </div>
+  </div>
+  <div>
+    <div class="p-title">Helle Themes</div>
+    <div class="theme-grid">
+      <button class="theme-btn" data-theme="dunkel" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#6a7a00"></span><span style="background:#999"></span><span style="background:#ddd;border:1px solid #ccc"></span></div>Licht</button>
+      <button class="theme-btn" data-theme="himmel" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#1870e0"></span><span style="background:#7aade8"></span><span style="background:#ddeeff;border:1px solid #cce"></span></div>Himmel</button>
+      <button class="theme-btn" data-theme="mint" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#0d8c3c"></span><span style="background:#6ec98a"></span><span style="background:#d8f5e0;border:1px solid #bde"></span></div>Mint</button>
+      <button class="theme-btn" data-theme="pfirsich" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#e05020"></span><span style="background:#e89070"></span><span style="background:#ffe8e0;border:1px solid #fdd"></span></div>Pfirsich</button>
+      <button class="theme-btn" data-theme="lavendel" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#6c3ce0"></span><span style="background:#aa88e8"></span><span style="background:#ece4ff;border:1px solid #ddf"></span></div>Lavendel</button>
+      <button class="theme-btn" data-theme="sand" data-mode="light" onclick="setTheme(this)"><div class="tdots"><span style="background:#8b5e20"></span><span style="background:#c09850"></span><span style="background:#faf7f0;border:1px solid #e8e0d0"></span></div>Papier</button>
     </div>
   </div>
 </div>
 
-<div class="main">
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-label">Biologie · Klausurvorbereitung</div>
+  <h1>Enzyme, Meiose &amp; Embryogenese</h1>
+  <p class="hero-sub">Proteinaufbau, Enzymwirkung, Kinetik, Hemmung, Meiose und Embryonalentwicklung</p>
+</header>
 
-  <!-- ===== LERNPLAN ===== -->
-  <div id="section-plan" class="section active">
-    <p class="plan-intro">Klausur morgen — hier ist dein optimierter Zeitplan für Sonntag, 18.05.:</p>
-
-    <div class="plan-block" style="border-color: #4ade8040; border-left: 4px solid #4ade80;">
-      <div class="plan-block-inner">
-        <div class="plan-icon">🔬</div>
-        <div>
-          <div class="plan-meta">
-            <span class="plan-tag" style="background:#4ade8020; color:#4ade80;">Früh morgen</span>
-            <span class="plan-date">So, 18.05. · 07:00 – 08:30 Uhr</span>
-          </div>
-          <div class="plan-title">Proteinstruktur + Enzymwirkung</div>
-          <ul class="plan-tasks">
-            <li>4 Proteinstrukturen erklären: Primär, Sekundär, Tertiär, Quartär</li>
-            <li>Schlüssel-Schloss-Prinzip vs. Induced-Fit-Modell</li>
-            <li>Aktives Zentrum, Substrat, Enzym-Substrat-Komplex, Produkt</li>
-            <li>7 Enzymklassen kurz aufzählen</li>
-            <li>Cofaktoren: Apoenzym + Cofaktor = Holoenzym</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="plan-block" style="border-color: #38bdf840; border-left: 4px solid #38bdf8;">
-      <div class="plan-block-inner">
-        <div class="plan-icon">📈</div>
-        <div>
-          <div class="plan-meta">
-            <span class="plan-tag" style="background:#38bdf820; color:#38bdf8;">Vormittag</span>
-            <span class="plan-date">So, 18.05. · 08:30 – 09:30 Uhr</span>
-          </div>
-          <div class="plan-title">Enzymkinetik & Abhängigkeiten</div>
-          <ul class="plan-tasks">
-            <li>KM-Wert-Definition auswendig: Substratkonzentration bei ½ Vmax</li>
-            <li>Niedriger KM = hohe Affinität / Hoher KM = niedrige Affinität</li>
-            <li>RGT-Regel: +10°C → Reaktionsgeschwindigkeit ×2–3</li>
-            <li>pH-Optima kennen: Pepsin pH 2, Amylase pH 7, Trypsin pH 8–9</li>
-            <li>Denaturierung erklären: Was passiert mit aktivem Zentrum?</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="plan-block" style="border-color: #f472b640; border-left: 4px solid #f472b6;">
-      <div class="plan-block-inner">
-        <div class="plan-icon">🚫</div>
-        <div>
-          <div class="plan-meta">
-            <span class="plan-tag" style="background:#f472b620; color:#f472b6;">Mittag</span>
-            <span class="plan-date">So, 18.05. · 09:30 – 10:30 Uhr</span>
-          </div>
-          <div class="plan-title">Enzymhemmung</div>
-          <ul class="plan-tasks">
-            <li>Kompetitiv: Inhibitor am aktiven Zentrum → überwindbar mit mehr Substrat</li>
-            <li>Allosterisch: Inhibitor seitlich → verformt Zentrum → nicht überwindbar</li>
-            <li>KM und Vmax-Veränderungen bei beiden Hemmtypen</li>
-            <li>Beispiele: Orlistat (kompetitiv), Aspirin (irreversibel)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="plan-block" style="border-color: #a78bfa40; border-left: 4px solid #a78bfa;">
-      <div class="plan-block-inner">
-        <div class="plan-icon">🧬</div>
-        <div>
-          <div class="plan-meta">
-            <span class="plan-tag" style="background:#a78bfa20; color:#a78bfa;">Nachmittag</span>
-            <span class="plan-date">So, 18.05. · 10:30 – 12:00 Uhr</span>
-          </div>
-          <div class="plan-title">Meiose & genetische Vielfalt</div>
-          <ul class="plan-tasks">
-            <li>Diploid vs. Haploid sicher erklären können</li>
-            <li>Meiose I: alle 4 Phasen mit Beschreibung (Prophase I mit Crossing-over!)</li>
-            <li>Meiose II: alle 4 Phasen (wie Mitose, aber haploid)</li>
-            <li>Mitose vs. Meiose Unterschiede tabellieren</li>
-            <li>Intrachromosomal (Crossing-over) vs. interchromosomal unterscheiden</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="plan-block" style="border-color: #fb923c40; border-left: 4px solid #fb923c;">
-      <div class="plan-block-inner">
-        <div class="plan-icon">🤰</div>
-        <div>
-          <div class="plan-meta">
-            <span class="plan-tag" style="background:#fb923c20; color:#fb923c;">Kurz vor Klausur</span>
-            <span class="plan-date">So, 18.05. · 12:00 – 13:00 Uhr</span>
-          </div>
-          <div class="plan-title">Embryogenese – Schnelldurchlauf</div>
-          <ul class="plan-tasks">
-            <li>Morula → Blastozyste → Gastrula in Reihenfolge + Zeitangaben</li>
-            <li>3 Keimblätter der Gastrula und was daraus entsteht</li>
-            <li>Embryo vs. Fetus (ab Woche 9)</li>
-            <li>Steuerung: Hormone, Differenzierung, Plazenta</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="plan-tip">
-      ✅ <strong>Vollständige Klausurthemen gecheckt:</strong> Proteinstruktur, Enzymwirkung, Enzymkinetik (KM-Wert), Temperatur/pH-Abhängigkeit, RGT-Regel, Kompetitive + Allosterische Hemmung, Meiose I+II, genetische Vielfalt, Mitose/Meiose-Vergleich, Embryogenese (Morula/Blastula/Gastrula, Embryo/Fetus). Alle Themen vom Tafel-Foto sind abgedeckt! 🎯
-    </div>
-  </div>
-
-  <!-- ===== LERNZETTEL ÜBERSICHT ===== -->
-  <div id="section-zettel" class="section">
-    <div id="zettel-grid-view">
-      <p class="zettel-intro">Wähle ein Thema:</p>
-      <div class="zettel-grid">
-        <button class="zettel-card-btn" style="border-color: #22c55e50;" onclick="showZettel('protein')">
-          <div class="zettel-icon">🧱</div>
-          <div class="zettel-name">Proteinstruktur</div>
-          <div class="zettel-dot-row"><div class="zettel-dot" style="background:#22c55e"></div><span class="zettel-count">Primär bis Quartär</span></div>
-        </button>
-        <button class="zettel-card-btn" style="border-color: #4ade8050;" onclick="showZettel('wirkung')">
-          <div class="zettel-icon">🔑</div>
-          <div class="zettel-name">Wirkung von Enzymen</div>
-          <div class="zettel-dot-row"><div class="zettel-dot" style="background:#4ade80"></div><span class="zettel-count">Modelle & Klassen</span></div>
-        </button>
-        <button class="zettel-card-btn" style="border-color: #38bdf850;" onclick="showZettel('kinetik')">
-          <div class="zettel-icon">📊</div>
-          <div class="zettel-name">Enzymkinetik & KM-Wert</div>
-          <div class="zettel-dot-row"><div class="zettel-dot" style="background:#38bdf8"></div><span class="zettel-count">Michaelis-Menten</span></div>
-        </button>
-        <button class="zettel-card-btn" style="border-color: #fbbf2450;" onclick="showZettel('abhaengigkeit')">
-          <div class="zettel-icon">🌡️</div>
-          <div class="zettel-name">Abhängigkeit von Enzymen</div>
-          <div class="zettel-dot-row"><div class="zettel-dot" style="background:#fbbf24"></div><span class="zettel-count">Temperatur & pH mit Grafiken</span></div>
-        </button>
-        <button class="zettel-card-btn" style="border-color: #f472b650;" onclick="showZettel('hemmung')">
-          <div class="zettel-icon">🚫</div>
-          <div class="zettel-name">Enzymhemmung</div>
-          <div class="zettel-dot-row"><div class="zettel-dot" style="background:#f472b6"></div><span class="zettel-count">Kompetitiv & Allosterisch</span></div>
-        </button>
-        <button class="zettel-card-btn" style="border-color: #a78bfa50;" onclick="showZettel('meiose')">
-          <div class="zettel-icon">🧬</div>
-          <div class="zettel-name">Meiose & genetische Vielfalt</div>
-          <div class="zettel-dot-row"><div class="zettel-dot" style="background:#a78bfa"></div><span class="zettel-count">Phasen mit Bildern</span></div>
-        </button>
-        <button class="zettel-card-btn" style="border-color: #fb923c50;" onclick="showZettel('embryo')">
-          <div class="zettel-icon">🤰</div>
-          <div class="zettel-name">Embryogenese</div>
-          <div class="zettel-dot-row"><div class="zettel-dot" style="background:#fb923c"></div><span class="zettel-count">Morula–Gastrula–Fetus</span></div>
-        </button>
-      </div>
-    </div>
-
-    <!-- ===== DETAIL VIEWS ===== -->
-    <div id="zettel-detail" style="display:none;">
-      <button class="detail-back" onclick="hideZettel()">← Zurück zur Übersicht</button>
-      <div id="zettel-content"></div>
-    </div>
-  </div>
-
+<!-- TAB NAV -->
+<div class="tab-nav">
+  <button class="tab-btn active" data-tab="proteine">Proteine &amp; Enzyme</button>
+  <button class="tab-btn" data-tab="wirkung">Enzymwirkung</button>
+  <button class="tab-btn" data-tab="kinetik">Kinetik &amp; KM-Wert</button>
+  <button class="tab-btn" data-tab="abhaengigkeit">Abhängigkeit</button>
+  <button class="tab-btn" data-tab="hemmung">Hemmung</button>
+  <button class="tab-btn" data-tab="meiose">Meiose</button>
+  <button class="tab-btn" data-tab="embryo">Embryogenese</button>
 </div>
 
- <script src="../design.js"></script>
+<div class="content-wrap">
 
+<!-- TAB 1: PROTEINE -->
+<section class="tab-section active" id="tab-proteine">
+  <div class="card">
+    <div class="detail-header">
+      <span class="detail-header-icon">🧱</span>
+      <h2>Aufbau von Proteinen &amp; Enzymen</h2>
+    </div>
+
+    <div class="karte karte-def">
+      <div class="karte-label">Definition</div>
+      <div class="karte-title">Was sind Proteine?</div>
+      <div class="karte-body">Proteine (Eiweiße) sind Makromoleküle aus Aminosäuren, die durch Peptidbindungen verknüpft sind. Enzyme sind spezielle Proteine mit katalytischer Funktion. Es gibt <strong>20 verschiedene Aminosäuren</strong>.</div>
+    </div>
+
+    <div class="karte karte-kon">
+      <div class="karte-label">Konzept</div>
+      <div class="karte-title">Aminosäure – Grundaufbau</div>
+      <div class="karte-body">Jede Aminosäure hat: ein zentrales <strong>Kohlenstoffatom (C)</strong>, eine <strong>Aminogruppe (–NH₂)</strong>, eine <strong>Carboxylgruppe (–COOH)</strong> und eine variable <strong>Seitenkette (Rest R)</strong>, die die Aminosäure einzigartig macht.</div>
+    </div>
+
+    <div class="karte karte-kon">
+      <div class="karte-label">Konzept</div>
+      <div class="karte-title">Peptidbindung (Kondensation)</div>
+      <div class="karte-body">Zwei Aminosäuren verbinden sich durch Abspaltung von Wasser (H₂O) → es entsteht eine <strong>Peptidbindung</strong>.<br><br>• &lt;10 AS = Oligopeptid<br>• &gt;10 AS = Polypeptid<br>• &gt;100 AS = Protein</div>
+    </div>
+
+    <div class="accordion" style="margin-top:16px">
+      <div class="acc-item open">
+        <button class="acc-header">1️⃣ Primärstruktur <span class="arrow">▶</span></button>
+        <div class="acc-body"><p>Die <strong>Aminosäuresequenz</strong> – die genaue Reihenfolge der Aminosäuren in der Polypeptidkette. Diese Sequenz bestimmt alle weiteren Strukturen.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">2️⃣ Sekundärstruktur <span class="arrow">▶</span></button>
+        <div class="acc-body"><p>Lokale, regelmäßige Faltung durch <strong>Wasserstoffbrücken</strong> innerhalb der Kette:</p><ul><li><strong>α-Helix:</strong> schraubenförmige Anordnung</li><li><strong>β-Faltblatt:</strong> Zick-Zack-Struktur, mehrere Kettenstücke parallel</li></ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">3️⃣ Tertiärstruktur <span class="arrow">▶</span></button>
+        <div class="acc-body"><p>Die <strong>dreidimensionale Raumstruktur</strong> der Polypeptidkette. Entsteht durch Wechselwirkungen der Seitenketten:</p><ul><li>Wasserstoffbrücken, Van-der-Waals-Kräfte, Ionenbindungen</li><li><strong>Disulfidbrücken</strong> (kovalent, zwischen zwei Cystein-Resten)</li><li>→ Hier liegt das <strong>aktive Zentrum</strong> des Enzyms!</li></ul></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">4️⃣ Quartärstruktur <span class="arrow">▶</span></button>
+        <div class="acc-body"><p>Entsteht, wenn <strong>mehrere Polypeptidketten</strong> (Untereinheiten) zu einem Gesamtprotein zusammentreten.<br>Beispiel: <strong>Hämoglobin</strong> = 4 Polypeptidketten (2 α- + 2 β-Ketten).</p></div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:16px">
+      <p><strong>Merksatz:</strong> Primär = Sequenz → Sekundär = lokale Faltung (Helix/Faltblatt) → Tertiär = 3D-Gesamtform (aktives Zentrum!) → Quartär = mehrere Ketten zusammen.<br><br><strong>Denaturierung</strong> zerstört die Tertiär- und Sekundärstruktur → aktives Zentrum verformt sich → Enzym inaktiv!</p>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 2: WIRKUNG -->
+<section class="tab-section" id="tab-wirkung">
+  <div class="card">
+    <div class="detail-header">
+      <span class="detail-header-icon">🔑</span>
+      <h2>Wirkung von Enzymen</h2>
+    </div>
+
+    <div class="karte karte-def">
+      <div class="karte-label">Definition</div>
+      <div class="karte-title">Was sind Enzyme?</div>
+      <div class="karte-body">Enzyme sind biologische Katalysatoren (Proteine). Sie <strong>senken die Aktivierungsenergie</strong> einer Reaktion, werden dabei nicht verbraucht und gehen unverändert aus der Reaktion hervor.</div>
+    </div>
+
+    <div class="vergl-grid">
+      <div class="vergl-item">
+        <div class="tag">Schlüssel-Schloss-Prinzip</div>
+        <p>Substrat passt genau in das aktive Zentrum wie ein Schlüssel ins Schloss → starre Struktur. Nur ein Substrat passt. <strong>Veraltet – vereinfacht!</strong></p>
+      </div>
+      <div class="vergl-item">
+        <div class="tag">Induced-Fit-Modell (realistisch)</div>
+        <p>Das aktive Zentrum <strong>verändert seine Form</strong> beim Kontakt mit dem Substrat (induzierte Anpassung). Flexibler, erklärt Substratspezifität besser.</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px;padding:0;background:transparent;border:none">
+      <h2 style="font-size:1rem;margin-bottom:12px;color:var(--text)">Reaktionsablauf</h2>
+      <ul class="step-list">
+        <li class="step-item"><div class="step-num">1</div><div class="step-body"><h4>Substrat nähert sich</h4><p>Substrat nähert sich dem aktiven Zentrum des Enzyms.</p></div></li>
+        <li class="step-item"><div class="step-num">2</div><div class="step-body"><h4>Enzym-Substrat-Komplex</h4><p>Komplex bildet sich (Induced Fit) – aktives Zentrum passt sich an.</p></div></li>
+        <li class="step-item"><div class="step-num">3</div><div class="step-body"><h4>Katalyse</h4><p>Im aktiven Zentrum wird das Substrat katalysiert – Aktivierungsenergie gesenkt.</p></div></li>
+        <li class="step-item"><div class="step-num">4</div><div class="step-body"><h4>Produkt wird freigegeben</h4><p>Enzym liegt unverändert vor → neuer Zyklus kann beginnen.</p></div></li>
+      </ul>
+    </div>
+
+    <div class="karte karte-sch" style="margin-top:16px">
+      <div class="karte-label">Schulwissen</div>
+      <div class="karte-title">7 Enzymklassen</div>
+      <div class="karte-body">
+        <ul>
+          <li><strong>1. Oxidoreduktasen</strong> → Oxidation/Reduktion (Zellatmung)</li>
+          <li><strong>2. Transferasen</strong> → Gruppenübertragung (Stoffwechsel)</li>
+          <li><strong>3. Hydrolasen</strong> → Spaltung durch Wasser (Verdauung: Amylase, Trypsin)</li>
+          <li><strong>4. Lyasen</strong> → Spaltung ohne Wasser oder Oxidation</li>
+          <li><strong>5. Isomerasen</strong> → strukturelle Umlagerung (Isomere bilden)</li>
+          <li><strong>6. Ligasen</strong> → Verknüpfung unter ATP-Verbrauch (DNA-Replikation)</li>
+          <li><strong>7. Translobasen</strong> → Transport von Ionen/Molekülen durch Membranen</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <p>Apoenzym + Cofaktor = <strong>Holoenzym</strong> (aktives Enzym).<br>Cofaktoren = Metallionen (Zn²⁺, Mg²⁺, Fe²⁺) oder Coenzyme (NAD, ATP).<br>Coenzyme = nicht fest gebunden. Prosthetische Gruppen = kovalent gebunden.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 3: KINETIK -->
+<section class="tab-section" id="tab-kinetik">
+  <div class="card">
+    <div class="detail-header">
+      <span class="detail-header-icon">📊</span>
+      <h2>Enzymkinetik &amp; KM-Wert</h2>
+    </div>
+
+    <div class="karte karte-def">
+      <div class="karte-label">Definition</div>
+      <div class="karte-title">Michaelis-Menten-Konstante (KM)</div>
+      <div class="karte-body">Der <strong>KM-Wert</strong> ist die Substratkonzentration, bei der die Reaktionsgeschwindigkeit genau <strong>½ Vmax</strong> (die Hälfte der maximalen Geschwindigkeit) beträgt.</div>
+    </div>
+
+    <div class="vergl-grid">
+      <div class="vergl-item">
+        <div class="tag">Niedriger KM-Wert</div>
+        <p>→ hohe Bindungsaffinität → Enzym arbeitet effizient, braucht <strong>wenig Substrat</strong></p>
+      </div>
+      <div class="vergl-item">
+        <div class="tag">Hoher KM-Wert</div>
+        <p>→ niedrige Bindungsaffinität → Enzym braucht <strong>viel Substrat</strong></p>
+      </div>
+    </div>
+
+    <div class="karte karte-kon" style="margin-top:12px">
+      <div class="karte-label">Konzept</div>
+      <div class="karte-title">Vmax &amp; Sättigung</div>
+      <div class="karte-body"><strong>Vmax</strong> (Maximalgeschwindigkeit) ist erreicht, wenn <strong>alle Enzyme mit Substraten besetzt</strong> sind. Mehr Substrat bringt dann nichts mehr → Sättigungsgrenze.</div>
+    </div>
+
+    <div class="karte karte-kon">
+      <div class="karte-label">Konzept</div>
+      <div class="karte-title">Wechselzahl (kcat)</div>
+      <div class="karte-body">Anzahl der Substratmoleküle, die ein Enzym <strong>pro Zeit</strong> (bei Sättigung) umsetzen kann. Je höher, desto effizienter das Enzym.</div>
+    </div>
+
+    <div class="highlight">
+      <p>🏪 <strong>Supermarkt-Modell:</strong> Kassen = Enzyme, Kunden = Substrat, bezahlte Kunden = Produkt.<br>
+      • Bei halbbesetzten Kassen = KM-Wert (halbmaximale Geschwindigkeit)<br>
+      • Alle Kassen voll = Vmax<br>
+      • Mehr Kunden bringen nichts, wenn alle Kassen voll sind!</p>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 4: ABHÄNGIGKEIT -->
+<section class="tab-section" id="tab-abhaengigkeit">
+  <div class="card">
+    <div class="detail-header">
+      <span class="detail-header-icon">🌡️</span>
+      <h2>Abhängigkeit von Enzymen</h2>
+    </div>
+
+    <div class="karte karte-def">
+      <div class="karte-label">Definition</div>
+      <div class="karte-title">RGT-Regel</div>
+      <div class="karte-body">Bei einer Temperaturerhöhung um <strong>10°C (10 Kelvin)</strong> verdoppelt bis verdreifacht sich die Reaktionsgeschwindigkeit – aber <strong>nur bis zum Temperaturoptimum</strong>!</div>
+    </div>
+
+    <div class="accordion">
+      <div class="acc-item open">
+        <button class="acc-header">pH-Diagramm erklären <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <p><strong>y-Achse:</strong> Reaktionsgeschwindigkeit | <strong>x-Achse:</strong> pH-Wert (1–14)</p>
+          <ul>
+            <li><strong>Pepsin</strong> (Magen): startet unter pH 1, Optimum bei <strong>pH ~2</strong>, bei pH 4 nicht mehr aktiv</li>
+            <li><strong>Amylase</strong> (Mundspeichel): Optimum bei <strong>pH ~7</strong>, größere Spannbreite</li>
+            <li><strong>Trypsin</strong> (Darm): beginnt ca. pH 3,5, Optimum bei <strong>pH 8–9</strong>, breiteste Spannbreite</li>
+          </ul>
+          <p style="margin-top:8px">→ Jedes Enzym hat sein spezifisches pH-Optimum.</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Temperatur-Diagramm erklären <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <p><strong>y-Achse links:</strong> Reaktionsgeschwindigkeit | <strong>y-Achse rechts:</strong> Stabilität | <strong>x-Achse:</strong> Temperatur (°C)</p>
+          <ul>
+            <li><strong>Rote Kurve</strong> (theoretisch): würde bei steigender Temperatur immer steigen → erklärt RGT-Regel</li>
+            <li><strong>Grüne Kurve</strong> (Stabilität): stabil bei 0–25°C, sinkt dann stark ab → Denaturierung</li>
+            <li><strong>Blaue Kurve</strong> (reale Aktivität): steigt bis ca. <strong>37°C (Optimum)</strong>, fällt dann auf 0 → Denaturierung überwiegt</li>
+          </ul>
+          <p style="margin-top:8px">→ Optimum beim Menschen: ca. 37°C (Körpertemperatur)</p>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Denaturierung <span class="arrow">▶</span></button>
+        <div class="acc-body"><p>Bei zu hoher Temperatur oder extremem pH-Wert werden die Bindungen der <strong>Tertiärstruktur</strong> zerstört (Disulfidbrücken, Wasserstoffbrücken). Das aktive Zentrum verformt sich → kein Substrat kann mehr binden → Enzym inaktiv. Oft <strong>irreversibel</strong>.</p></div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:12px">
+      <p><strong>Diagramm beschreiben:</strong> IMMER x-Achse und y-Achse nennen! Dann: „steigend" → Optimum (konkrete Werte!) → „fallend". Dann <strong>Deutung</strong>: Warum so? → RGT-Regel / Denaturierung!</p>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 5: HEMMUNG -->
+<section class="tab-section" id="tab-hemmung">
+  <div class="card">
+    <div class="detail-header">
+      <span class="detail-header-icon">🚫</span>
+      <h2>Enzymhemmung</h2>
+    </div>
+
+    <div class="vergl-grid">
+      <div class="vergl-item">
+        <div class="tag">Kompetitive Hemmung</div>
+        <p>Inhibitor bindet am <strong>aktiven Zentrum</strong>. Ähnelt dem Substrat. <strong>Überwindbar</strong> mit mehr Substrat. KM steigt, <strong>Vmax bleibt gleich</strong>.</p>
+      </div>
+      <div class="vergl-item">
+        <div class="tag">Allosterische Hemmung</div>
+        <p>Inhibitor bindet am <strong>allosterischen Zentrum</strong>. Ähnelt dem Substrat NICHT. <strong>Nicht überwindbar</strong>. Vmax sinkt, KM bleibt gleich.</p>
+      </div>
+    </div>
+
+    <div class="accordion" style="margin-top:16px">
+      <div class="acc-item open">
+        <button class="acc-header">Kompetitive Hemmung – Details <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <ul>
+            <li>Bindungsort: <strong>aktives Zentrum</strong></li>
+            <li>Inhibitor ähnelt dem Substrat (chemisch/räumlich)</li>
+            <li><strong>Überwindbar:</strong> mit mehr Substrat kann Inhibitor verdrängt werden</li>
+            <li>KM steigt (mehr Substrat nötig), <strong>Vmax bleibt gleich</strong></li>
+            <li>Beispiel: <strong>Orlistat</strong> hemmt Pankreaslipase → Fett wird nicht gespalten → wird ausgeschieden</li>
+          </ul>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Allosterische Hemmung – Details <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <ul>
+            <li>Bindungsort: <strong>allosterisches (seitliches) Zentrum</strong></li>
+            <li>Inhibitor ähnelt dem Substrat NICHT</li>
+            <li><strong>NICHT überwindbar:</strong> mehr Substrat hilft nicht</li>
+            <li>Vmax sinkt, KM bleibt unverändert</li>
+            <li>Vorkommen: Regulation von Stoffwechselwegen (z.B. Glykolyse, ATP-Produktion)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Irreversible Hemmung (Sonderfall) <span class="arrow">▶</span></button>
+        <div class="acc-body"><p>Inhibitor bindet <strong>dauerhaft</strong> ans aktive Zentrum → Enzym permanent inaktiv.<br>Beispiel: <strong>Aspirin (ASS)</strong> hemmt COX-Enzym irreversibel → kein Prostaglandin → weniger Schmerz. Aspirin wirkt zudem blutverdünnend.</p></div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:12px">
+      <p><strong>Vergleich:</strong><br>
+      Kompetitiv = Konkurrenz am <strong>GLEICHEN Ort</strong> (überwindbar mit mehr Substrat).<br>
+      Allosterisch = Bindung <strong>WOANDERS</strong> (unüberwindbar, verformt Zentrum).<br><br>
+      Merkhilfe: <strong>Kompetitiv = Konkurrenz. Allosterisch = Anders.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 6: MEIOSE -->
+<section class="tab-section" id="tab-meiose">
+  <div class="card">
+    <div class="detail-header">
+      <span class="detail-header-icon">🧬</span>
+      <h2>Meiose &amp; genetische Vielfalt</h2>
+    </div>
+
+    <div class="karte karte-def">
+      <div class="karte-label">Definition</div>
+      <div class="karte-title">Diploid vs. Haploid</div>
+      <div class="karte-body">
+        <strong>Diploid (2n)</strong> = doppelter Chromosomensatz. Körperzellen des Menschen: 2n = 46 Chromosomen (= 23 Paare).<br><br>
+        <strong>Haploid (n)</strong> = einfacher Chromosomensatz. Keimzellen: n = 23 Chromosomen.<br><br>
+        → Durch Befruchtung entsteht wieder eine diploide Zygote: n + n = 2n = 46.
+      </div>
+    </div>
+
+    <div class="karte karte-def">
+      <div class="karte-label">Definition</div>
+      <div class="karte-title">Meiose – Überblick</div>
+      <div class="karte-body">Meiose = Reifeteilung. Findet nur in <strong>Keimzellen (Gonaden)</strong> statt. Aus einer diploiden Zelle (2n = 46) entstehen <strong>4 haploide Zellen</strong> (n = 23). Ziel: Gameten für die Fortpflanzung.</div>
+    </div>
+
+    <div class="accordion">
+      <div class="acc-item open">
+        <button class="acc-header">Meiose I – Die Reduktionsteilung <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <ul>
+            <li><strong>Interphase:</strong> DNA verdoppelt sich (jetzt 4n)</li>
+            <li><strong>Prophase I:</strong> Chromosomen spiralisieren, <strong>CROSSING-OVER</strong> findet statt (DNA-Austausch!), Kernhülle löst sich auf</li>
+            <li><strong>Metaphase I:</strong> Tetraden ordnen sich auf der <strong>Äquatorialplatte</strong> an, Spindelapparat bildet sich</li>
+            <li><strong>Anaphase I:</strong> Spindelfasern trennen <strong>homologe Chromosomen</strong> (ohne Centromere zu trennen!)</li>
+            <li><strong>Telophase I:</strong> Zelle teilt sich → 2 Tochterzellen mit je 23 Chromosomen (haploid, aber noch Doppel-Chromatiden!)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Meiose II – Wie eine Mitose (aber haploid!) <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <ul>
+            <li><strong>Prophase II:</strong> Weitere Zellteilung wird eingeleitet, Kernmembran löst sich auf</li>
+            <li><strong>Metaphase II:</strong> Chromosomen ordnen sich an Äquatorialplatte an, um Chromatiden zu trennen</li>
+            <li><strong>Anaphase II:</strong> Chromatiden werden an die Pole gezogen</li>
+            <li><strong>Telophase II:</strong> Zelle fertig geteilt → <strong>4 haploide Zellen</strong> (n=23, einzelne Chromatiden)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-header">Genetische Vielfalt – Wie entsteht sie? <span class="arrow">▶</span></button>
+        <div class="acc-body">
+          <ul>
+            <li><strong>1. Crossing-over</strong> (intrachromosomal): DNA-Austausch in <strong>Prophase I</strong> → neue Genkombinationen</li>
+            <li><strong>2. Interchromosomale Rekombination:</strong> zufällige Verteilung ganzer Chromosomen in <strong>Metaphase I</strong></li>
+            <li><strong>3. Zufällige Befruchtung:</strong> welches Spermium welche Eizelle befruchtet ist zufällig</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <table class="vergl-table" style="margin-top:16px">
+      <thead>
+        <tr>
+          <th></th>
+          <th style="color:#5ec96a">Mitose</th>
+          <th style="color:#a87fff">Meiose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-label">Teilungen</td><td>1</td><td>2 (I + II)</td></tr>
+        <tr><td class="td-label">Tochterzellen</td><td>2</td><td>4</td></tr>
+        <tr><td class="td-label">Chromosomensatz</td><td>diploid (2n)</td><td>haploid (n)</td></tr>
+        <tr><td class="td-label">Identisch?</td><td>Ja</td><td>Nein (genetisch verschieden)</td></tr>
+        <tr><td class="td-label">Crossing-over?</td><td>Nein</td><td>Ja (Prophase I)</td></tr>
+        <tr><td class="td-label">Wo?</td><td>Alle Körperzellen</td><td>Nur Keimzellen (Gonaden)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="highlight" style="margin-top:16px">
+      <p><strong>Wichtige Begriffe:</strong><br>
+      • Autosome (44) + Gonosome (2) = 46 Chromosomen<br>
+      • Crossing-over = Austausch von DNA-Abschnitten (Chiasma = Kreuzungspunkt)<br>
+      • Zygote = Verschmelzung ♂+♀ Zelle → diploid<br>
+      • Oogonese = Eizellbildung, Spermatogenese = Spermienbildung</p>
+    </div>
+  </div>
+</section>
+
+<!-- TAB 7: EMBRYO -->
+<section class="tab-section" id="tab-embryo">
+  <div class="card">
+    <div class="detail-header">
+      <span class="detail-header-icon">🤰</span>
+      <h2>Embryogenese des Menschen</h2>
+    </div>
+
+    <div class="karte karte-def">
+      <div class="karte-label">Definition</div>
+      <div class="karte-title">Embryonalentwicklung – Überblick</div>
+      <div class="karte-body">Nach der Befruchtung entwickelt sich die Zygote über mehrere Stadien zum Embryo und schließlich zum Fetus. Gesteuert durch Hormone und genetische Programme.</div>
+    </div>
+
+    <div class="card" style="background:transparent;border:none;padding:0;margin-top:16px">
+      <h2 style="font-size:1rem;margin-bottom:12px;color:var(--text)">Entwicklungsstadien – Reihenfolge (Auswendig!)</h2>
+      <ul class="step-list">
+        <li class="step-item"><div class="step-num" style="font-size:.65rem">0h</div><div class="step-body"><h4>Zygote</h4><p>Vorkernstadium – diploide Zelle nach der Befruchtung.</p></div></li>
+        <li class="step-item"><div class="step-num" style="font-size:.65rem">72h</div><div class="step-body"><h4>Morula</h4><p>16-Zell-Stadium → kompakte Zellkugel, ca. 0,1 mm. Vorher: 2-, 4-, 8-Zell-Stadium.</p></div></li>
+        <li class="step-item"><div class="step-num" style="font-size:.65rem">5–6d</div><div class="step-body"><h4>Blastozyste</h4><p>Hohle Zellkugel mit Differenzierung des Zellmaterials.</p></div></li>
+        <li class="step-item"><div class="step-num" style="font-size:.65rem">2–3W</div><div class="step-body"><h4>Implantation</h4><p>Blastozyste wandert über Eileiter → <strong>Einnistung</strong> in Gebärmutter → Schwangerschaft beginnt, Hormone werden gebildet.</p></div></li>
+        <li class="step-item"><div class="step-num" style="font-size:.65rem">4–5W</div><div class="step-body"><h4>Gastrula</h4><p>GASTRULATION → <strong>3 Keimblätter</strong>, wichtige Organe beginnen Entwicklung (Herz, Gehirn, Wirbelsäule).</p></div></li>
+        <li class="step-item"><div class="step-num" style="font-size:.65rem">ab W9</div><div class="step-body"><h4>Fetus</h4><p>Alle Organe angelegt. Ab Woche 9 heißt das Kind Fetus (nicht mehr Embryo).</p></div></li>
+      </ul>
+    </div>
+
+    <div class="karte karte-sch" style="margin-top:16px">
+      <div class="karte-label">Schulwissen</div>
+      <div class="karte-title">GASTRULA – 3 Keimblätter (sehr wichtig!)</div>
+      <div class="karte-body">
+        <ul>
+          <li><strong>Ektoderm</strong> (außen) → Haut, Nervensystem, Sinnesorgane, Gehirn</li>
+          <li><strong>Mesoderm</strong> (Mitte) → Muskeln, Knochen, Blut, Nieren, Herzmuskel</li>
+          <li><strong>Entoderm</strong> (innen) → Darm, Lunge, Leber, Bauchspeicheldrüse</li>
+          <li>+ <strong>Neuralleiste</strong> → Zähne, periphere Ganglien</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="karte karte-kon">
+      <div class="karte-label">Konzept</div>
+      <div class="karte-title">Steuerung der Entwicklung</div>
+      <div class="karte-body">
+        <ul>
+          <li><strong>Hormone:</strong> hCG signalisiert Schwangerschaft, Progesteron hält Schwangerschaft aufrecht</li>
+          <li><strong>Hox-Gene:</strong> steuern Körperachsen und Organentwicklung</li>
+          <li><strong>Zell-Zell-Kommunikation:</strong> Differenzierung durch Signalmoleküle</li>
+          <li><strong>Plazenta:</strong> Versorgung mit Nährstoffen und Sauerstoff ab Woche 4</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="vergl-grid">
+      <div class="vergl-item">
+        <div class="tag">Embryo</div>
+        <p>Befruchtung bis Ende <strong>Woche 8</strong>. Organanlage – empfindlichste Phase für Teratogene!</p>
+      </div>
+      <div class="vergl-item">
+        <div class="tag">Fetus</div>
+        <p>Ab <strong>Woche 9</strong> bis Geburt. Wachstum, Reifung, Ausdifferenzierung der Organe.</p>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:12px">
+      <p><strong>Merksatz:</strong> Morula = kompakte Zellkugel. Blastozyste = hohle Kugel. Gastrula = 3 Keimblätter.<br><br><strong>Anfang der Schwangerschaft!</strong> Empfindlichste Phase, Teratogene wirken am stärksten in Woche 3–8.</p>
+    </div>
+  </div>
+</section>
+
+</div><!-- /.content-wrap -->
+
+<footer>Lernapp · Alle Inhalte für den privaten Schulgebrauch</footer>
+
+<script src="../design.js"></script>
+<script>
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+// Accordion
+document.querySelectorAll('.acc-header').forEach(h => {
+  h.addEventListener('click', () => h.closest('.acc-item').classList.toggle('open'));
+});
+</script>
 </body>
 </html>
