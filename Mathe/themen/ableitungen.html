@@ -27,11 +27,11 @@ const THEMA = {
     }
   ],
 
-  blocks: [
+ blocks: [
     {
       typ:    "formel",
       titel:  "Potenzregel",
-      inhalt: "f(x) = xⁿ  →  f′(x) = n · xⁿ⁻¹\n\nBeispiel:\nf(x) = x³  →  f′(x) = 3x²\nf(x) = x⁵  →  f′(x) = 5x⁴"
+      inhalt: "f(x) = xⁿ  →  f′(x) = n · xⁿ⁻¹\n\nBeispiele:\nf(x) = x³   →  f′(x) = 3x²\nf(x) = x⁵   →  f′(x) = 5x⁴\nf(x) = x    →  f′(x) = 1\nf(x) = 1    →  f′(x) = 0"
     },
     {
       typ:    "formel",
@@ -40,13 +40,18 @@ const THEMA = {
     },
     {
       typ:    "beispiel",
-      titel:  "Vollständiges Beispiel: Extremstellen bestimmen",
-      inhalt: "Gegeben: f(x) = x³ − 3x² + 2\n\n1) Ableiten:   f′(x) = 3x² − 6x\n2) Nullsetzen:  3x² − 6x = 0  →  3x(x − 2) = 0\n3) Lösungen:   x₁ = 0,  x₂ = 2\n4) f″(x) = 6x − 6\n   f″(0) = −6 < 0  →  Hochpunkt bei x = 0\n   f″(2) = +6 > 0  →  Tiefpunkt bei x = 2"
+      titel:  "Höhere Ableitungen: f″, f‴, f⁽⁴⁾",
+      inhalt: "Gegeben: f(x) = x⁴ − 2x³ + 3x\n\n1. Ableitung:  f′(x)   = 4x³ − 6x² + 3\n2. Ableitung:  f″(x)   = 12x² − 12x\n3. Ableitung:  f‴(x)   = 24x − 12\n4. Ableitung:  f⁽⁴⁾(x) = 24\n5. Ableitung:  f⁽⁵⁾(x) = 0\n\nJede weitere Ableitung einer Konstante ergibt 0."
+    },
+    {
+      typ:    "beispiel",
+      titel:  "Summenregel: Glieder einzeln ableiten",
+      inhalt: "f(x) = 3x⁴ − 5x² + 7x − 2\n\nGlied für Glied ableiten:\n  3x⁴  →  12x³\n  5x²  →  10x\n  7x   →  7\n  2    →  0\n\nErgebnis: f′(x) = 12x³ − 10x + 7"
     },
     {
       typ:    "hinweis",
       titel:  "Merke",
-      inhalt: "Die Ableitung der Ableitung heißt zweite Ableitung f″(x). Sie bestimmt, ob ein Extrempunkt ein Hoch- oder Tiefpunkt ist (Vorzeichentest)."
+      inhalt: "Jede Ableitung senkt den Grad des Polynoms um 1. Ein Polynom vom Grad n hat genau n Ableitungen, bevor das Ergebnis 0 wird. Die höheren Ableitungen (f″, f‴ …) werden später für Extrem- und Wendepunkte gebraucht — das sind eigene Themen."
     }
   ]
 };
