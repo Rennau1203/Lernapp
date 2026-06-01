@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="de" data-mode="dark" data-theme="dunkel">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ╔══════════════════════════════════════════════════════╗
+     ║  NUR DIESEN BLOCK ANPASSEN                          ║
+     ╚══════════════════════════════════════════════════════╝ -->
+<script>
+const FACH = { name: "Mathe", icon: "📐" };
+
+const THEMEN = [
+
+  // ── VERFÜGBARE THEMEN ────────────────────────────────
+  // status: "ready"  → Karte ist klickbar, verlinkt auf die HTML-Datei
+  // status: "soon"   → Karte ist gesperrt, href wird ignoriert
+  //
+  // NEUES THEMA HINZUFÜGEN — diesen Block kopieren und anpassen:
+  // { titel: "THEMENNAME", emoji: "EMOJI", sub: "KURZBESCHREIBUNG", datei: "dateiname.html", status: "ready" },
+
+  {
+    titel:  "Ableitungen",
+    emoji:  "📈",
+    sub:    "Steigung, Extremstellen, Ableitungsregeln",
+    datei:  "ableitungen.html",
+    status: "ready"
+  },
+  {
+    titel:  "Aufleitungen",
+    emoji:  "∫",
+    sub:    "Stammfunktionen, bestimmtes Integral",
+    datei:  "aufleitungen.html",
+    status: "soon"
+  },
+  {
+    titel:  "Extrempunkte",
+    emoji:  "🏔️",
+    sub:    "Hoch- und Tiefpunkte, notwendige Bedingung",
+    datei:  "extrempunkte.html",
+    status: "soon"
+  },
+  {
+    titel:  "Wendepunkte",
+    emoji:  "〰️",
+    sub:    "Krümmungsverhalten, Sattelpunkte",
+    datei:  "wendepunkte.html",
+    status: "soon"
+  },
+
+  // HIER NEUES THEMA EINFÜGEN ↓
+  // { titel: "...", emoji: "...", sub: "...", datei: "....html", status: "soon" },
+
+];
+// ════════════════════════════════════════════════════════
+// AB HIER NICHTS ÄNDERN
+// ════════════════════════════════════════════════════════
+</script>
+
+<title>Laden…</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../design.css">
+
+<style>
+header { padding: 88px 0 0; position: relative; z-index: 1; }
+.content-area { padding-bottom: 80px; position: relative; z-index: 1; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="back-btn" href="../index.html">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span id="back-label">Zurück</span>
+    </a>
+    <div class="nav-divider"></div>
+    <span class="nav-fach" id="nav-fach-name"></span>
+  </div>
+  <div class="nav-right">
+    <button class="mode-btn" id="mode-btn" onclick="toggleMode()" title="Hell / Dunkel">🌙</button>
+    <button class="design-btn" onclick="togglePanel()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M7 1v1.5M7 11.5V13M1 7h1.5M11.5 7H13M2.93 2.93l1.06 1.06M10.01 10.01l1.06 1.06M2.93 11.07l1.06-1.06M10.01 3.99l1.06-1.06" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span>Design</span>
+    </button>
+  </div>
+</nav>
+
+<div id="design-panel">
+  <div>
+    <div class="p-title">Dunkle Themes</div>
+    <div class="theme-grid">
+      <button class="theme-btn active" data-theme="dunkel"   onclick="setTheme(this)"><div class="tdots"><span style="background:#c8f135"></span><span style="background:#444"></span><span style="background:#111"></span></div>Dunkel</button>
+      <button class="theme-btn"        data-theme="ozean"    onclick="setTheme(this)"><div class="tdots"><span style="background:#4db8ff"></span><span style="background:#1a5a99"></span><span style="background:#050d1a"></span></div>Ozean</button>
+      <button class="theme-btn"        data-theme="wald"     onclick="setTheme(this)"><div class="tdots"><span style="background:#5ec96a"></span><span style="background:#2a7030"></span><span style="background:#0b110d"></span></div>Wald</button>
+      <button class="theme-btn"        data-theme="rose"     onclick="setTheme(this)"><div class="tdots"><span style="background:#ff6b9d"></span><span style="background:#aa2050"></span><span style="background:#1a0a10"></span></div>Rose</button>
+      <button class="theme-btn"        data-theme="schiefer" onclick="setTheme(this)"><div class="tdots"><span style="background:#7ba7e8"></span><span style="background:#3a6099"></span><span style="background:#10141c"></span></div>Schiefer</button>
+      <button class="theme-btn"        data-theme="sand"     onclick="setTheme(this)"><div class="tdots"><span style="background:#e8a020"></span><span style="background:#8a6010"></span><span style="background:#1c1710"></span></div>Sand</button>
+    </div>
+  </div>
+  <div>
+    <div class="p-title">Helle Themes</div>
+    <div class="theme-grid">
+      <button class="theme-btn" data-theme="dunkel"   onclick="setTheme(this)"><div class="tdots"><span style="background:#6a7a00"></span><span style="background:#999"></span><span style="background:#ddd;border:1px solid #ccc"></span></div>Licht</button>
+      <button class="theme-btn" data-theme="ozean"    onclick="setTheme(this)"><div class="tdots"><span style="background:#1870e0"></span><span style="background:#7aade8"></span><span style="background:#ddeeff;border:1px solid #cce"></span></div>Himmel</button>
+      <button class="theme-btn" data-theme="wald"     onclick="setTheme(this)"><div class="tdots"><span style="background:#0d8c3c"></span><span style="background:#6ec98a"></span><span style="background:#d8f5e0;border:1px solid #bde"></span></div>Mint</button>
+      <button class="theme-btn" data-theme="rose"     onclick="setTheme(this)"><div class="tdots"><span style="background:#e05020"></span><span style="background:#e89070"></span><span style="background:#ffe8e0;border:1px solid #fdd"></span></div>Pfirsich</button>
+      <button class="theme-btn" data-theme="lavendel" onclick="setTheme(this)"><div class="tdots"><span style="background:#6c3ce0"></span><span style="background:#aa88e8"></span><span style="background:#ece4ff;border:1px solid #ddf"></span></div>Lavendel</button>
+      <button class="theme-btn" data-theme="sand"     onclick="setTheme(this)"><div class="tdots"><span style="background:#8b5e20"></span><span style="background:#c09850"></span><span style="background:#faf7f0;border:1px solid #e8e0d0"></span></div>Papier</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="hero">
+      <div class="hero-top">
+        <div class="hero-icon" id="hero-icon"></div>
+        <h1 id="hero-title"><i></i></h1>
+      </div>
+      <p>Wähle ein Thema — alle wichtigen Erklärungen auf einen Blick.</p>
+    </div>
+  </header>
+
+  <div class="content-area">
+    <div class="sec-label">Themen</div>
+    <div class="folder-grid" id="themen-grid">
+      <!-- wird per JS befüllt -->
+    </div>
+  </div>
+</div>
+
+<footer>Lernapp · Alle Inhalte für den privaten Schulgebrauch</footer>
+
+<script src="../design.js"></script>
+<script>
+// Seite befüllen
+document.title = 'Alle Themen — ' + FACH.name + ' — Lernapp';
+document.getElementById('nav-fach-name').textContent = FACH.name + ' · Alle Themen';
+document.getElementById('back-label').textContent = FACH.name;
+document.getElementById('hero-icon').textContent = FACH.icon;
+document.getElementById('hero-title').innerHTML = '<i>Alle Themen</i>';
+
+// Themen-Karten rendern
+const grid = document.getElementById('themen-grid');
+THEMEN.forEach((t, i) => {
+  const isReady = t.status === 'ready';
+  const delay = ((i + 1) * 0.04).toFixed(2);
+  grid.innerHTML += `
+    <a class="folder${isReady ? '' : ' disabled'}"
+       href="${isReady ? t.datei : '#'}"
+       style="animation-delay:${delay}s">
+      <div class="f-top">
+        <div class="f-icon">${t.emoji}</div>
+        <div class="f-arrow">↗</div>
+      </div>
+      <div>
+        <div class="f-name">${t.titel}</div>
+        <div class="f-sub">${t.sub}</div>
+      </div>
+      <div class="f-badge ${t.status === 'ready' ? 'ready' : 'soon'}">
+        ${t.status === 'ready' ? 'Verfügbar' : 'Bald verfügbar'}
+      </div>
+    </a>`;
+});
+</script>
+
+</body>
+</html>
