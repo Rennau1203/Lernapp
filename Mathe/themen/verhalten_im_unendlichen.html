@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de" data-mode="dark" data-theme="dunkel">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+const FACH = { name: "Mathe", icon: "📐" };
+
+const THEMA = {
+  titel:        "Grenzverhalten",
+  emoji:        "∞",
+  beschreibung: "Das Grenzverhalten beschreibt, wie sich eine Funktion verhält, wenn x gegen +∞ oder −∞ läuft. Entscheidend ist dabei nur der Term mit dem höchsten Exponenten.",
+
+  kernpunkte: [
+    {
+      titel: "Nur der führende Term zählt",
+      text:  "Für x → ±∞ dominiert der Term mit dem höchsten Exponenten alle anderen. f(x) = x⁴ − 100x³ + 999 verhält sich für sehr große x genauso wie x⁴ — die anderen Terme werden verschwindend klein."
+    },
+    {
+      titel: "Gerader Exponent",
+      text:  "Bei geradem Exponenten verhalten sich beide Seiten (x → +∞ und x → −∞) gleich. Der Graph öffnet sich entweder beidseitig nach oben (+) oder beidseitig nach unten (−) — wie eine Parabel."
+    },
+    {
+      titel: "Ungerader Exponent",
+      text:  "Bei ungeradem Exponenten laufen die beiden Seiten in entgegengesetzte Richtungen. Positiver Koeffizient: links −∞, rechts +∞. Negativer Koeffizient: links +∞, rechts −∞."
+    }
+  ],
+
+  blocks: [
+    {
+      typ:    "formel",
+      titel:  "Schreibweise mit Limes",
+      inhalt: "Grenzverhalten wird so notiert:\n\n  lim f(x) = +∞   oder   lim f(x) = −∞\n x→+∞                    x→+∞\n\n  lim f(x) = +∞   oder   lim f(x) = −∞\n x→−∞                    x→−∞\n\nBei Polynomen reicht es, nur den führenden Term zu betrachten:\n\n  f(x) = aₙxⁿ + …   →   Grenzverhalten wie aₙxⁿ"
+    },
+    {
+      typ:    "formel",
+      titel:  "Gerader Exponent — beidseitig gleich (Parabelform)",
+      inhalt: "Führender Term: +xⁿ (n gerade)\n\n        ↑               ↑\n        |               |\n   \\    |    /     →  beidseitig +∞\n    \\   |   /\n     \\__|__/\n\n  lim f(x) = +∞     lim f(x) = +∞\n x→−∞              x→+∞\n\n─────────────────────────────────────\n\nFührender Term: −xⁿ (n gerade)\n\n     __.__\n    /  |  \\\n   /   |   \\     →  beidseitig −∞\n        |        ↓               ↓\n\n  lim f(x) = −∞     lim f(x) = −∞\n x→−∞              x→+∞"
+    },
+    {
+      typ:    "formel",
+      titel:  "Ungerader Exponent — entgegengesetzte Richtungen",
+      inhalt: "Führender Term: +xⁿ (n ungerade)\n\n              /\n             /\n            /      →  links −∞, rechts +∞\n           /\n          /\n\n  lim f(x) = −∞     lim f(x) = +∞\n x→−∞              x→+∞\n\n─────────────────────────────────────\n\nFührender Term: −xⁿ (n ungerade)\n\n  \\\n   \\\n    \\          →  links +∞, rechts −∞\n     \\\n      \\\n\n  lim f(x) = +∞     lim f(x) = −∞\n x→−∞              x→+∞"
+    },
+    {
+      typ:    "beispiel",
+      titel:  "Beispiele: Grenzverhalten ablesen",
+      inhalt: "f(x) = 3x⁴ − 7x² + 2\n  Führender Term: +3x⁴  (gerade, positiv)\n  lim f(x) = +∞   und   lim f(x) = +∞\n x→−∞                  x→+∞\n\n───────────────────────────────────────\n\nf(x) = −2x⁴ + x³ − 5\n  Führender Term: −2x⁴  (gerade, negativ)\n  lim f(x) = −∞   und   lim f(x) = −∞\n x→−∞                  x→+∞\n\n───────────────────────────────────────\n\nf(x) = x³ − 4x + 1\n  Führender Term: +x³  (ungerade, positiv)\n  lim f(x) = −∞   und   lim f(x) = +∞\n x→−∞                  x→+∞\n\n───────────────────────────────────────\n\nf(x) = −x⁵ + 3x²\n  Führender Term: −x⁵  (ungerade, negativ)\n  lim f(x) = +∞   und   lim f(x) = −∞\n x→−∞                  x→+∞"
+    },
+    {
+      typ:    "hinweis",
+      titel:  "Merke — Schnellübersicht",
+      inhalt: "  Exponent  │  Vorzeichen  │  x→−∞  │  x→+∞\n  ──────────┼─────────────┼─────────┼────────\n  gerade    │      +      │   +∞   │   +∞\n  gerade    │      −      │   −∞   │   −∞\n  ungerade  │      +      │   −∞   │   +∞\n  ungerade  │      −      │   +∞   │   −∞\n\nFaustregel:\n  Gerade    → beide Seiten gleich  (wie Parabel)\n  Ungerade  → beide Seiten entgegengesetzt"
+    }
+  ]
+};
+</script>
+
+<title>Laden…</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../design.css">
+
+<style>
+header{padding:88px 0 0;position:relative;z-index:1}
+.thema-desc{font-size:15px;color:var(--muted);max-width:620px;line-height:1.8;margin-top:10px;transition:color .3s}
+.content-area{display:flex;flex-direction:column;gap:48px;padding-bottom:80px;position:relative;z-index:1}
+.kernpunkt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:background .3s,border-color .3s}
+.kernpunkt{background:var(--surface);padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;transition:background .18s;animation:fadeUp .4s ease both}
+.kernpunkt:hover{background:var(--surface2)}
+.kp-num{font-size:10px;font-weight:700;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;transition:color .3s}
+.kp-titel{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.kp-text{font-size:13px;color:var(--muted);line-height:1.75;transition:color .3s}
+.block-stack{display:flex;flex-direction:column;gap:12px}
+.block{border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .3s;animation:fadeUp .4s ease both}
+.block-header{padding:12px 18px;background:var(--surface2);display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);transition:background .3s,border-color .3s}
+.block-tag{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-fg);background:var(--accent);padding:2px 7px;border-radius:5px;transition:background .3s,color .3s}
+.block-tag.beispiel-tag{background:var(--surface);color:var(--muted);border:1px solid var(--border)}
+.block-tag.hinweis-tag{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.block-titel{font-size:13px;font-weight:600}
+.block-body{padding:18px;background:var(--surface);transition:background .3s}
+.formel-inhalt{font-family:'Courier New',monospace;font-size:13px;line-height:1.9;color:var(--text);white-space:pre;overflow-x:auto;transition:color .3s}
+.beispiel-inhalt{font-family:'Syne',sans-serif;font-size:13px;line-height:1.85;color:var(--text);white-space:pre-line;transition:color .3s}
+.block.hinweis-block{border-color:var(--accent)}
+.block.hinweis-block .block-header{background:color-mix(in srgb,var(--accent) 8%,transparent);border-bottom-color:var(--accent)}
+.hinweis-inhalt{font-size:13px;line-height:1.75;color:var(--muted);font-family:'Courier New',monospace;white-space:pre;overflow-x:auto;transition:color .3s}
+.kernpunkt:nth-child(1){animation-delay:.04s}.kernpunkt:nth-child(2){animation-delay:.08s}.kernpunkt:nth-child(3){animation-delay:.12s}
+.block:nth-child(1){animation-delay:.06s}.block:nth-child(2){animation-delay:.12s}.block:nth-child(3){animation-delay:.18s}.block:nth-child(4){animation-delay:.24s}.block:nth-child(5){animation-delay:.30s}
+@media(max-width:580px){.kernpunkt-grid{grid-template-columns:1fr}.formel-inhalt{font-size:11px}.hinweis-inhalt{font-size:11px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="back-btn" href="../index.html" id="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span id="back-label">Zurück</span>
+    </a>
+    <div class="nav-divider"></div>
+    <span class="nav-fach" id="nav-fach-name"></span>
+  </div>
+  <div class="nav-right">
+    <button class="mode-btn" id="mode-btn" onclick="toggleMode()" title="Hell / Dunkel">🌙</button>
+    <button class="design-btn" onclick="togglePanel()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M7 1v1.5M7 11.5V13M1 7h1.5M11.5 7H13M2.93 2.93l1.06 1.06M10.01 10.01l1.06 1.06M2.93 11.07l1.06-1.06M10.01 3.99l1.06-1.06" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span>Design</span>
+    </button>
+  </div>
+</nav>
+
+<div id="design-panel">
+  <div>
+    <div class="p-title">Dunkle Themes</div>
+    <div class="theme-grid">
+      <button class="theme-btn active" data-theme="dunkel"   onclick="setTheme(this)"><div class="tdots"><span style="background:#c8f135"></span><span style="background:#444"></span><span style="background:#111"></span></div>Dunkel</button>
+      <button class="theme-btn"        data-theme="ozean"    onclick="setTheme(this)"><div class="tdots"><span style="background:#4db8ff"></span><span style="background:#1a5a99"></span><span style="background:#050d1a"></span></div>Ozean</button>
+      <button class="theme-btn"        data-theme="wald"     onclick="setTheme(this)"><div class="tdots"><span style="background:#5ec96a"></span><span style="background:#2a7030"></span><span style="background:#0b110d"></span></div>Wald</button>
+      <button class="theme-btn"        data-theme="rose"     onclick="setTheme(this)"><div class="tdots"><span style="background:#ff6b9d"></span><span style="background:#aa2050"></span><span style="background:#1a0a10"></span></div>Rose</button>
+      <button class="theme-btn"        data-theme="schiefer" onclick="setTheme(this)"><div class="tdots"><span style="background:#7ba7e8"></span><span style="background:#3a6099"></span><span style="background:#10141c"></span></div>Schiefer</button>
+      <button class="theme-btn"        data-theme="sand"     onclick="setTheme(this)"><div class="tdots"><span style="background:#e8a020"></span><span style="background:#8a6010"></span><span style="background:#1c1710"></span></div>Sand</button>
+    </div>
+  </div>
+  <div>
+    <div class="p-title">Helle Themes</div>
+    <div class="theme-grid">
+      <button class="theme-btn" data-theme="dunkel"   onclick="setTheme(this)"><div class="tdots"><span style="background:#6a7a00"></span><span style="background:#999"></span><span style="background:#ddd;border:1px solid #ccc"></span></div>Licht</button>
+      <button class="theme-btn" data-theme="ozean"    onclick="setTheme(this)"><div class="tdots"><span style="background:#1870e0"></span><span style="background:#7aade8"></span><span style="background:#ddeeff;border:1px solid #cce"></span></div>Himmel</button>
+      <button class="theme-btn" data-theme="wald"     onclick="setTheme(this)"><div class="tdots"><span style="background:#0d8c3c"></span><span style="background:#6ec98a"></span><span style="background:#d8f5e0;border:1px solid #bde"></span></div>Mint</button>
+      <button class="theme-btn" data-theme="rose"     onclick="setTheme(this)"><div class="tdots"><span style="background:#e05020"></span><span style="background:#e89070"></span><span style="background:#ffe8e0;border:1px solid #fdd"></span></div>Pfirsich</button>
+      <button class="theme-btn" data-theme="lavendel" onclick="setTheme(this)"><div class="tdots"><span style="background:#6c3ce0"></span><span style="background:#aa88e8"></span><span style="background:#ece4ff;border:1px solid #ddf"></span></div>Lavendel</button>
+      <button class="theme-btn" data-theme="sand"     onclick="setTheme(this)"><div class="tdots"><span style="background:#8b5e20"></span><span style="background:#c09850"></span><span style="background:#faf7f0;border:1px solid #e8e0d0"></span></div>Papier</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="hero">
+      <div class="hero-top">
+        <div class="hero-icon" id="hero-icon"></div>
+        <h1 id="hero-title"><i></i></h1>
+      </div>
+      <p class="thema-desc" id="thema-desc"></p>
+    </div>
+  </header>
+  <div class="content-area">
+    <div>
+      <div class="sec-label">Kernpunkte</div>
+      <div class="kernpunkt-grid" id="kernpunkt-grid"></div>
+    </div>
+    <div>
+      <div class="sec-label">Formeln &amp; Beispiele</div>
+      <div class="block-stack" id="block-stack"></div>
+    </div>
+  </div>
+</div>
+
+<footer>Lernapp · Alle Inhalte für den privaten Schulgebrauch</footer>
+<script src="../../design.js"></script>
+<script>
+document.title = THEMA.titel + ' — ' + FACH.name + ' — Lernapp';
+document.getElementById('nav-fach-name').textContent = FACH.name + ' · ' + THEMA.titel;
+document.getElementById('back-label').textContent = FACH.name;
+document.getElementById('hero-icon').textContent = THEMA.emoji;
+document.getElementById('hero-title').innerHTML = '<i>' + THEMA.titel + '</i>';
+document.getElementById('thema-desc').textContent = THEMA.beschreibung;
+const kGrid = document.getElementById('kernpunkt-grid');
+THEMA.kernpunkte.forEach((kp, i) => {
+  kGrid.innerHTML += `<div class="kernpunkt"><div class="kp-num">Punkt ${String(i+1).padStart(2,'0')}</div><div class="kp-titel">${kp.titel}</div><div class="kp-text">${kp.text}</div></div>`;
+});
+const bStack = document.getElementById('block-stack');
+THEMA.blocks.forEach(block => {
+  let tagClass='',tagLabel='',inhaltHTML='';
+  if(block.typ==='formel'){tagClass='formel-tag';tagLabel='Formel';inhaltHTML=`<div class="formel-inhalt">${block.inhalt}</div>`;}
+  else if(block.typ==='beispiel'){tagClass='beispiel-tag';tagLabel='Beispiel';inhaltHTML=`<div class="beispiel-inhalt">${block.inhalt}</div>`;}
+  else if(block.typ==='hinweis'){tagClass='hinweis-tag';tagLabel='Hinweis';inhaltHTML=`<div class="hinweis-inhalt">${block.inhalt}</div>`;}
+  bStack.innerHTML += `<div class="block${block.typ==='hinweis'?' hinweis-block':''}"><div class="block-header"><span class="block-tag ${tagClass}">${tagLabel}</span><span class="block-titel">${block.titel}</span></div><div class="block-body">${inhaltHTML}</div></div>`;
+});
+</script>
+</body>
+</html>
