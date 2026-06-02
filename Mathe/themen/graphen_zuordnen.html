@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de" data-mode="dark" data-theme="dunkel">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+const FACH = { name: "Mathe", icon: "📐" };
+
+const THEMA = {
+  titel:        "Graphen von f und f″ zuordnen",
+  emoji:        "🔗",
+  beschreibung: "Die zweite Ableitung f″ gibt Auskunft über die Krümmung des Graphen von f. Anhand von Krümmungsverhalten, Vorzeichen und Vorzeichenwechseln lassen sich f und f″ begründet einander zuordnen.",
+
+  kernpunkte: [
+    {
+      titel: "f″ und Krümmung von f",
+      text:  "Ist f″(x) > 0, ist f an dieser Stelle linksgekrümmt (∪-Form, nach oben geöffnet). Ist f″(x) < 0, ist f rechtsgekrümmt (∩-Form, nach unten geöffnet). f″ zeigt also nicht die Steigung, sondern die Krümmungsart."
+    },
+    {
+      titel: "Nullstellen von f″ = Wendepunkte von f",
+      text:  "Wo f″ die x-Achse schneidet (Nullstelle von f″), wechselt die Krümmung von f — dort liegt ein Wendepunkt von f. Die x-Werte der Nullstellen von f″ und die Wendepunkte von f müssen übereinstimmen."
+    },
+    {
+      titel: "VZW von f″ = Art des Wendepunkts",
+      text:  "Wechselt f″ von − nach +: f wechselt von Rechts- zu Linkskrümmung → Rechts-Links-Wendepunkt. Wechselt f″ von + nach −: f wechselt von Links- zu Rechtskrümmung → Links-Rechts-Wendepunkt."
+    }
+  ],
+
+  blocks: [
+    {
+      typ:    "formel",
+      titel:  "Übersichtstabelle: f″ ablesen → Aussage über f",
+      inhalt: "  Was ich bei f″ sehe            │  Aussage über f\n  ──────────────────────────────┼──────────────────────────────────\n  f″(x) > 0  (oberhalb x-Achse) │  f ist linksgekrümmt  (∪-Form)\n  f″(x) < 0  (unterhalb x-Achse)│  f ist rechtsgekrümmt (∩-Form)\n  f″(x) = 0  (Nullstelle)        │  möglicher Wendepunkt bei f\n  VZW von − nach +               │  RL-Wendepunkt bei f\n  VZW von + nach −               │  LR-Wendepunkt bei f\n  f″ konstant > 0 (waagerecht)   │  f überall linksgekrümmt (Parabel)\n  f″ konstant < 0 (waagerecht)   │  f überall rechtsgekrümmt\n  f″ hat Hochpunkt               │  Wendepunkt von f′ (= WP 3. Ordnung)"
+    },
+    {
+      typ:    "beispiel",
+      titel:  "Beispiel I → B: Funktion 3. Grades, RL-Wendepunkt",
+      inhalt: "Graph I (f):  Zunächst rechtsgekrümmt, dann linksgekrümmt → RL-Wendepunkt\n\n  Rechtskrümmung  →  f″ < 0\n  Linkskrümmung   →  f″ > 0\n  Übergang (WP)   →  f″ hat Nullstelle mit VZW von − nach +\n\nGraph B (f″):  Gerade mit VZW von − nach +\n\n       f″\n   ↑  /\n    /\n───/──────→ x\n  /\n /\n\nZuordnung I → B, weil:\n  ✓  f″ wechselt von − nach + (passt zu RL-Wendepunkt in I)\n  ✓  Nullstelle von B liegt beim gleichen x-Wert wie WP in I\n  ✓  Vorzeichen links/rechts der Nullstelle stimmen mit Krümmung in I überein"
+    },
+    {
+      typ:    "beispiel",
+      titel:  "Beispiel II → A: Funktion mit RL-WP und LR-WP",
+      inhalt: "Graph II (f):  Erst rechtsgekrümmt, dann linksgekrümmt, dann wieder rechtsgekrümmt\n               → zwei Wendepunkte: erst RL-WP, dann LR-WP\n\n  Abfolge von f″:  − → + → −  (zwei Vorzeichenwechsel)\n\nGraph A (f″):  Parabelform, erst positiv, dann negativ\n\n       f″\n   ↑  . .\n     /   \\\n  ──/─────\\──→ x\n            \\\n\nZuordnung II → A, weil:\n  ✓  f″ hat Vorzeichenfolge − → + → −  (passt zu RL-WP → LR-WP in II)\n  ✓  Nullstellen von A liegen bei gleichen x-Werten wie WP in II\n  ✓  Hochpunkt von A liegt dort, wo Steigung von f am größten ist"
+    },
+    {
+      typ:    "beispiel",
+      titel:  "Beispiel III → C: Nach oben geöffnete Parabel, f″ konstant",
+      inhalt: "Graph III (f):  Nach oben geöffnete Parabel, überall linksgekrümmt\n               → f″ muss überall positiv und konstant sein\n               → f″(x) > 0 für alle x  →  Tiefpunkt bei f\n\nGraph C (f″):  Waagerechte Gerade oberhalb der x-Achse\n\n       f″\n   ↑\n    ─────────────→ x    f″(x) > 0  (konstant)\n\nZuordnung III → C, weil:\n  ✓  f″ überall positiv → f überall linksgekrümmt (stimmt mit Parabel überein)\n  ✓  f″ konstant → zweite Ableitung einer quadratischen Funktion ist immer konstant\n  ✓  Keine Nullstelle von f″ → kein Wendepunkt bei f (stimmt, Parabel hat keinen WP)"
+    },
+    {
+      typ:    "hinweis",
+      titel:  "Vorgehen bei Zuordnungsaufgaben",
+      inhalt: "Schritt 1 — Krümmung von f bestimmen:\n  Welche Bereiche sind links-/rechtsgekrümmt?\n  Wo liegen Wendepunkte (Krümmungswechsel)?\n\nSchritt 2 — Vorzeichen von f″ ableiten:\n  Linkskrümmung  →  f″ > 0\n  Rechtskrümmung →  f″ < 0\n  Wendepunkt     →  f″ = 0 mit VZW\n\nSchritt 3 — Passenden f″-Graphen suchen:\n  Vorzeichen, VZW-Stellen und Nullstellen vergleichen\n\nSchritt 4 — Begründung formulieren:\n  ✓  Krümmungsabschnitte mit Vorzeichen von f″ verknüpfen\n  ✓  Wendepunkte von f mit Nullstellen von f″ abgleichen\n  ✓  VZW-Richtung von f″ mit Wendepunktart verknüpfen"
+    }
+  ]
+};
+</script>
+
+<title>Laden…</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../design.css">
+
+<style>
+header{padding:88px 0 0;position:relative;z-index:1}
+.thema-desc{font-size:15px;color:var(--muted);max-width:620px;line-height:1.8;margin-top:10px;transition:color .3s}
+.content-area{display:flex;flex-direction:column;gap:48px;padding-bottom:80px;position:relative;z-index:1}
+.kernpunkt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:background .3s,border-color .3s}
+.kernpunkt{background:var(--surface);padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;transition:background .18s;animation:fadeUp .4s ease both}
+.kernpunkt:hover{background:var(--surface2)}
+.kp-num{font-size:10px;font-weight:700;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;transition:color .3s}
+.kp-titel{font-size:14px;font-weight:600;letter-spacing:-.01em}
+.kp-text{font-size:13px;color:var(--muted);line-height:1.75;transition:color .3s}
+.block-stack{display:flex;flex-direction:column;gap:12px}
+.block{border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .3s;animation:fadeUp .4s ease both}
+.block-header{padding:12px 18px;background:var(--surface2);display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);transition:background .3s,border-color .3s}
+.block-tag{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-fg);background:var(--accent);padding:2px 7px;border-radius:5px;transition:background .3s,color .3s}
+.block-tag.beispiel-tag{background:var(--surface);color:var(--muted);border:1px solid var(--border)}
+.block-tag.hinweis-tag{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.block-titel{font-size:13px;font-weight:600}
+.block-body{padding:18px;background:var(--surface);transition:background .3s}
+.formel-inhalt{font-family:'Courier New',monospace;font-size:13px;line-height:1.9;color:var(--text);white-space:pre;overflow-x:auto;transition:color .3s}
+.beispiel-inhalt{font-family:'Courier New',monospace;font-size:12.5px;line-height:1.85;color:var(--text);white-space:pre-line;transition:color .3s}
+.block.hinweis-block{border-color:var(--accent)}
+.block.hinweis-block .block-header{background:color-mix(in srgb,var(--accent) 8%,transparent);border-bottom-color:var(--accent)}
+.hinweis-inhalt{font-family:'Courier New',monospace;font-size:12.5px;line-height:1.85;color:var(--muted);white-space:pre-line;transition:color .3s}
+.kernpunkt:nth-child(1){animation-delay:.04s}.kernpunkt:nth-child(2){animation-delay:.08s}.kernpunkt:nth-child(3){animation-delay:.12s}
+.block:nth-child(1){animation-delay:.06s}.block:nth-child(2){animation-delay:.12s}.block:nth-child(3){animation-delay:.18s}.block:nth-child(4){animation-delay:.24s}.block:nth-child(5){animation-delay:.30s}
+@media(max-width:580px){.kernpunkt-grid{grid-template-columns:1fr}.formel-inhalt{font-size:11px}.beispiel-inhalt{font-size:11px}.hinweis-inhalt{font-size:11px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="back-btn" href="../index.html" id="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span id="back-label">Zurück</span>
+    </a>
+    <div class="nav-divider"></div>
+    <span class="nav-fach" id="nav-fach-name"></span>
+  </div>
+  <div class="nav-right">
+    <button class="mode-btn" id="mode-btn" onclick="toggleMode()" title="Hell / Dunkel">🌙</button>
+    <button class="design-btn" onclick="togglePanel()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M7 1v1.5M7 11.5V13M1 7h1.5M11.5 7H13M2.93 2.93l1.06 1.06M10.01 10.01l1.06 1.06M2.93 11.07l1.06-1.06M10.01 3.99l1.06-1.06" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span>Design</span>
+    </button>
+  </div>
+</nav>
+
+<div id="design-panel">
+  <div>
+    <div class="p-title">Dunkle Themes</div>
+    <div class="theme-grid">
+      <button class="theme-btn active" data-theme="dunkel"   onclick="setTheme(this)"><div class="tdots"><span style="background:#c8f135"></span><span style="background:#444"></span><span style="background:#111"></span></div>Dunkel</button>
+      <button class="theme-btn"        data-theme="ozean"    onclick="setTheme(this)"><div class="tdots"><span style="background:#4db8ff"></span><span style="background:#1a5a99"></span><span style="background:#050d1a"></span></div>Ozean</button>
+      <button class="theme-btn"        data-theme="wald"     onclick="setTheme(this)"><div class="tdots"><span style="background:#5ec96a"></span><span style="background:#2a7030"></span><span style="background:#0b110d"></span></div>Wald</button>
+      <button class="theme-btn"        data-theme="rose"     onclick="setTheme(this)"><div class="tdots"><span style="background:#ff6b9d"></span><span style="background:#aa2050"></span><span style="background:#1a0a10"></span></div>Rose</button>
+      <button class="theme-btn"        data-theme="schiefer" onclick="setTheme(this)"><div class="tdots"><span style="background:#7ba7e8"></span><span style="background:#3a6099"></span><span style="background:#10141c"></span></div>Schiefer</button>
+      <button class="theme-btn"        data-theme="sand"     onclick="setTheme(this)"><div class="tdots"><span style="background:#e8a020"></span><span style="background:#8a6010"></span><span style="background:#1c1710"></span></div>Sand</button>
+    </div>
+  </div>
+  <div>
+    <div class="p-title">Helle Themes</div>
+    <div class="theme-grid">
+      <button class="theme-btn" data-theme="dunkel"   onclick="setTheme(this)"><div class="tdots"><span style="background:#6a7a00"></span><span style="background:#999"></span><span style="background:#ddd;border:1px solid #ccc"></span></div>Licht</button>
+      <button class="theme-btn" data-theme="ozean"    onclick="setTheme(this)"><div class="tdots"><span style="background:#1870e0"></span><span style="background:#7aade8"></span><span style="background:#ddeeff;border:1px solid #cce"></span></div>Himmel</button>
+      <button class="theme-btn" data-theme="wald"     onclick="setTheme(this)"><div class="tdots"><span style="background:#0d8c3c"></span><span style="background:#6ec98a"></span><span style="background:#d8f5e0;border:1px solid #bde"></span></div>Mint</button>
+      <button class="theme-btn" data-theme="rose"     onclick="setTheme(this)"><div class="tdots"><span style="background:#e05020"></span><span style="background:#e89070"></span><span style="background:#ffe8e0;border:1px solid #fdd"></span></div>Pfirsich</button>
+      <button class="theme-btn" data-theme="lavendel" onclick="setTheme(this)"><div class="tdots"><span style="background:#6c3ce0"></span><span style="background:#aa88e8"></span><span style="background:#ece4ff;border:1px solid #ddf"></span></div>Lavendel</button>
+      <button class="theme-btn" data-theme="sand"     onclick="setTheme(this)"><div class="tdots"><span style="background:#8b5e20"></span><span style="background:#c09850"></span><span style="background:#faf7f0;border:1px solid #e8e0d0"></span></div>Papier</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="hero">
+      <div class="hero-top">
+        <div class="hero-icon" id="hero-icon"></div>
+        <h1 id="hero-title"><i></i></h1>
+      </div>
+      <p class="thema-desc" id="thema-desc"></p>
+    </div>
+  </header>
+  <div class="content-area">
+    <div>
+      <div class="sec-label">Kernpunkte</div>
+      <div class="kernpunkt-grid" id="kernpunkt-grid"></div>
+    </div>
+    <div>
+      <div class="sec-label">Regeln &amp; Beispiele</div>
+      <div class="block-stack" id="block-stack"></div>
+    </div>
+  </div>
+</div>
+
+<footer>Lernapp · Alle Inhalte für den privaten Schulgebrauch</footer>
+<script src="../../design.js"></script>
+<script>
+document.title = THEMA.titel + ' — ' + FACH.name + ' — Lernapp';
+document.getElementById('nav-fach-name').textContent = FACH.name + ' · ' + THEMA.titel;
+document.getElementById('back-label').textContent = FACH.name;
+document.getElementById('hero-icon').textContent = THEMA.emoji;
+document.getElementById('hero-title').innerHTML = '<i>' + THEMA.titel + '</i>';
+document.getElementById('thema-desc').textContent = THEMA.beschreibung;
+const kGrid = document.getElementById('kernpunkt-grid');
+THEMA.kernpunkte.forEach((kp, i) => {
+  kGrid.innerHTML += `<div class="kernpunkt"><div class="kp-num">Punkt ${String(i+1).padStart(2,'0')}</div><div class="kp-titel">${kp.titel}</div><div class="kp-text">${kp.text}</div></div>`;
+});
+const bStack = document.getElementById('block-stack');
+THEMA.blocks.forEach(block => {
+  let tagClass='',tagLabel='',inhaltHTML='';
+  if(block.typ==='formel'){tagClass='formel-tag';tagLabel='Formel';inhaltHTML=`<div class="formel-inhalt">${block.inhalt}</div>`;}
+  else if(block.typ==='beispiel'){tagClass='beispiel-tag';tagLabel='Beispiel';inhaltHTML=`<div class="beispiel-inhalt">${block.inhalt}</div>`;}
+  else if(block.typ==='hinweis'){tagClass='hinweis-tag';tagLabel='Hinweis';inhaltHTML=`<div class="hinweis-inhalt">${block.inhalt}</div>`;}
+  bStack.innerHTML += `<div class="block${block.typ==='hinweis'?' hinweis-block':''}"><div class="block-header"><span class="block-tag ${tagClass}">${tagLabel}</span><span class="block-titel">${block.titel}</span></div><div class="block-body">${inhaltHTML}</div></div>`;
+});
+</script>
+</body>
+</html>
