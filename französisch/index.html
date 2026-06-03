@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="de" data-mode="dark" data-theme="dunkel">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  HIER ANPASSEN — NUR DIESE 2 ZEILEN ÄNDERN      ║
+     ╚══════════════════════════════════════════════════╝ -->
+<title>Französisch — Lernapp</title>   <!-- z.B. Französisch — Lernapp -->
+<script>const FACH = { name: "Französisch", icon: "🇫🇷" }</script>
+<!-- Beispiele:
+     Mathe:       name: "Mathe",       icon: "📐"
+     Deutsch:     name: "Deutsch",     icon: "📖"
+     Englisch:    name: "Englisch",    icon: "🇬🇧"
+     Geschichte:  name: "Geschichte",  icon: "🏛️"
+     Biologie:    name: "Biologie",    icon: "🧬"
+     Powi:        name: "Powi",        icon: "🗳️"
+     Chemie:      name: "Chemie",      icon: "⚗️"
+     Kunst:       name: "Kunst",       icon: "🎨"
+     Ethik:       name: "Ethik",       icon: "🤝"
+     Geographie:  name: "Geographie",  icon: "🌍"
+     Französisch: name: "Französisch", icon: "🇫🇷"
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../design.css">
+     <link rel="stylesheet" href="../design.css">
+<style>
+header { padding-top: 80px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a class="back-btn" href="../index.html">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Zurück</span>
+    </a>
+    <div class="nav-divider"></div>
+    <span class="nav-fach" id="nav-fach-name"></span>
+  </div>
+  <div class="nav-right">
+    <button class="mode-btn" id="mode-btn" onclick="toggleMode()" title="Hell / Dunkel">🌙</button>
+    <button class="design-btn" onclick="togglePanel()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2.5" stroke="currentColor" stroke-width="1.4"/><path d="M7 1v1.5M7 11.5V13M1 7h1.5M11.5 7H13M2.93 2.93l1.06 1.06M10.01 10.01l1.06 1.06M2.93 11.07l1.06-1.06M10.01 3.99l1.06-1.06" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span>Design</span>
+    </button>
+  </div>
+</nav>
+ 
+<!-- DESIGN PANEL — diesen Block in allen HTML-Dateien ersetzen -->
+<div id="design-panel">
+  <div class="p-title">Theme wählen</div>
+  <div class="theme-grid">
+
+    <button class="theme-btn active" data-theme="dunkel" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#c8f135"></span><span style="background:#444"></span><span style="background:#111"></span></div>
+      Dunkel
+    </button>
+
+    <button class="theme-btn" data-theme="ozean" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#4db8ff"></span><span style="background:#1a5a99"></span><span style="background:#050d1a"></span></div>
+      Ozean
+    </button>
+
+    <button class="theme-btn" data-theme="wald" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#5ec96a"></span><span style="background:#2a7030"></span><span style="background:#0b110d"></span></div>
+      Wald
+    </button>
+
+    <button class="theme-btn" data-theme="rose" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#ff6b9d"></span><span style="background:#aa2050"></span><span style="background:#1a0a10"></span></div>
+      Rose
+    </button>
+
+    <button class="theme-btn" data-theme="schiefer" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#7ba7e8"></span><span style="background:#3a6099"></span><span style="background:#10141c"></span></div>
+      Schiefer
+    </button>
+
+    <button class="theme-btn" data-theme="sand" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#e8a020"></span><span style="background:#8a6010"></span><span style="background:#1c1710"></span></div>
+      Sand
+    </button>
+
+    <button class="theme-btn" data-theme="lavendel" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#a87fff"></span><span style="background:#6040bb"></span><span style="background:#110d1a"></span></div>
+      Lavendel
+    </button>
+
+    <button class="theme-btn" data-theme="pfirsich" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#ff8c42"></span><span style="background:#cc5010"></span><span style="background:#1a0e08"></span></div>
+      Pfirsich
+    </button>
+
+    <button class="theme-btn" data-theme="mint" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#3ecf8e"></span><span style="background:#0a7a40"></span><span style="background:#081410"></span></div>
+      Mint
+    </button>
+
+    <button class="theme-btn" data-theme="himmel" onclick="setTheme(this)">
+      <div class="tdots"><span style="background:#5599ff"></span><span style="background:#1455c0"></span><span style="background:#080e1a"></span></div>
+      Himmel
+    </button>
+
+  </div>
+</div>
+<div class="wrap">
+  <header>
+    <div class="hero">
+      <div class="hero-top">
+        <div class="hero-icon" id="hero-icon"></div>
+        <h1 id="hero-title"><i></i></h1>
+      </div>
+      <p>Wähle einen Bereich — Themen oder eine Schulphase.</p>
+    </div>
+  </header>
+
+  <div class="sections">
+
+    <!-- ═══════════════════════════════════════════════════════
+         THEMEN-ORDNER
+         Datei hinzufügen: class="folder" + href="themen/DATEINAME.html"
+                           badge: ready + Text "Verfügbar"
+         Noch keine Datei: class="folder disabled" + href="#"
+                           badge: soon + Text "Bald verfügbar"
+    ════════════════════════════════════════════════════════ -->
+    <div>
+      <div class="sec-label">Themen</div>
+      <div class="folder-grid">
+
+        <!-- THEMEN-DATEI — Status anpassen wenn Datei hochgeladen -->
+        <a class="folder" href="themen/index.html">
+          <div class="f-top"><div class="f-icon">📚</div><div class="f-arrow">↗</div></div>
+          <div><div class="f-name">Alle Themen</div><div class="f-sub">Interaktiver Lernzettel</div></div>
+          <div class="f-badge ready">Verfügbar</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         KLAUSUR-ORDNER (E2, Q1, Q2, Q3, Q4)
+         Klausur hinzufügen: class="folder" + href="PHASE/DATEINAME.html"
+         Noch keine:         class="folder disabled" + href="#"
+    ════════════════════════════════════════════════════════ -->
+    <div>
+      <div class="sec-label">Klausuren nach Schulphase</div>
+      <div class="folder-grid">
+
+        <!-- E2 -->
+        <a class="folder" href="mathe.html">
+          <div class="f-top"><div class="f-icon">📝</div><div class="f-arrow">↗</div></div>
+          <div><div class="f-name">E2</div><div class="f-sub">Einführungsphase 2</div></div>
+          <div class="f-badge ready">Klausur E2.2</div>
+        </a>
+
+        <!-- Q1 -->
+        <a class="folder disabled" href="#">
+          <div class="f-top"><div class="f-icon">📝</div><div class="f-arrow">↗</div></div>
+          <div><div class="f-name">Q1</div><div class="f-sub">Qualifikationsphase 1</div></div>
+          <div class="f-badge soon">Keine Klausur</div>
+        </a>
+
+        <!-- Q2 -->
+        <a class="folder disabled" href="#">
+          <div class="f-top"><div class="f-icon">📝</div><div class="f-arrow">↗</div></div>
+          <div><div class="f-name">Q2</div><div class="f-sub">Qualifikationsphase 2</div></div>
+          <div class="f-badge soon">Keine Klausur</div>
+        </a>
+
+        <!-- Q3 -->
+        <a class="folder disabled" href="#">
+          <div class="f-top"><div class="f-icon">📝</div><div class="f-arrow">↗</div></div>
+          <div><div class="f-name">Q3</div><div class="f-sub">Qualifikationsphase 3</div></div>
+          <div class="f-badge soon">Keine Klausur</div>
+        </a>
+
+        <!-- Q4 -->
+        <a class="folder disabled" href="#">
+          <div class="f-top"><div class="f-icon">📝</div><div class="f-arrow">↗</div></div>
+          <div><div class="f-name">Q4</div><div class="f-sub">Qualifikationsphase 4</div></div>
+          <div class="f-badge soon">Keine Klausur</div>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>Lernapp · Alle Inhalte für den privaten Schulgebrauch</footer>
+
+ <script src="../design.js"></script>
+</body>
+</html>
