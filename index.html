@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="de" data-mode="dark" data-theme="dunkel">
 <head>
 <meta charset="UTF-8">
@@ -6,20 +6,136 @@
 <title>Lernapp</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="design.css"> 
-  <style>
+<link rel="stylesheet" href="design.css">
+<style>
 header { padding-top: 80px; }
+
+/* ══ INFO-BUTTON (Nav links) ══════════════════════════ */
+.info-btn {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px; font-weight: 700;
+  transition: background .2s, color .2s, transform .15s;
+  flex-shrink: 0;
+}
+.info-btn:hover { background: var(--surface); color: var(--text); transform: scale(1.08); }
+
+/* ══ MODAL OVERLAY (gemeinsam für Info + Ankündigung) ═ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s ease;
+}
+.modal-overlay.open {
+  opacity: 1; pointer-events: all;
+}
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  width: 100%; max-width: 480px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 28px 28px 24px;
+  display: flex; flex-direction: column; gap: 20px;
+  transform: translateY(12px);
+  transition: transform .25s ease;
+  position: relative;
+}
+.modal-overlay.open .modal-box {
+  transform: translateY(0);
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; line-height: 1;
+  transition: background .2s, color .2s;
+}
+.modal-close:hover { background: var(--border); color: var(--text); }
+.modal-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px; font-weight: 400;
+  letter-spacing: -.01em;
+  color: var(--text);
+  padding-right: 24px;
+}
+.modal-title i { font-style: italic; color: var(--accent); }
+.modal-section { display: flex; flex-direction: column; gap: 8px; }
+.modal-section-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--accent);
+}
+.modal-section-text {
+  font-size: 13px; color: var(--muted);
+  line-height: 1.8;
+}
+.modal-divider {
+  height: 1px; background: var(--border);
+}
+
+/* ══ ANKÜNDIGUNGS-POPUP (eigene Akzent-Linie oben) ════ */
+.modal-box.announce { border-top: 3px solid var(--accent); }
+.announce-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--accent-fg);
+  background: var(--accent); padding: 3px 9px; border-radius: 6px;
+  width: fit-content;
+}
+.announce-message {
+  font-size: 14px; color: var(--text);
+  line-height: 1.8; white-space: pre-line;
+}
+
+@media (max-width: 580px) {
+  .modal-box { padding: 22px 18px 18px; }
+  .modal-title { font-size: 19px; }
+}
 </style>
 </head>
 <body>
 
+<!-- ══════════════════════════════════════════════════════
+     ANKÜNDIGUNG — hier konfigurieren
+     status: "active"   → Popup erscheint beim Laden der Seite
+     status: "inactive" → Popup wird nicht angezeigt
+     titel + nachricht  → dein eigener Text
+════════════════════════════════════════════════════════ -->
+<script>
+const ANKUENDIGUNG = {
+  status:    "inactive",
+  titel:     "Wichtige Mitteilung",
+  nachricht: "Hier deinen Text einfügen.\n\nDu kannst mehrere Absätze mit einer Leerzeile trennen."
+};
+</script>
+
 <!-- ── TOP NAV ── -->
 <nav>
-  <div class="nav-logo">
-    <div class="dot-live"></div>
-    <span class="nav-name">Lernapp</span>
+  <div class="nav-left">
+    <div class="nav-logo">
+      <div class="dot-live"></div>
+      <span class="nav-name">Lernapp</span>
+    </div>
+    <div class="nav-divider"></div>
+    <button class="info-btn" onclick="openInfo()" title="Info & Datenschutz">i</button>
   </div>
   <div class="nav-right">
     <button class="mode-btn" id="mode-btn" onclick="toggleMode()" title="Hell / Dunkel">🌙</button>
@@ -33,7 +149,60 @@ header { padding-top: 80px; }
   </div>
 </nav>
 
-<!-- DESIGN PANEL — diesen Block in allen HTML-Dateien ersetzen -->
+<!-- ── INFO MODAL ── -->
+<div class="modal-overlay" id="info-modal" onclick="closeOnOverlay(event, 'info-modal')">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('info-modal')">✕</button>
+    <div class="modal-title">Info & <i>Datenschutz</i></div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Über diese App</div>
+      <div class="modal-section-text">
+        Dies ist eine private Lernapp, die ausschließlich für den persönlichen Schulgebrauch erstellt wurde.
+        Die Inhalte sind nicht öffentlich zugänglich und richten sich nur an den Ersteller sowie ausgewählte Personen.
+      </div>
+    </div>
+
+    <div class="modal-divider"></div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Kein Anspruch auf Vollständigkeit</div>
+      <div class="modal-section-text">
+        Alle Inhalte wurden nach bestem Wissen erstellt, jedoch wird keine Garantie für Richtigkeit,
+        Vollständigkeit oder Aktualität übernommen. Die App ersetzt keinen Lehrer und keine offizielle Lernquelle.
+        Fehler können vorkommen — bei Unsicherheiten bitte immer die Schulunterlagen oder Lehrkraft konsultieren.
+      </div>
+    </div>
+
+    <div class="modal-divider"></div>
+
+    <div class="modal-section">
+      <div class="modal-section-label">Datenschutz & Technik</div>
+      <div class="modal-section-text">
+        Die App speichert lokal in deinem Browser ausschließlich deine Theme- und Farbeinstellung
+        (über <code>localStorage</code>). Es werden keine personenbezogenen Daten erhoben oder weitergegeben.<br><br>
+        Die Website wird über <strong>Cloudflare Pages</strong> gehostet. Cloudflare erfasst dabei technische
+        Zugriffsdaten (z. B. IP-Adresse, Browsertyp) zur Bereitstellung und Absicherung des Dienstes.
+        Diese Daten liegen bei Cloudflare und unterliegen deren Datenschutzrichtlinien:
+        <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener"
+           style="color:var(--accent);text-decoration:none;">cloudflare.com/privacypolicy</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── ANKÜNDIGUNGS MODAL ── -->
+<div class="modal-overlay" id="announce-modal" onclick="closeOnOverlay(event, 'announce-modal')">
+  <div class="modal-box announce">
+    <button class="modal-close" onclick="closeModal('announce-modal')">✕</button>
+    <div class="announce-badge">Ankündigung</div>
+    <div class="modal-title" id="announce-titel"></div>
+    <div class="announce-message" id="announce-nachricht"></div>
+  </div>
+</div>
+
+<!-- ── DESIGN PANEL ── -->
 <div id="design-panel">
   <div class="p-title">Theme wählen</div>
   <div class="theme-grid">
@@ -42,47 +211,38 @@ header { padding-top: 80px; }
       <div class="tdots"><span style="background:#c8f135"></span><span style="background:#444"></span><span style="background:#111"></span></div>
       Dunkel
     </button>
-
     <button class="theme-btn" data-theme="ozean" onclick="setTheme(this)">
       <div class="tdots"><span style="background:#4db8ff"></span><span style="background:#1a5a99"></span><span style="background:#050d1a"></span></div>
       Ozean
     </button>
-
     <button class="theme-btn" data-theme="wald" onclick="setTheme(this)">
       <div class="tdots"><span style="background:#5ec96a"></span><span style="background:#2a7030"></span><span style="background:#0b110d"></span></div>
       Wald
     </button>
-
     <button class="theme-btn" data-theme="rose" onclick="setTheme(this)">
       <div class="tdots"><span style="background:#ff6b9d"></span><span style="background:#aa2050"></span><span style="background:#1a0a10"></span></div>
       Rose
     </button>
-
     <button class="theme-btn" data-theme="schiefer" onclick="setTheme(this)">
       <div class="tdots"><span style="background:#7ba7e8"></span><span style="background:#3a6099"></span><span style="background:#10141c"></span></div>
       Schiefer
     </button>
-
     <button class="theme-btn" data-theme="sand" onclick="setTheme(this)">
       <div class="tdots"><span style="background:#e8a020"></span><span style="background:#8a6010"></span><span style="background:#1c1710"></span></div>
       Sand
     </button>
-
     <button class="theme-btn" data-theme="lavendel" onclick="setTheme(this)">
       <div class="tdots"><span style="background:#a87fff"></span><span style="background:#6040bb"></span><span style="background:#110d1a"></span></div>
       Lavendel
     </button>
-
     <button class="theme-btn" data-theme="pfirsich" onclick="setTheme(this)">
       <div class="tdots"><span style="background:#ff8c42"></span><span style="background:#cc5010"></span><span style="background:#1a0e08"></span></div>
       Pfirsich
     </button>
-
     <button class="theme-btn" data-theme="mint" onclick="setTheme(this)">
       <div class="tdots"><span style="background:#3ecf8e"></span><span style="background:#0a7a40"></span><span style="background:#081410"></span></div>
       Mint
     </button>
-
     <button class="theme-btn" data-theme="himmel" onclick="setTheme(this)">
       <div class="tdots"><span style="background:#5599ff"></span><span style="background:#1455c0"></span><span style="background:#080e1a"></span></div>
       Himmel
@@ -158,7 +318,6 @@ header { padding-top: 80px; }
         <div class="badge soon">Bald verfügbar</div>
       </a>
 
-      <!-- ⑩ GEOGRAPHIE — aktiv -->
       <a class="card" href="geographie/index.html">
         <div class="card-top"><div class="icon">🌍</div><div class="arrow">↗</div></div>
         <div><div class="name">Geographie</div><div class="sub">Erde & Klima</div></div>
@@ -170,6 +329,42 @@ header { padding-top: 80px; }
 </div>
 
 <footer>Lernapp · Alle Inhalte für den privaten Schulgebrauch</footer>
- <script src="design.js"></script>
+
+<script src="design.js"></script>
+<script>
+// ── MODAL FUNKTIONEN ─────────────────────────────────
+function openInfo() {
+  document.getElementById('info-modal').classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+function closeOnOverlay(event, id) {
+  // Schließt nur wenn direkt auf den dunklen Hintergrund geklickt wird
+  if (event.target === document.getElementById(id)) {
+    closeModal(id);
+  }
+}
+
+// ── ANKÜNDIGUNG BEIM LADEN PRÜFEN ────────────────────
+window.addEventListener('DOMContentLoaded', function () {
+  if (ANKUENDIGUNG.status === 'active') {
+    document.getElementById('announce-titel').textContent    = ANKUENDIGUNG.titel;
+    document.getElementById('announce-nachricht').textContent = ANKUENDIGUNG.nachricht;
+    // Kurze Verzögerung damit der Seitenaufbau zuerst sichtbar ist
+    setTimeout(function () {
+      document.getElementById('announce-modal').classList.add('open');
+    }, 400);
+  }
+});
+
+// ── ESC-TASTE schliesst offene Modals ────────────────
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') {
+    closeModal('info-modal');
+    closeModal('announce-modal');
+  }
+});
+</script>
 </body>
 </html>
