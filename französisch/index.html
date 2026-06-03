@@ -196,6 +196,12 @@ header { padding-top: 80px; }
 
 <footer>Lernapp · Alle Inhalte für den privaten Schulgebrauch</footer>
 
- <script src="../design.js"></script>
+<script src="../design.js"></script>
+<script>
+document.getElementById('nav-fach-name').textContent = FACH.name;
+document.getElementById('hero-icon').textContent = FACH.icon;
+document.getElementById('hero-title').innerHTML = '<i>' + FACH.name + '</i>';
+document.title = FACH.name + ' — Lernapp';
+</script>
 </body>
 </html>
