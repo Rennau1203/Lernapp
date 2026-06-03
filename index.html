@@ -367,13 +367,14 @@ function closeOnOverlay(event, id) {
 
 // ── ANKÜNDIGUNG BEIM LADEN PRÜFEN ────────────────────
 window.addEventListener('DOMContentLoaded', function () {
-  if (ANKUENDIGUNG.status === 'active') {
-    document.getElementById('announce-titel').textContent    = ANKUENDIGUNG.titel;
+  const storageKey = 'lernapp-announce-' + ANKUENDIGUNG.titel.replace(/\s+/g, '-');
+  if (ANKUENDIGUNG.status === 'active' && !localStorage.getItem(storageKey)) {
+    document.getElementById('announce-titel').textContent     = ANKUENDIGUNG.titel;
     document.getElementById('announce-nachricht').textContent = ANKUENDIGUNG.nachricht;
-    // Kurze Verzögerung damit der Seitenaufbau zuerst sichtbar ist
     setTimeout(function () {
       document.getElementById('announce-modal').classList.add('open');
     }, 400);
+    localStorage.setItem(storageKey, '1');
   }
 });
 
