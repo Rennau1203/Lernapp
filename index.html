@@ -368,7 +368,7 @@ function closeOnOverlay(event, id) {
 
 // ── ANKÜNDIGUNG BEIM LADEN PRÜFEN ────────────────────
 window.addEventListener('DOMContentLoaded', function () {
-  const storageKey = 'lernapp-announce-' + ANKUENDIGUNG.titel.replace(/\s+/g, '-');
+const storageKey = 'lernapp-announce-v' + ANKUENDIGUNG.version;
   if (ANKUENDIGUNG.status === 'active' && !localStorage.getItem(storageKey)) {
     document.getElementById('announce-titel').textContent     = ANKUENDIGUNG.titel;
     document.getElementById('announce-nachricht').textContent = ANKUENDIGUNG.nachricht;
