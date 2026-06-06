@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="de" data-mode="dark" data-theme="dunkel">
 <head>
 <meta charset="UTF-8">
@@ -6,188 +6,498 @@
 
 <script>
 const FACH = { name: "Französisch", icon: "🇫🇷" };
+const THEMA = { titel: "Intouchables", emoji: "🎬" };
+const BESCHREIBUNG = '"Intouchables" (2011) — Ein reicher, querschnittsgelähmter Aristokrat (Philippe) stellt den arbeitslosen Banlieue-Bewohner Driss als Pflegekraft ein. Trotz völlig verschiedener Welten entwickeln sie eine tiefe Freundschaft.';
 
-const THEMA = {
-  titel:        "Intouchables",
-  emoji:        "🎬",
-  beschreibung: "\"Intouchables\" (2011) von Olivier Nakache & Éric Toledano — Ein reicher, querschnittsgelähmter Pariser Aristokrat (Philippe) stellt den arbeitslosen Banlieue-Bewohner Driss als Pflegekraft ein, und die beiden entwickeln trotz völlig verschiedener Welten eine tiefe Freundschaft.",
-
-  kernpunkte: [
-    {
-      titel: "Was kommt in der Klausur?",
-      text:  "Aufgabe 1: Analyse einer Filmszene mit Bild (beschreiben, Bezug zum Film/Text herstellen, Botschaft erklären). Aufgabe 2: Multiple-Choice und offene Fragen zum Film/zur Szene. Aufgabe 3: Journal intime, lettre personnelle ODER monologue intérieur — immer aus der Perspektive von Driss oder Philippe."
-    },
-    {
-      titel: "Die zwei Hauptfiguren",
-      text:  "Philippe: reich, querschnittsgelähmt (tétraplégique), Kunstliebhaber, romantisch, gebildet, witzig — aber abhängig von Hilfe. Driss: arbeitslos, aus der Banlieue, vorbestraft, direkt, musikalisch (Soul/Funk), humorvoll, loyal — entwickelt sich durch Philippe weiter."
-    },
-    {
-      titel: "Das Hauptthema",
-      text:  "Zwei Welten (pauvre ↔ riche, banlieue ↔ hôtel particulier) treffen aufeinander. Beide verändern sich gegenseitig — Driss befreit Philippe von seiner Isolation, Philippe gibt Driss eine Chance im Leben. Zentral: Freundschaft über soziale Grenzen hinweg."
+const TABS = [
+  {
+    id: "ueberblick", label: "Überblick",
+    render: function(el) {
+      el.innerHTML = `
+        <div class="sec-label">Klausuraufbau</div>
+        <div class="kernpunkt-grid">
+          <div class="kernpunkt"><div class="kp-num">Aufgabe 01</div><div class="kp-titel">Bildanalyse — Analyse d'une image</div><div class="kp-text">Ein Bild aus dem Film analysieren: beschreiben, Bezug zum Film herstellen, Botschaft erklären.</div></div>
+          <div class="kernpunkt"><div class="kp-num">Aufgabe 02</div><div class="kp-titel">Filmfragen — Questions sur le film</div><div class="kp-text">Multiple-Choice und offene Fragen zum Inhalt des Films und der analysierten Szene.</div></div>
+          <div class="kernpunkt"><div class="kp-num">Aufgabe 03</div><div class="kp-titel">Schreiben — Production écrite</div><div class="kp-text">Journal intime, lettre personnelle ODER monologue intérieur — immer als Driss oder Philippe.</div></div>
+        </div>
+        <div class="sec-label" style="margin-top:36px">Die zwei Hauptfiguren</div>
+        <div class="kernpunkt-grid">
+          <div class="kernpunkt"><div class="kp-num">Philippe</div><div class="kp-titel">Reich, gelähmt, Kunstliebhaber</div><div class="kp-text">Querschnittsgelähmt (tétraplégique) nach Paragliding-Unfall. Hôtel particulier in Paris. Liebt Kunst, Poesie, klassische Musik. Wahres Handicap: Tod seiner Frau Alice (Krebs). Brieffreundschaft mit Éléonore.</div></div>
+          <div class="kernpunkt"><div class="kp-num">Driss</div><div class="kp-titel">Arbeitslos, aus der Banlieue</div><div class="kp-text">Echter Name: Bakari Bassara, aus dem Senegal, mit 8 Jahren adoptiert. 6 Monate Gefängnis wegen Einbruchs. Will zuerst nur die Assedic-Unterschrift. Liebt Soul & Funk. Am Ende: Arbeit, Führerschein, findet sich selbst.</div></div>
+          <div class="kernpunkt"><div class="kp-num">Hauptthema</div><div class="kp-titel">Zwei Welten — deux mondes</div><div class="kp-text">Pauvre ↔ riche. Banlieue ↔ hôtel particulier. Beide verändern sich gegenseitig (ils se changent mutuellement). Zentral: Freundschaft über soziale Grenzen (l'amitié sans frontières sociales).</div></div>
+        </div>`;
     }
-  ],
+  },
+  {
+    id: "bildanalyse", label: "Bildanalyse",
+    render: function(el) {
+      el.innerHTML = `
+        <div class="sec-label">Aufbau — Les trois étapes</div>
+        <div class="block-stack">
+          <div class="block">
+            <div class="block-header"><span class="block-tag">Schritt 1</span><span class="block-titel">Beschreiben — Description de l'image</span></div>
+            <div class="block-body"><div class="formel-inhalt">Was sehe ich? Wer ist zu sehen? Was passiert?
+Qu'est-ce qu'on voit ? Qui est representé(e) ? Que se passe-t-il ?
 
-  blocks: [
-    // ── AUFGABE 1: BILDANALYSE ──────────────────────────────
-    {
-      typ:    "formel",
-      titel:  "Aufgabe 1 — Bildanalyse (analyse d'une image/scène): Aufbau",
-      inhalt: `SCHRITT 1 — BESCHREIBEN (Description)\n  Was sehe ich? Wo? Wer ist zu sehen?\n  → Im Vordergrund (au premier plan) / Im Hintergrund (à l'arrière-plan)\n  → Links (à gauche) / Rechts (à droite) / In der Mitte (au milieu)\n  → On voit... / On peut voir... / Il y a...\n\nSCHRITT 2 — BEZUG ZUM FILM (Rapport texte/film)\n  Was zeigt diese Szene im Kontext des Films?\n  → Cette scène montre... / Dans cette scène, ...\n  → Cela se passe au moment où...\n  → On reconnaît Philippe / Driss parce que...\n\nSCHRITT 3 — BOTSCHAFT (Message / Interprétation)\n  Was will der Regisseur damit sagen?\n  → Le message de cette image est...\n  → Selon moi, la toile/photo exprime...\n  → On voit que la relation entre Driss et Philippe est...`
-    },
-    {
-      typ:    "beispiel",
-      titel:  "Satzhilfen für die Bildanalyse (fertige Sätze zum Einsetzen)",
-      inhalt: `BESCHREIBEN:\n  'Sur cette image, on voit [Person] qui [Verb]...'\n  'À gauche/droite, il y a...'\n  'Au premier plan, on remarque...'\n  'L'image montre une scène où...'\n\nBEZUG ZUM FILM:\n  'Cette scène se passe [wann/wo im Film]...'\n  'On reconnaît Driss/Philippe, parce qu'il...'\n  'Dans cette scène, Driss et Philippe...'\n  'C'est le moment où Philippe décide de...'\n\nBOTSCHAFT:\n  'Le message est que la vraie amitié n'a pas de frontières.'\n  'Cette image montre que les deux hommes se comprennent malgré leurs différences.'\n  'À mon avis, la toile/photo représente [Freiheit / Freundschaft / Vertrauen].'\n  'Selon moi, on voit l'infini / l'espoir / la liberté.'`
-    },
+POSITION (où ?)
+  Im Vordergrund   → au premier plan
+  Im Hintergrund   → à l'arrière-plan
+  Links / Rechts   → à gauche / à droite
+  In der Mitte     → au milieu / au centre
 
-    // ── AUFGABE 2: FILMWISSEN ───────────────────────────────
-    {
-      typ:    "hinweis",
-      titel:  "Wichtige Fakten zum Film — für Multiple Choice & offene Fragen",
-      inhalt: `PHILIPPE:\n  • Querschnittsgelähmt nach Paragliding-Unfall\n  • Lebt in einem großen Hôtel particulier in Paris\n  • Sammelt Kunst (peinture, poésie, musique classique)\n  • Seine Frau Alice ist an Krebs gestorben → sein 'wahres Handicap'\n  • Brieffreundschaft mit Éléonore\n  • Adoptivtochter Elisa (15 J.) — hat keinen guten Draht zu ihr\n  • Nach 5 toten Babys adoptierte er ein Kind\n  • Liebt Paragliding wegen Risiko, Geschwindigkeit, dem Gefühl von oben\n\nDRISS:\n  • Echter Name: Bakari Bassara, aus dem Senegal, mit 8 Jahren adoptiert\n  • 6 Monate Gefängnis wegen Juwelendiebstahl\n  • Will zuerst nur die Assedic-Unterschrift (Arbeitslosengeld)\n  • Familie lebt in einer kleinen HLM-Wohnung in der Banlieue\n  • Kleiner Bruder Adama → Drogenhandel\n  • Liebt Soul- und Funk-Musik\n  • Am Ende: bekommt Job, Führerschein, findet sich selbst\n\nCAFÉ-SZENE 'Aux Deux Magots' (43:02–46:43) — wichtig!\n  • Philippe erzählt Driss von seinem Leben, Alice, dem Paragliding\n  • Driss wird offiziell fest eingestellt\n  • Themen: Liebe, Paragliding, Elternschaft, Handicap`
-    },
+EINSTIEGSSÄTZE:
+  On voit / On peut voir...
+  Il y a... / On remarque...
+  Au premier plan, on voit...
+  À gauche, il y a... / À droite, on remarque...</div></div>
+          </div>
+          <div class="block">
+            <div class="block-header"><span class="block-tag">Schritt 2</span><span class="block-titel">Bezug zum Film — Rapport avec le film</span></div>
+            <div class="block-body"><div class="formel-inhalt">Was zeigt diese Szene im Kontext des Films?
+Quel est le rapport entre cette image et le film ?
 
-    // ── AUFGABE 3: SCHREIBAUFGABEN ──────────────────────────
-    {
-      typ:    "formel",
-      titel:  "Aufgabe 3a — Journal intime: Aufbau & Pflichtbestandteile",
-      inhalt: `FORMAT:\n  Datum + Uhrzeit oben (z.B.: 'Paris, le 15 novembre, 23 h 30')\n  Anrede optional: 'Cher journal,' oder direkt anfangen\n\nINHALT (was rein muss):\n  1. Was ist gerade passiert? (die Situation erklären)\n  2. Wie fühle ich mich? (Gefühle ausdrücken)\n  3. Warum hat jemand so gehandelt? (Gründe suchen)\n  4. Was könnte als nächstes passieren?\n  5. Optional: Eine Entscheidung treffen\n\nSPRACHE:\n  → Ich-Perspektive (je / moi)\n  → Umgangssprache erlaubt: 'C'est pas vrai !', 'Bof...'\n  → Zeiten: présent, imparfait, passé composé\n  → Ausrufe nutzen: 'Quelle journée !', 'Incroyable !'`
-    },
-    {
-      typ:    "formel",
-      titel:  "Aufgabe 3b — Lettre personnelle: Aufbau & Pflichtbestandteile",
-      inhalt: `FORMAT:\n  Ort + Datum oben rechts: 'Paris, le 15 novembre'\n  Anrede: 'Cher Philippe,' / 'Cher Driss,'\n  Schluss:  'Je t'embrasse, / Amicalement,' + Name\n\nINHALT:\n  1. Warum schreibe ich? (Anlass erklären)\n  2. Was ist passiert? (Situation beschreiben)\n  3. Wie geht es mir dabei? (Gefühle)\n  4. Was wünsche ich mir / erwarte ich?\n  5. Abschlusssatz + Grußformel\n\nSPRACHE:\n  → Persönlich, direkt, freundlich\n  → Zeiten: présent + passé composé + futur für Pläne\n  → Ausdrücke: 'Je t'écris pour...', 'Je voulais te dire que...', 'J'espère que...'`
-    },
-    {
-      typ:    "formel",
-      titel:  "Aufgabe 3c — Monologue intérieur: Aufbau & Pflichtbestandteile",
-      inhalt: `WAS IST EIN MONOLOGUE INTÉRIEUR?\n  Die inneren Gedanken einer Person in einem bestimmten Moment.\n  Sehr ähnlich wie ein Tagebuch, aber noch spontaner und ungeordneter.\n\nINHALT:\n  1. Was passiert gerade? / Was hat jemand gesagt?\n  2. Warum hat er/sie so gehandelt? (Erklärungen suchen)\n  3. Innere Konflikte, Zweifel, Hoffnungen\n  4. Was werde ich tun?\n\nSPRACHE:\n  → Ich-Perspektive (je)\n  → Keine feste Reihenfolge der Gedanken nötig\n  → Viele Fragen: 'Pourquoi est-ce qu'il...?', 'Que faire ?\'\n  → Ausrufe: 'Je n'en reviens pas !', 'C'est incroyable !'\n  → Zeiten: présent, imparfait, passé composé, futur`
-    },
+SATZANFÄNGE:
+  Cette scène montre...
+  Dans cette scène, Driss / Philippe...
+  Cela se passe au moment où...
+  On reconnait Driss / Philippe parce qu'il...
+  C'est le moment où... / C'est la scène où...
 
-    // ── SATZHILFEN GEFÜHLE & AUSDRÜCKE ─────────────────────
-    {
-      typ:    "beispiel",
-      titel:  "Satzhilfen: Gefühle ausdrücken (für alle 3 Schreibaufgaben)",
-      inhalt: `POSITIVE GEFÜHLE:\n  'Je suis content(e) / heureux(-se) que + subj.'\n  'Je me sens bien / à l'aise avec lui.'\n  'Je suis soulagé(e)...'\n  'Je n'en reviens pas — c'est incroyable !'\n  'Quelle chance ! / Quelle surprise !'\n\nNEGATIVE GEFÜHLE:\n  'Je suis en colère / furieux(-se).'\n  'Je me sens seul(e) / abandonné(e) / déçu(e).'\n  'J'ai honte de... / J'ai peur de...'\n  'Je ne comprends pas pourquoi il/elle...'\n  'Ça m'énerve ! / J'en ai marre !'\n\nZWEIFEL / FRAGEN:\n  'Je me demande si / pourquoi...'\n  'Peut-être que... / Il est possible que + subj.'\n  'Comment réagir ? / Que faire ?'\n\nWÜNSCHE / ENTSCHEIDUNGEN:\n  'Je voudrais que + subj. / J'aimerais que + subj.'\n  'Il faut que je... / Je dois...'\n  'Finalement, je vais... / À partir de maintenant,...'`
-    },
+BEISPIELE:
+  Cette scène se passe au café, quand Philippe embauche Driss.
+  On reconnait Philippe parce qu'il est dans son fauteuil roulant.
+  C'est le moment où les deux hommes apprennent à se connaitre.</div></div>
+          </div>
+          <div class="block hinweis-block">
+            <div class="block-header"><span class="block-tag hinweis-tag">Schritt 3</span><span class="block-titel">Botschaft — Message / Interprétation</span></div>
+            <div class="block-body"><div class="hinweis-inhalt">Was will der Regisseur sagen? — Quel est le message ?
 
-    // ── VOKABULAR FÜR DRISS-TEXTE ──────────────────────────
-    {
-      typ:    "beispiel",
-      titel:  "Driss schreibt / denkt — konkrete Beispielsätze",
-      inhalt: `DRISS schreibt an Philippe / denkt über Philippe nach:\n\n  'Philippe m'a donné une chance que personne n'avait donnée avant.'\n  'Je ne comprends pas vraiment son monde, mais je le respecte.'\n  'Au début, je voulais juste partir. Mais maintenant...'\n  'Il me traite comme une personne normale, pas comme un employé.'\n  'Chez lui, j'ai découvert la musique classique / la peinture.'\n  'Je dois aider mon frère Adama. C'est ma famille.'\n  'Sans Philippe, je serais encore dans la rue.'\n  'Cette amitié est étrange, mais elle est réelle.'\n\nEINFACHE ÜBERGÄNGE:\n  D'abord... → Ensuite... → Enfin...\n  Au début... → Mais maintenant...\n  Aujourd'hui... / Ce soir... / Cette nuit...`
-    },
-    {
-      typ:    "beispiel",
-      titel:  "Philippe schreibt / denkt — konkrete Beispielsätze",
-      inhalt: `PHILIPPE schreibt an Driss / denkt über Driss nach:\n\n  'Driss n'est pas comme les autres. Il me parle normalement.'\n  'Il ne me voit pas d'abord comme un handicapé.'\n  'Grâce à lui, j'ai retrouvé le goût de vivre.'\n  'Il m'a fait rire comme je n'avais pas ri depuis longtemps.'\n  'Je lui fais confiance, même si mon entourage ne comprend pas.'\n  'Mon vrai handicap, ce n'est pas le fauteuil. C'est la solitude.'\n  'Alice me manque toujours. Mais Driss m'aide à continuer.'\n  'Je voulais lui donner une chance — il me l'a rendue au centuple.'\n\nBRIEF-ANFÄNGE FÜR PHILIPPE:\n  'Cher Driss, je t'écris pour te dire que...'\n  'Depuis ton départ, la maison est différente...'\n  'Je voulais te remercier pour tout ce que tu as fait...'`
-    },
+SATZANFÄNGE:
+  Le message de cette image est que...
+  Selon moi, cette image montre / exprime...
+  À mon avis, on voit que la relation entre Driss et Philippe est...
+  Je trouve / Je pense que...
+  La toile / la photo représente...
 
-    // ── VOKABELLISTE KLAUSURRELEVANT ────────────────────────
-    {
-      typ:    "hinweis",
-      titel:  "Klausurvokabular — die wichtigsten Wörter",
-      inhalt: `PERSONEN & BEZIEHUNG:\n  l'amitié (f.) = die Freundschaft\n  un ami intime = ein enger Freund\n  la confiance = das Vertrauen\n  faire confiance à qn = jdm vertrauen\n  se confier à qn = sich jdm anvertrauen\n  s'aider mutuellement = sich gegenseitig helfen\n  la compassion = das Mitleid\n  la déception = die Enttäuschung\n\nFILM & SZENE (Bildanalyse):\n  l'image (f.) = das Bild\n  au premier plan = im Vordergrund\n  à l'arrière-plan = im Hintergrund\n  à gauche / à droite = links / rechts\n  au milieu / au centre = in der Mitte\n  le message = die Botschaft\n  le réalisateur = der Regisseur\n\nSOZIALE LAGE:\n  être au chômage = arbeitslos sein\n  la banlieue = der Vorort (oft sozial schwach)\n  un hôtel particulier = ein Stadtpalais\n  un handicapé / tétraplégique = ein Querschnittsgelähmter\n  un fauteuil roulant = ein Rollstuhl\n  aisé(e) = wohlhabend\n  marginalisé(e) = ausgegrenzt`
-    },
+THEMEN DIE OFT PASSEN:
+  l'amitié = die Freundschaft
+  la liberté = die Freiheit
+  la confiance = das Vertrauen
+  l'espoir = die Hoffnung
+  deux mondes différents = zwei verschiedene Welten</div></div>
+          </div>
+        </div>
+        <div class="sec-label" style="margin-top:36px">Satzhilfen für die Bildanalyse</div>
+        <div class="block-stack">
+          <div class="block">
+            <div class="block-header"><span class="block-tag beispiel-tag">Satzhilfen</span><span class="block-titel">Fertige Sätze — direkt einsetzen</span></div>
+            <div class="block-body"><div class="beispiel-inhalt">BESCHREIBEN:
+  Sur cette image, on voit [Person] qui [Verb]...
+  Au premier plan, on remarque...
+  À gauche / à droite, il y a...
+  L'image montre une scène où...
 
-    // ── GRAMMATIKHINWEISE ───────────────────────────────────
-    {
-      typ:    "hinweis",
-      titel:  "Grammatik-Schnellcheck für die Schreibaufgaben",
-      inhalt: `SUBJONCTIF — nach diesen Ausdrücken nötig:\n  'Je veux / voudrais que + subj.'\n  'Il faut que + subj.'\n  'Je suis content(e) que + subj.'\n  'Il est possible que + subj.'\n  Bildung: ils-Form Präsens, -ent weg, + -e, -es, -e, -ions, -iez, -ent\n  Beispiel: finir → ils finissent → je finisse\n\nPROPOSITION CONDITIONNELLE (wenn...dann):\n  Vergangenheit (hätte getan): 'Si j'avais su, j'aurais fait...'\n  Gegenwart (würde tun): 'Si je pouvais, je ferais...'\n\nZEITEN IM ÜBERBLICK:\n  Présent: Was gerade passiert / Gefühle jetzt\n  Passé composé: Was passiert ist (j'ai fait, il est venu)\n  Imparfait: Zustand in der Vergangenheit (c'était, il était)\n  Futur simple: Was passieren wird (je ferai, il viendra)`
+BEZUG ZUM FILM:
+  Cette scène se passe [wo/wann im Film]...
+  On reconnait Driss / Philippe, parce qu'il...
+  Dans cette scène, Driss et Philippe...
+  C'est le moment où Philippe decide de...
+
+BOTSCHAFT:
+  Le message est que la vraie amitie n'a pas de frontieres.
+  Cette image montre que les deux hommes se comprennent malgre leurs differences.
+  À mon avis, la photo represente la liberte / l'amitie / la confiance.
+  Selon moi, on voit l'espoir / la joie / la connexion entre les deux hommes.</div></div>
+          </div>
+        </div>`;
     }
-  ]
-};
+  },
+  {
+    id: "filmwissen", label: "Filmwissen",
+    render: function(el) {
+      el.innerHTML = `
+        <div class="sec-label">Wichtige Fakten — Faits importants</div>
+        <div class="block-stack">
+          <div class="block hinweis-block">
+            <div class="block-header"><span class="block-tag hinweis-tag">Merke</span><span class="block-titel">Philippe — Fakten für die Klausur</span></div>
+            <div class="block-body"><div class="hinweis-inhalt">Querschnittsgelähmt (tétraplégique) nach Paragliding-Unfall
+  → Il est devenu tétraplégique après un accident de parapente.
 
-// ── QUIZ-DATEN ───────────────────────────────────────────
-const QUIZ = [
-  {
-    frage: "Warum geht Driss anfangs überhaupt zum Vorstellungsgespräch bei Philippe?",
-    antworten: [
-      "Er will unbedingt als Pflegekraft arbeiten.",
-      "Er braucht nur die Unterschrift für sein Arbeitslosengeld (Assedic).",
-      "Er wurde von einem Freund geschickt.",
-      "Er kennt Philippe bereits."
-    ],
-    richtig: 1,
-    erklaerung: "Driss will die Unterschrift (la signature) für seine Assedic — das Arbeitslosengeld. Er hat kein echtes Interesse an dem Job."
+Lebt in einem Stadtpalais (hôtel particulier) in Paris
+  → Il vit dans un grand hôtel particulier à Paris.
+
+Liebt Kunst, Poesie, klassische Musik
+  → Il aime l'art, la poésie, la musique classique.
+
+Seine Frau Alice starb an Krebs — sein wahres Handicap (son vrai handicap)
+  → Mon vrai handicap, ce n'est pas le fauteuil, c'est d'avoir perdu ma femme.
+
+Brieffreundschaft mit Éléonore (une relation épistolaire avec Éléonore)
+
+Adoptivtochter Elisa, 15 Jahre — schlechtes Verhältnis
+  → Il a du mal à communiquer avec sa fille Elisa.
+
+Nach 5 toten Kindern: ein Kind adoptiert
+  → Après 5 fausses couches, ils ont adopté un enfant.
+
+Liebt Paragliding wegen Risiko, Geschwindigkeit, Freiheit
+  → Il aime le risque, la vitesse et le sentiment de liberté.</div></div>
+          </div>
+          <div class="block hinweis-block">
+            <div class="block-header"><span class="block-tag hinweis-tag">Merke</span><span class="block-titel">Driss — Fakten für die Klausur</span></div>
+            <div class="block-body"><div class="hinweis-inhalt">Echter Name: Bakari Bassara — aus dem Senegal, mit 8 Jahren adoptiert
+  → Son vrai nom est Bakari Bassara. Il vient du Sénégal.
+
+6 Monate Gefängnis wegen Einbruchs (6 mois de prison pour cambriolage)
+
+Will zuerst nur die Assedic-Unterschrift (Arbeitslosengeld)
+  → Au début, il veut juste la signature pour ses Assedic.
+
+Familie lebt in kleiner HLM-Wohnung in der Banlieue
+  → Sa famille vit dans un petit appartement HLM en banlieue.
+
+Kleiner Bruder Adama — Drogenhandel (trafic de drogues)
+
+Liebt Soul- und Funk-Musik (il aime la musique soul et funk)
+
+Am Ende: feste Arbeit, Führerschein, versöhnt mit Familie
+  → À la fin, il a un emploi, le permis de conduire et retrouve sa famille.</div></div>
+          </div>
+          <div class="block">
+            <div class="block-header"><span class="block-tag">Szene</span><span class="block-titel">Café-Szene "Aux Deux Magots" (43:02–46:43) — sehr wichtig!</span></div>
+            <div class="block-body"><div class="formel-inhalt">Was passiert? / Que se passe-t-il ?
+  Philippe stellt Driss offiziell fest ein (il embauche Driss définitivement).
+  Philippe erzählt von seinem Leben, Alice, dem Paragliding.
+  Sie lernen sich wirklich kennen (ils apprennent vraiment à se connaitre).
+
+Themen der Szene:
+  l'amour = die Liebe — Philippe erzählt von Alice
+  le parapente = das Paragliding — Philippes Leidenschaft
+  la souffrance = das Leiden — Fausses couches, Tod von Alice
+  l'emploi = die Arbeit — Driss wird eingestellt</div></div>
+          </div>
+        </div>
+        <div class="sec-label" style="margin-top:36px">Vokabular — Le vocabulaire</div>
+        <div class="block-stack">
+          <div class="block">
+            <div class="block-header"><span class="block-tag beispiel-tag">Vokabeln</span><span class="block-titel">Personen & Beziehung — Personnes et relations</span></div>
+            <div class="block-body"><div class="beispiel-inhalt">l'amitié (f.)            = die Freundschaft
+un ami intime            = ein enger Freund
+la confiance             = das Vertrauen
+faire confiance à qn     = jdm vertrauen
+se confier à qn          = sich jdm anvertrauen
+s'aider mutuellement     = sich gegenseitig helfen
+la compassion            = das Mitleid
+la déception             = die Enttäuschung
+la relation épistolaire  = die Brieffreundschaft
+soutenir qn              = jdn unterstützen</div></div>
+          </div>
+          <div class="block">
+            <div class="block-header"><span class="block-tag beispiel-tag">Vokabeln</span><span class="block-titel">Soziale Lage & Film — Situation sociale et film</span></div>
+            <div class="block-body"><div class="beispiel-inhalt">être au chômage          = arbeitslos sein
+une HLM                  = eine Sozialwohnung
+la banlieue              = der Vorort (sozial schwach)
+un hôtel particulier     = ein Stadtpalais
+être marginalisé(e)      = ausgegrenzt sein
+aisé(e)                  = wohlhabend
+un tétraplégique         = ein Querschnittsgelähmter
+un fauteuil roulant      = ein Rollstuhl
+un auxiliaire de vie     = eine Pflegekraft
+au premier plan          = im Vordergrund
+à l'arrière-plan         = im Hintergrund
+le réalisateur           = der Regisseur</div></div>
+          </div>
+        </div>`;
+    }
   },
   {
-    frage: "Was ist laut Philippe sein 'wahres Handicap'?",
-    antworten: [
-      "Der Rollstuhl.",
-      "Seine Tochter Elisa.",
-      "Der Tod seiner Frau Alice.",
-      "Die Schmerzen in den Beinen."
-    ],
-    richtig: 2,
-    erklaerung: "Philippe sagt: \"Mon vrai handicap, ce n'est pas le fauteuil, mais d'avoir perdu ma femme.\" Die Einsamkeit nach Alices Tod ist sein eigentliches Leiden."
+    id: "schreiben", label: "Schreiben",
+    render: function(el) {
+      el.innerHTML = `
+        <div class="sec-label">Journal intime — Tagebucheintrag</div>
+        <div class="block-stack">
+          <div class="block">
+            <div class="block-header"><span class="block-tag">Aufbau</span><span class="block-titel">Format & Pflichtbestandteile</span></div>
+            <div class="block-body"><div class="formel-inhalt">FORMAT:
+  Datum + Uhrzeit:  Paris, le 15 novembre, 23 h 30
+  Anrede optional:  Cher journal, ... (oder direkt anfangen)
+
+INHALT:
+  1. Was ist gerade passiert?         → Qu'est-ce qui s'est passé ?
+  2. Wie fühle ich mich?              → Comment je me sens ?
+  3. Warum hat jemand so gehandelt?   → Pourquoi est-ce qu'il a fait ça ?
+  4. Was könnte als nächstes passieren?
+  5. Optional: Eine Entscheidung treffen
+
+SPRACHE:
+  → Ich-Perspektive (je / moi)
+  → Umgangssprache erlaubt: C'est pas vrai ! / Bof...
+  → Zeiten: présent + imparfait + passé composé
+  → Ausrufe: Quelle journée ! / Incroyable !</div></div>
+          </div>
+          <div class="block">
+            <div class="block-header"><span class="block-tag beispiel-tag">Satzhilfen</span><span class="block-titel">Einstieg & typische Sätze — Journal intime</span></div>
+            <div class="block-body"><div class="beispiel-inhalt">EINSTIEG:
+  Paris, le [Datum], [Uhrzeit]
+  Aujourd'hui, il s'est passé quelque chose d'incroyable...
+  Ce soir, je ne sais pas quoi penser...
+  Je n'en reviens pas ! Philippe vient de...
+
+ALS DRISS:
+  Philippe m'a donné une chance que personne n'avait donnée avant.
+  Au début, je voulais juste partir. Mais maintenant...
+  Je ne comprends pas vraiment son monde, mais je le respecte.
+  Sans Philippe, je serais encore dans la rue.
+
+ALS PHILIPPE:
+  Driss n'est pas comme les autres. Il me parle normalement.
+  Mon vrai handicap, ce n'est pas le fauteuil. C'est la solitude.
+  Grâce à lui, j'ai retrouvé le goût de vivre.
+  Alice me manque toujours. Mais Driss m'aide à continuer.</div></div>
+          </div>
+        </div>
+        <div class="sec-label" style="margin-top:36px">Lettre personnelle — Persönlicher Brief</div>
+        <div class="block-stack">
+          <div class="block">
+            <div class="block-header"><span class="block-tag">Aufbau</span><span class="block-titel">Format & Pflichtbestandteile</span></div>
+            <div class="block-body"><div class="formel-inhalt">FORMAT:
+  Ort + Datum oben rechts:  Paris, le 15 novembre
+  Anrede:                   Cher Philippe, / Cher Driss,
+  Schluss:                  Je t'embrasse, / Amicalement, + Name
+
+INHALT:
+  1. Warum schreibe ich?    → Je t'écris pour...
+  2. Was ist passiert?      → Situation beschreiben
+  3. Wie geht es mir?       → Gefühle ausdrücken
+  4. Was wünsche ich mir?   → Wünsche / Erwartungen
+  5. Abschlusssatz + Grußformel
+
+SPRACHE:
+  → Persönlich, direkt, freundlich
+  → Zeiten: présent + passé composé + futur
+  → Je t'écris pour... / Je voulais te dire que... / J'espère que...</div></div>
+          </div>
+          <div class="block">
+            <div class="block-header"><span class="block-tag beispiel-tag">Satzhilfen</span><span class="block-titel">Einstieg & typische Sätze — Lettre</span></div>
+            <div class="block-body"><div class="beispiel-inhalt">EINSTIEG:
+  Cher Driss, je t'écris pour te dire que...
+  Cher Philippe, depuis quelques jours, je pense à...
+  Je voulais te remercier pour tout ce que tu as fait.
+
+MITTELTEIL:
+  Récemment, il s'est passé quelque chose d'important...
+  Je dois t'avouer que... / Je voulais te dire que...
+  Tu m'as appris que... / Grâce à toi, j'ai compris que...
+
+SCHLUSS:
+  J'espère qu'on pourra se revoir bientôt.
+  Je t'embrasse / Amicalement, [Name]
+  À bientôt, j'espère !</div></div>
+          </div>
+        </div>
+        <div class="sec-label" style="margin-top:36px">Monologue intérieur — Innerer Monolog</div>
+        <div class="block-stack">
+          <div class="block">
+            <div class="block-header"><span class="block-tag">Aufbau</span><span class="block-titel">Was ist ein monologue intérieur?</span></div>
+            <div class="block-body"><div class="formel-inhalt">Innere Gedanken einer Person in einem bestimmten Moment.
+Ähnlich wie ein Tagebuch — aber spontaner, ungeordneter, emotionaler.
+KEIN Datum, KEINE Anrede, direkt mit Gedanken anfangen.
+
+INHALT:
+  1. Was passiert gerade? / Was wurde gesagt?
+  2. Warum hat er/sie so gehandelt?
+  3. Innere Konflikte, Zweifel, Hoffnungen
+  4. Was werde ich tun?
+
+SPRACHE:
+  → Ich-Perspektive (je)
+  → Keine feste Reihenfolge der Gedanken
+  → Viele Fragen: Pourquoi ? / Que faire ? / Comment ?
+  → Ausrufe: Je n'en reviens pas ! / C'est incroyable !
+  → Zeiten: présent + imparfait + passé composé + futur</div></div>
+          </div>
+          <div class="block">
+            <div class="block-header"><span class="block-tag beispiel-tag">Satzhilfen</span><span class="block-titel">Einstieg & typische Sätze — Monologue</span></div>
+            <div class="block-body"><div class="beispiel-inhalt">DIREKTER EINSTIEG (kein Datum, keine Anrede!):
+  Je n'en reviens pas ! Philippe vient de me dire que...
+  Qu'est-ce qui m'arrive ? Je ne comprends plus rien...
+  C'est incroyable ! Comment est-ce possible que...
+
+INNERE FRAGEN:
+  Pourquoi est-ce qu'il/elle a fait ça ?
+  Que faire maintenant ? / Où aller ?
+  Je me demande si / pourquoi...
+
+ENTSCHEIDUNGEN:
+  Il faut que je... / Je dois...
+  À partir de maintenant, je vais...
+  Finalement, j'ai décidé de...</div></div>
+          </div>
+        </div>`;
+    }
   },
   {
-    frage: "Wie heißt Driss mit richtigem Namen?",
-    antworten: [
-      "Adama Bassara",
-      "Bakari Bassara",
-      "Driss Sellou",
-      "Omar Sy"
-    ],
-    richtig: 1,
-    erklaerung: "Driss heißt eigentlich Bakari Bassara. Er kam aus dem Senegal und wurde mit 8 Jahren von seinem Onkel adoptiert und in Driss umbenannt."
+    id: "satzhilfen", label: "Satzhilfen",
+    render: function(el) {
+      el.innerHTML = `
+        <div class="sec-label">Gefühle ausdrücken — Exprimer ses sentiments</div>
+        <div class="block-stack">
+          <div class="block">
+            <div class="block-header"><span class="block-tag beispiel-tag">Satzhilfen</span><span class="block-titel">Positive Gefühle — Sentiments positifs</span></div>
+            <div class="block-body"><div class="beispiel-inhalt">Je suis content(e) / heureux(-se) que + subj.
+Je me sens bien / à l'aise avec lui.
+Je suis soulagé(e)...
+Je n'en reviens pas — c'est incroyable !
+Quelle chance ! / Quelle surprise !
+Je suis reconnaissant(e) envers...   = ich bin dankbar gegenüber...
+Grâce à lui/elle, j'ai compris que... = dank ihm/ihr habe ich verstanden...</div></div>
+          </div>
+          <div class="block">
+            <div class="block-header"><span class="block-tag beispiel-tag">Satzhilfen</span><span class="block-titel">Negative Gefühle — Sentiments négatifs</span></div>
+            <div class="block-body"><div class="beispiel-inhalt">Je suis en colère / furieux(-se).   = ich bin wütend
+Je me sens seul(e) / abandonné(e) / déçu(e).
+J'ai honte de... / J'ai peur de...
+Je ne comprends pas pourquoi il/elle...
+Ça m'énerve ! / J'en ai marre !   = das nervt mich / ich habe die Nase voll
+Je suis désespéré(e)...   = ich bin verzweifelt
+Je me sens trahi(e)...   = ich fühle mich verraten</div></div>
+          </div>
+          <div class="block">
+            <div class="block-header"><span class="block-tag beispiel-tag">Satzhilfen</span><span class="block-titel">Zweifel & Wünsche — Doutes et souhaits</span></div>
+            <div class="block-body"><div class="beispiel-inhalt">ZWEIFEL / FRAGEN:
+  Je me demande si / pourquoi...   = ich frage mich ob / warum
+  Peut-être que... / Il est possible que + subj.
+  Comment réagir ? / Que faire ?   = wie reagieren? / was tun?
+
+WÜNSCHE / ENTSCHEIDUNGEN:
+  Je voudrais que + subj.   = ich würde gerne, dass...
+  Il faut que je... + subj.   = ich muss...
+  Finalement, je vais...   = letztendlich werde ich...
+  À partir de maintenant,...   = ab jetzt...</div></div>
+          </div>
+        </div>
+        <div class="sec-label" style="margin-top:36px">Grammatik-Schnellcheck</div>
+        <div class="block-stack">
+          <div class="block hinweis-block">
+            <div class="block-header"><span class="block-tag hinweis-tag">Grammatik</span><span class="block-titel">Subjonctif — wann und wie?</span></div>
+            <div class="block-body"><div class="hinweis-inhalt">WANN? Nach diesen Ausdrücken kommt immer Subjonctif:
+  Je veux / voudrais que...
+  Il faut que...
+  Je suis content(e) / triste que...
+  Il est possible / important que...
+
+WIE BILDEN?
+  ils-Form Präsens → -ent weglassen → Endungen anhängen
+  finir → ils finissent → je finisse, tu finisses...
+  faire → ils fassent → je fasse, tu fasses...
+
+NICHT danach (Indikativ!):
+  Je pense que... / Je sais que... / Il dit que...</div></div>
+          </div>
+          <div class="block hinweis-block">
+            <div class="block-header"><span class="block-tag hinweis-tag">Grammatik</span><span class="block-titel">Zeiten im Überblick — Les temps verbaux</span></div>
+            <div class="block-body"><div class="hinweis-inhalt">PRÉSENT → Gefühle jetzt / was gerade passiert
+  Je suis content. / Il me dit que...
+
+PASSÉ COMPOSÉ → Was passiert ist (Handlungen)
+  J'ai fait... / Il est venu... / Elle a dit...
+
+IMPARFAIT → Zustand / Beschreibung in der Vergangenheit
+  C'était... / Il était... / Nous vivions...
+
+FUTUR SIMPLE → Was passieren wird
+  Je ferai... / Il viendra... / Nous partirons...
+
+CONDITIONNEL → Hypothesen (wenn...dann)
+  Si j'avais su, j'aurais fait...
+  Si je pouvais, je ferais...</div></div>
+          </div>
+        </div>`;
+    }
   },
   {
-    frage: "Was passiert in der Café-Szene 'Aux Deux Magots' (43:02–46:43)?",
-    antworten: [
-      "Driss kündigt seinen Job.",
-      "Philippe und Driss streiten sich.",
-      "Philippe stellt Driss fest ein und erzählt ihm von seinem Leben.",
-      "Driss lernt Éléonore kennen."
-    ],
-    richtig: 2,
-    erklaerung: "In dieser wichtigen Szene (embauché = fest eingestellt) erzählt Philippe von Alice, dem Paragliding, seinem Leben — sie lernen sich wirklich kennen."
-  },
-  {
-    frage: "Welche Zeitformen braucht man im Journal intime?",
-    antworten: [
-      "Nur Futur",
-      "Nur Imparfait",
-      "Présent, Imparfait und Passé composé",
-      "Nur Passé composé"
-    ],
-    richtig: 2,
-    erklaerung: "Im Tagebuch nutzt man: présent (Gefühle jetzt), passé composé (was passiert ist), imparfait (Zustände in der Vergangenheit). Alle drei zusammen!"
-  },
-  {
-    frage: "Nach welchem Ausdruck muss man den Subjonctif verwenden?",
-    antworten: [
-      "'Je pense que...'",
-      "'Il dit que...'",
-      "'Je veux que...'",
-      "'Je sais que...'"
-    ],
-    richtig: 2,
-    erklaerung: "Nach Willensausdrücken wie 'je veux que', 'il faut que', 'je voudrais que' kommt immer der Subjonctif. Nach 'je pense que', 'il dit que', 'je sais que' kommt der Indikativ."
-  },
-  {
-    frage: "Wo leben die Hauptfiguren zu Beginn des Films?",
-    antworten: [
-      "Beide in der Banlieue",
-      "Philippe im Hôtel particulier, Driss in der Banlieue (HLM)",
-      "Beide in einem Luxushotel",
-      "Driss im Hôtel particulier, Philippe in der Banlieue"
-    ],
-    richtig: 1,
-    erklaerung: "Philippe wohnt in einem großen Stadtpalais (hôtel particulier), Driss in einer kleinen HLM-Wohnung in der Banlieue parisienne — das ist der Kern des sozialen Kontrasts."
-  },
-  {
-    frage: "Welcher Satz ist ein guter Einstieg für einen Monologue intérieur von Driss?",
-    antworten: [
-      "'Cher journal, aujourd'hui...'",
-      "'Paris, le 15 novembre — Cher Philippe...'",
-      "'Je n'en reviens pas ! Philippe vient de me dire que...'",
-      "'Il était une fois dans la banlieue...'"
-    ],
-    richtig: 2,
-    erklaerung: "Der Monologue intérieur beginnt direkt mit einem Gedanken/Ausruf — ohne Datumszeile (das ist das Tagebuch) und ohne Anrede (das ist der Brief). Spontan, emotional, in der Ich-Perspektive."
+    id: "quiz", label: "Quiz",
+    render: function(el) {
+      window._quizData = [
+        {
+          fr: "Pourquoi Driss va-t-il chez Philippe au début du film ?",
+          de: "Warum geht Driss anfangs zu Philippe?",
+          antworten: ["Il veut vraiment travailler comme auxiliaire de vie.", "Il a besoin juste d'une signature pour ses Assedic.", "Un ami l'a envoyé chez Philippe.", "Il connait déjà Philippe."],
+          richtig: 1,
+          erklaerung: "Driss will nur die Unterschrift für sein Arbeitslosengeld. — Il veut seulement la signature pour ses Assedic."
+        },
+        {
+          fr: "Quel est le vrai handicap de Philippe selon lui ?",
+          de: "Was ist laut Philippe sein wahres Handicap?",
+          antworten: ["Le fauteuil roulant.", "Sa fille Elisa.", "La mort de sa femme Alice.", "Les douleurs dans les jambes."],
+          richtig: 2,
+          erklaerung: "Mon vrai handicap, ce n'est pas le fauteuil, mais d'avoir perdu ma femme. Die Einsamkeit nach Alices Tod ist sein eigentliches Leiden."
+        },
+        {
+          fr: "Quel est le vrai nom de Driss ?",
+          de: "Wie heißt Driss mit richtigem Namen?",
+          antworten: ["Adama Bassara", "Bakari Bassara", "Driss Sellou", "Omar Sy"],
+          richtig: 1,
+          erklaerung: "Son vrai nom est Bakari Bassara. Il vient du Sénégal et a été adopté à l'âge de 8 ans."
+        },
+        {
+          fr: "Que se passe-t-il dans la scène au café Aux Deux Magots ?",
+          de: "Was passiert in der Café-Szene Aux Deux Magots?",
+          antworten: ["Driss quitte son travail.", "Philippe et Driss se disputent.", "Philippe embauche Driss et lui parle de sa vie.", "Driss rencontre Éléonore."],
+          richtig: 2,
+          erklaerung: "Philippe stellt Driss fest ein (embauché) und erzählt von Alice, dem Paragliding und seinem Leben."
+        },
+        {
+          fr: "Quels temps faut-il utiliser dans un journal intime ?",
+          de: "Welche Zeitformen braucht man im Journal intime?",
+          antworten: ["Seulement le futur", "Seulement l'imparfait", "Le présent, l'imparfait et le passé composé", "Seulement le passé composé"],
+          richtig: 2,
+          erklaerung: "Présent für Gefühle jetzt, passé composé für Handlungen, imparfait für Beschreibungen — alle drei zusammen."
+        },
+        {
+          fr: "Après quelle expression faut-il utiliser le subjonctif ?",
+          de: "Nach welchem Ausdruck kommt der Subjonctif?",
+          antworten: ["Je pense que...", "Il dit que...", "Je veux que...", "Je sais que..."],
+          richtig: 2,
+          erklaerung: "Nach je veux que, il faut que, je voudrais que kommt immer der Subjonctif. Nach je pense / sais / dit que kommt Indikativ."
+        },
+        {
+          fr: "Où habitent les deux personnages principaux au début du film ?",
+          de: "Wo wohnen die Hauptfiguren zu Beginn des Films?",
+          antworten: ["Tous les deux en banlieue", "Philippe dans un hôtel particulier, Driss en banlieue (HLM)", "Tous les deux dans un hôtel de luxe", "Driss dans un hôtel particulier, Philippe en banlieue"],
+          richtig: 1,
+          erklaerung: "Philippe im Hôtel particulier (Stadtpalais), Driss in einer HLM-Wohnung in der Banlieue — das ist der soziale Kontrast des Films."
+        },
+        {
+          fr: "Quelle est la bonne façon de commencer un monologue intérieur de Driss ?",
+          de: "Wie beginnt man einen Monologue intérieur von Driss?",
+          antworten: ["Cher journal, aujourd'hui...", "Paris, le 15 novembre — Cher Philippe...", "Je n'en reviens pas ! Philippe vient de me dire que...", "Il était une fois dans la banlieue..."],
+          richtig: 2,
+          erklaerung: "Kein Datum, keine Anrede — direkt mit einem spontanen Gedanken oder Ausruf anfangen."
+        }
+      ];
+
+      let html = '<div class="sec-label">Quiz — Beantworte die Fragen auf Französisch</div><div class="quiz-wrap">';
+      window._quizData.forEach((q, qi) => {
+        let antwHTML = '';
+        q.antworten.forEach((a, ai) => {
+          antwHTML += `<button class="quiz-btn" id="qb${qi}_${ai}" onclick="antworten(${qi},${ai})">${a}</button>`;
+        });
+        html += `
+          <div class="quiz-card" id="qc${qi}">
+            <div class="quiz-frage">
+              <span>Question ${qi+1} / ${window._quizData.length}</span>
+              ${q.fr}
+              <div><button class="translate-btn" id="tbtn${qi}" onclick="toggleTranslate(${qi})">🇩🇪 Übersetzen</button></div>
+              <div class="quiz-translation" id="qtrans${qi}">${q.de}</div>
+            </div>
+            <div class="quiz-antworten">${antwHTML}</div>
+            <div class="quiz-erklaerung" id="qe${qi}">✓ ${q.erklaerung}</div>
+          </div>`;
+      });
+      html += '</div>';
+      el.innerHTML = html;
+    }
   }
 ];
 </script>
@@ -195,61 +505,60 @@ const QUIZ = [
 <title>Laden…</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../design.css">
+<link rel="stylesheet" href="../design.css">
 
 <style>
 header{padding:88px 0 0;position:relative;z-index:1}
 .thema-desc{font-size:15px;color:var(--muted);max-width:680px;line-height:1.8;margin-top:10px;transition:color .3s}
-.content-area{display:flex;flex-direction:column;gap:48px;padding-bottom:80px;position:relative;z-index:1}
-
-/* Kernpunkte */
-.kernpunkt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:background .3s,border-color .3s}
-.kernpunkt{background:var(--surface);padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;transition:background .18s;animation:fadeUp .4s ease both}
+.content-area{padding-bottom:80px;position:relative;z-index:1}
+.tab-bar{display:flex;gap:2px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow-x:auto;padding:3px;margin-bottom:28px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tab-bar::-webkit-scrollbar{display:none}
+.tab-btn{flex-shrink:0;padding:8px 16px;border-radius:9px;border:none;background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;cursor:pointer;transition:background .18s,color .18s;white-space:nowrap}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{background:var(--surface);color:var(--text)}
+.tab-panel{display:none}
+.tab-panel.active{display:block;animation:fadeUp .3s ease both}
+.kernpunkt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:background .3s,border-color .3s}
+.kernpunkt{background:var(--surface);padding:22px 20px 20px;display:flex;flex-direction:column;gap:10px;transition:background .18s}
 .kernpunkt:hover{background:var(--surface2)}
 .kp-num{font-size:10px;font-weight:700;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;transition:color .3s}
 .kp-titel{font-size:14px;font-weight:600;letter-spacing:-.01em}
 .kp-text{font-size:13px;color:var(--muted);line-height:1.75;transition:color .3s}
-
-/* Blocks */
-.block-stack{display:flex;flex-direction:column;gap:12px}
-.block{border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .3s;animation:fadeUp .4s ease both}
-.block-header{padding:12px 18px;background:var(--surface2);display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);transition:background .3s,border-color .3s}
-.block-tag{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-fg);background:var(--accent);padding:2px 7px;border-radius:5px;transition:background .3s,color .3s}
+.block-stack{display:flex;flex-direction:column;gap:10px}
+.block{border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .3s}
+.block-header{padding:11px 16px;background:var(--surface2);display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);transition:background .3s,border-color .3s}
+.block-tag{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-fg);background:var(--accent);padding:2px 7px;border-radius:5px;white-space:nowrap;transition:background .3s,color .3s}
 .block-tag.beispiel-tag{background:var(--surface);color:var(--muted);border:1px solid var(--border)}
 .block-tag.hinweis-tag{background:transparent;color:var(--accent);border:1px solid var(--accent)}
 .block-titel{font-size:13px;font-weight:600}
-.block-body{padding:18px;background:var(--surface);transition:background .3s}
-.formel-inhalt{font-family:'Courier New',monospace;font-size:12.5px;line-height:1.95;color:var(--text);white-space:pre;overflow-x:auto;transition:color .3s}
+.block-body{padding:16px;background:var(--surface);transition:background .3s}
+.formel-inhalt{font-family:'Courier New',monospace;font-size:12px;line-height:2;color:var(--text);white-space:pre;overflow-x:auto;transition:color .3s}
 .beispiel-inhalt{font-family:'Syne',sans-serif;font-size:13px;line-height:1.9;color:var(--text);white-space:pre-line;transition:color .3s}
 .block.hinweis-block{border-color:var(--accent)}
 .block.hinweis-block .block-header{background:color-mix(in srgb,var(--accent) 8%,transparent);border-bottom-color:var(--accent)}
-.hinweis-inhalt{font-size:13px;line-height:1.8;color:var(--muted);white-space:pre-line;transition:color .3s}
-
-/* Quiz */
-.quiz-wrap{display:flex;flex-direction:column;gap:20px}
-.quiz-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;animation:fadeUp .4s ease both;transition:border-color .3s}
-.quiz-frage{padding:16px 18px 14px;background:var(--surface2);border-bottom:1px solid var(--border);font-size:13px;font-weight:600;line-height:1.55;transition:background .3s,border-color .3s}
+.hinweis-inhalt{font-size:13px;line-height:1.85;color:var(--muted);white-space:pre-line;transition:color .3s}
+.quiz-wrap{display:flex;flex-direction:column;gap:16px}
+.quiz-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .3s}
+.quiz-frage{padding:14px 16px 12px;background:var(--surface2);border-bottom:1px solid var(--border);font-size:13px;font-weight:600;line-height:1.55;transition:background .3s,border-color .3s}
 .quiz-frage span{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:6px;transition:color .3s}
-.quiz-antworten{padding:14px 18px;display:flex;flex-direction:column;gap:7px}
-.quiz-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 14px;text-align:left;font-family:'Syne',sans-serif;font-size:12.5px;color:var(--text);cursor:pointer;transition:background .18s,border-color .18s,color .18s;line-height:1.5}
+.translate-btn{display:inline-flex;align-items:center;gap:5px;margin-top:10px;padding:5px 12px;background:var(--surface);border:1px solid var(--border);border-radius:7px;color:var(--muted);font-family:'Syne',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:background .18s,color .18s}
+.translate-btn:hover{background:var(--surface2);color:var(--text)}
+.quiz-translation{display:none;margin-top:8px;padding:8px 12px;background:color-mix(in srgb,var(--accent) 6%,transparent);border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);border-radius:8px;font-size:12px;color:var(--muted);font-weight:400;font-style:italic}
+.quiz-antworten{padding:12px 16px;display:flex;flex-direction:column;gap:6px}
+.quiz-btn{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 14px;text-align:left;font-family:'Syne',sans-serif;font-size:12.5px;color:var(--text);cursor:pointer;transition:background .18s,border-color .18s;line-height:1.5}
 .quiz-btn:hover:not(.locked){background:var(--surface);border-color:var(--accent)}
-.quiz-btn.richtig{background:color-mix(in srgb,var(--accent) 15%,transparent);border-color:var(--accent);color:var(--text)}
+.quiz-btn.richtig{background:color-mix(in srgb,var(--accent) 15%,transparent);border-color:var(--accent)}
 .quiz-btn.falsch{background:color-mix(in srgb,#f55 10%,transparent);border-color:#f55;color:var(--muted)}
-.quiz-erklaerung{margin:0 18px 14px;padding:10px 14px;background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);border-radius:8px;font-size:12px;line-height:1.65;color:var(--text);display:none;transition:background .3s}
-
-.kernpunkt:nth-child(1){animation-delay:.04s}.kernpunkt:nth-child(2){animation-delay:.08s}.kernpunkt:nth-child(3){animation-delay:.12s}
-.block:nth-child(1){animation-delay:.04s}.block:nth-child(2){animation-delay:.08s}.block:nth-child(3){animation-delay:.12s}.block:nth-child(4){animation-delay:.16s}.block:nth-child(5){animation-delay:.20s}.block:nth-child(6){animation-delay:.24s}
-.quiz-card:nth-child(1){animation-delay:.04s}.quiz-card:nth-child(2){animation-delay:.08s}.quiz-card:nth-child(3){animation-delay:.12s}.quiz-card:nth-child(4){animation-delay:.16s}.quiz-card:nth-child(5){animation-delay:.20s}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:580px){.kernpunkt-grid{grid-template-columns:1fr}.formel-inhalt{font-size:11px}}
+.quiz-erklaerung{display:none;margin:0 16px 12px;padding:10px 14px;background:color-mix(in srgb,var(--accent) 10%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);border-radius:8px;font-size:12px;line-height:1.65;color:var(--text)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:580px){.formel-inhalt{font-size:11px}.tab-btn{padding:7px 11px;font-size:11px}}
 </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-left">
-    <a class="back-btn" href="../index.html" id="back-link">
+    <a class="back-btn" href="../index.html">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span id="back-label">Zurück</span>
     </a>
@@ -300,95 +609,81 @@ header{padding:88px 0 0;position:relative;z-index:1}
       <p class="thema-desc" id="thema-desc"></p>
     </div>
   </header>
-
   <div class="content-area">
-
-    <!-- Kernpunkte -->
-    <div>
-      <div class="sec-label">Kernpunkte</div>
-      <div class="kernpunkt-grid" id="kernpunkt-grid"></div>
-    </div>
-
-    <!-- Blocks -->
-    <div>
-      <div class="sec-label">Aufgaben &amp; Satzhilfen</div>
-      <div class="block-stack" id="block-stack"></div>
-    </div>
-
-    <!-- Quiz -->
-    <div>
-      <div class="sec-label">Quiz — teste dich selbst</div>
-      <div class="quiz-wrap" id="quiz-wrap"></div>
-    </div>
-
+    <div class="tab-bar" id="tab-bar"></div>
+    <div id="tab-panels"></div>
   </div>
 </div>
 
 <footer>Lernapp · Alle Inhalte für den privaten Schulgebrauch</footer>
 
-<script src="../../design.js"></script>
+<script src="../design.js"></script>
 <script>
-// Seite befüllen
 document.title = THEMA.titel + ' — ' + FACH.name + ' — Lernapp';
 document.getElementById('nav-fach-name').textContent = FACH.name + ' · ' + THEMA.titel;
 document.getElementById('back-label').textContent = FACH.name;
 document.getElementById('hero-icon').textContent = THEMA.emoji;
 document.getElementById('hero-title').innerHTML = '<i>' + THEMA.titel + '</i>';
-document.getElementById('thema-desc').textContent = THEMA.beschreibung;
+document.getElementById('thema-desc').textContent = BESCHREIBUNG;
 
-// Kernpunkte rendern
-const kGrid = document.getElementById('kernpunkt-grid');
-THEMA.kernpunkte.forEach((kp, i) => {
-  kGrid.innerHTML += `<div class="kernpunkt"><div class="kp-num">Punkt ${String(i+1).padStart(2,'0')}</div><div class="kp-titel">${kp.titel}</div><div class="kp-text">${kp.text}</div></div>`;
+const tabBar    = document.getElementById('tab-bar');
+const tabPanels = document.getElementById('tab-panels');
+
+TABS.forEach((tab, i) => {
+  var btn = document.createElement('button');
+  btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+  btn.textContent = tab.label;
+  btn.setAttribute('data-tab', tab.id);
+  btn.onclick = function() { switchTab(tab.id); };
+  tabBar.appendChild(btn);
+
+  var panel = document.createElement('div');
+  panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
+  panel.id = 'panel-' + tab.id;
+  tabPanels.appendChild(panel);
+
+  if (i === 0) tab.render(panel);
 });
 
-// Blocks rendern
-const bStack = document.getElementById('block-stack');
-THEMA.blocks.forEach(block => {
-  let tagClass='', tagLabel='', inhaltHTML='';
-  if (block.typ === 'formel') {
-    tagClass = 'formel-tag'; tagLabel = 'Aufbau';
-    inhaltHTML = `<div class="formel-inhalt">${block.inhalt}</div>`;
-  } else if (block.typ === 'beispiel') {
-    tagClass = 'beispiel-tag'; tagLabel = 'Satzhilfen';
-    inhaltHTML = `<div class="beispiel-inhalt">${block.inhalt}</div>`;
-  } else if (block.typ === 'hinweis') {
-    tagClass = 'hinweis-tag'; tagLabel = 'Merke';
-    inhaltHTML = `<div class="hinweis-inhalt">${block.inhalt}</div>`;
-  }
-  bStack.innerHTML += `<div class="block${block.typ==='hinweis'?' hinweis-block':''}"><div class="block-header"><span class="block-tag ${tagClass}">${tagLabel}</span><span class="block-titel">${block.titel}</span></div><div class="block-body">${inhaltHTML}</div></div>`;
-});
-
-// Quiz rendern
-const qWrap = document.getElementById('quiz-wrap');
-QUIZ.forEach((q, qi) => {
-  const cardId = 'qc' + qi;
-  let antwHTML = '';
-  q.antworten.forEach((a, ai) => {
-    antwHTML += `<button class="quiz-btn" id="qb${qi}_${ai}" onclick="antworten(${qi},${ai})">${a}</button>`;
+function switchTab(id) {
+  document.querySelectorAll('.tab-btn').forEach(function(b) {
+    b.classList.toggle('active', b.getAttribute('data-tab') === id);
   });
-  qWrap.innerHTML += `
-    <div class="quiz-card" id="${cardId}">
-      <div class="quiz-frage"><span>Frage ${qi+1} von ${QUIZ.length}</span>${q.frage}</div>
-      <div class="quiz-antworten">${antwHTML}</div>
-      <div class="quiz-erklaerung" id="qe${qi}">✓ ${q.erklaerung}</div>
-    </div>`;
-});
+  document.querySelectorAll('.tab-panel').forEach(function(p) {
+    var active = p.id === 'panel-' + id;
+    p.classList.toggle('active', active);
+    if (active && p.innerHTML.trim() === '') {
+      var tab = TABS.find(function(t) { return t.id === id; });
+      if (tab) tab.render(p);
+    }
+  });
+}
 
 function antworten(qi, ai) {
-  const card = document.getElementById('qc' + qi);
-  if (card.classList.contains('beantwortet')) return;
+  var card = document.getElementById('qc' + qi);
+  if (!card || card.classList.contains('beantwortet')) return;
   card.classList.add('beantwortet');
-  const richtigIdx = QUIZ[qi].richtig;
-  for (let i = 0; i < QUIZ[qi].antworten.length; i++) {
-    const btn = document.getElementById('qb' + qi + '_' + i);
+  var quiz = window._quizData;
+  var richtigIdx = quiz[qi].richtig;
+  for (var i = 0; i < quiz[qi].antworten.length; i++) {
+    var btn = document.getElementById('qb' + qi + '_' + i);
+    if (!btn) continue;
     btn.classList.add('locked');
     if (i === richtigIdx) btn.classList.add('richtig');
     else if (i === ai && i !== richtigIdx) btn.classList.add('falsch');
   }
-  const erkl = document.getElementById('qe' + qi);
-  erkl.style.display = 'block';
+  var erkl = document.getElementById('qe' + qi);
+  if (erkl) erkl.style.display = 'block';
+}
+
+function toggleTranslate(qi) {
+  var trans = document.getElementById('qtrans' + qi);
+  var btn   = document.getElementById('tbtn' + qi);
+  if (!trans || !btn) return;
+  var visible = trans.style.display === 'block';
+  trans.style.display = visible ? 'none' : 'block';
+  btn.textContent = visible ? '🇩🇪 Übersetzen' : '🇩🇪 Ausblenden';
 }
 </script>
 </body>
-</html> 
+</html>
