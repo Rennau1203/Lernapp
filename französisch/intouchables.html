@@ -418,65 +418,72 @@ CONDITIONNEL → Hypothesen (wenn...dann)
   {
     id: "quiz", label: "Quiz",
     render: function(el) {
-      window._quizData = [
-        {
-          fr: "Pourquoi Driss va-t-il chez Philippe au début du film ?",
-          de: "Warum geht Driss anfangs zu Philippe?",
-          antworten: ["Il veut vraiment travailler comme auxiliaire de vie.", "Il a besoin juste d'une signature pour ses Assedic.", "Un ami l'a envoyé chez Philippe.", "Il connait déjà Philippe."],
-          richtig: 1,
-          erklaerung: "Driss will nur die Unterschrift für sein Arbeitslosengeld. — Il veut seulement la signature pour ses Assedic."
-        },
-        {
-          fr: "Quel est le vrai handicap de Philippe selon lui ?",
-          de: "Was ist laut Philippe sein wahres Handicap?",
-          antworten: ["Le fauteuil roulant.", "Sa fille Elisa.", "La mort de sa femme Alice.", "Les douleurs dans les jambes."],
-          richtig: 2,
-          erklaerung: "Mon vrai handicap, ce n'est pas le fauteuil, mais d'avoir perdu ma femme. Die Einsamkeit nach Alices Tod ist sein eigentliches Leiden."
-        },
-        {
-          fr: "Quel est le vrai nom de Driss ?",
-          de: "Wie heißt Driss mit richtigem Namen?",
-          antworten: ["Adama Bassara", "Bakari Bassara", "Driss Sellou", "Omar Sy"],
-          richtig: 1,
-          erklaerung: "Son vrai nom est Bakari Bassara. Il vient du Sénégal et a été adopté à l'âge de 8 ans."
-        },
-        {
-          fr: "Que se passe-t-il dans la scène au café Aux Deux Magots ?",
-          de: "Was passiert in der Café-Szene Aux Deux Magots?",
-          antworten: ["Driss quitte son travail.", "Philippe et Driss se disputent.", "Philippe embauche Driss et lui parle de sa vie.", "Driss rencontre Éléonore."],
-          richtig: 2,
-          erklaerung: "Philippe stellt Driss fest ein (embauché) und erzählt von Alice, dem Paragliding und seinem Leben."
-        },
-        {
-          fr: "Quels temps faut-il utiliser dans un journal intime ?",
-          de: "Welche Zeitformen braucht man im Journal intime?",
-          antworten: ["Seulement le futur", "Seulement l'imparfait", "Le présent, l'imparfait et le passé composé", "Seulement le passé composé"],
-          richtig: 2,
-          erklaerung: "Présent für Gefühle jetzt, passé composé für Handlungen, imparfait für Beschreibungen — alle drei zusammen."
-        },
-        {
-          fr: "Après quelle expression faut-il utiliser le subjonctif ?",
-          de: "Nach welchem Ausdruck kommt der Subjonctif?",
-          antworten: ["Je pense que...", "Il dit que...", "Je veux que...", "Je sais que..."],
-          richtig: 2,
-          erklaerung: "Nach je veux que, il faut que, je voudrais que kommt immer der Subjonctif. Nach je pense / sais / dit que kommt Indikativ."
-        },
-        {
-          fr: "Où habitent les deux personnages principaux au début du film ?",
-          de: "Wo wohnen die Hauptfiguren zu Beginn des Films?",
-          antworten: ["Tous les deux en banlieue", "Philippe dans un hôtel particulier, Driss en banlieue (HLM)", "Tous les deux dans un hôtel de luxe", "Driss dans un hôtel particulier, Philippe en banlieue"],
-          richtig: 1,
-          erklaerung: "Philippe im Hôtel particulier (Stadtpalais), Driss in einer HLM-Wohnung in der Banlieue — das ist der soziale Kontrast des Films."
-        },
-        {
-          fr: "Quelle est la bonne façon de commencer un monologue intérieur de Driss ?",
-          de: "Wie beginnt man einen Monologue intérieur von Driss?",
-          antworten: ["Cher journal, aujourd'hui...", "Paris, le 15 novembre — Cher Philippe...", "Je n'en reviens pas ! Philippe vient de me dire que...", "Il était une fois dans la banlieue..."],
-          richtig: 2,
-          erklaerung: "Kein Datum, keine Anrede — direkt mit einem spontanen Gedanken oder Ausruf anfangen."
-        }
-      ];
-
+     window._quizData = [
+  {
+    fr: "Pourquoi Driss va-t-il chez Philippe au début du film ?",
+    de: "Warum geht Driss anfangs zu Philippe?",
+    antworten: ["Il veut vraiment travailler comme auxiliaire de vie.", "Il a besoin juste d'une signature pour ses Assedic.", "Un ami l'a envoyé chez Philippe.", "Il connait déjà Philippe."],
+    antworten_de: ["Er will wirklich als Pflegekraft arbeiten.", "Er braucht nur eine Unterschrift für sein Arbeitslosengeld.", "Ein Freund hat ihn zu Philippe geschickt.", "Er kennt Philippe bereits."],
+    richtig: 1,
+    erklaerung: "Driss will nur die Unterschrift für sein Arbeitslosengeld. — Il veut seulement la signature pour ses Assedic."
+  },
+  {
+    fr: "Quel est le vrai handicap de Philippe selon lui ?",
+    de: "Was ist laut Philippe sein wahres Handicap?",
+    antworten: ["Le fauteuil roulant.", "Sa fille Elisa.", "La mort de sa femme Alice.", "Les douleurs dans les jambes."],
+    antworten_de: ["Der Rollstuhl.", "Seine Tochter Elisa.", "Der Tod seiner Frau Alice.", "Die Schmerzen in den Beinen."],
+    richtig: 2,
+    erklaerung: "Mon vrai handicap, ce n'est pas le fauteuil, mais d'avoir perdu ma femme. Die Einsamkeit nach Alices Tod ist sein eigentliches Leiden."
+  },
+  {
+    fr: "Quel est le vrai nom de Driss ?",
+    de: "Wie heißt Driss mit richtigem Namen?",
+    antworten: ["Adama Bassara", "Bakari Bassara", "Driss Sellou", "Omar Sy"],
+    antworten_de: ["Adama Bassara", "Bakari Bassara", "Driss Sellou", "Omar Sy"],
+    richtig: 1,
+    erklaerung: "Son vrai nom est Bakari Bassara. Il vient du Sénégal et a été adopté à l'âge de 8 ans."
+  },
+  {
+    fr: "Que se passe-t-il dans la scène au café Aux Deux Magots ?",
+    de: "Was passiert in der Café-Szene Aux Deux Magots?",
+    antworten: ["Driss quitte son travail.", "Philippe et Driss se disputent.", "Philippe embauche Driss et lui parle de sa vie.", "Driss rencontre Éléonore."],
+    antworten_de: ["Driss kündigt seinen Job.", "Philippe und Driss streiten sich.", "Philippe stellt Driss ein und erzählt von seinem Leben.", "Driss lernt Éléonore kennen."],
+    richtig: 2,
+    erklaerung: "Philippe stellt Driss fest ein (embauché) und erzählt von Alice, dem Paragliding und seinem Leben."
+  },
+  {
+    fr: "Quels temps faut-il utiliser dans un journal intime ?",
+    de: "Welche Zeitformen braucht man im Journal intime?",
+    antworten: ["Seulement le futur", "Seulement l'imparfait", "Le présent, l'imparfait et le passé composé", "Seulement le passé composé"],
+    antworten_de: ["Nur Futur", "Nur Imparfait", "Présent, Imparfait und Passé composé", "Nur Passé composé"],
+    richtig: 2,
+    erklaerung: "Présent für Gefühle jetzt, passé composé für Handlungen, imparfait für Beschreibungen — alle drei zusammen."
+  },
+  {
+    fr: "Après quelle expression faut-il utiliser le subjonctif ?",
+    de: "Nach welchem Ausdruck kommt der Subjonctif?",
+    antworten: ["Je pense que...", "Il dit que...", "Je veux que...", "Je sais que..."],
+    antworten_de: ["Je pense que...", "Il dit que...", "Je veux que...", "Je sais que..."],
+    richtig: 2,
+    erklaerung: "Nach je veux que, il faut que, je voudrais que kommt immer der Subjonctif. Nach je pense / sais / dit que kommt Indikativ."
+  },
+  {
+    fr: "Où habitent les deux personnages principaux au début du film ?",
+    de: "Wo wohnen die Hauptfiguren zu Beginn des Films?",
+    antworten: ["Tous les deux en banlieue", "Philippe dans un hôtel particulier, Driss en banlieue (HLM)", "Tous les deux dans un hôtel de luxe", "Driss dans un hôtel particulier, Philippe en banlieue"],
+    antworten_de: ["Beide in der Banlieue", "Philippe im Hôtel particulier, Driss in der Banlieue (HLM)", "Beide in einem Luxushotel", "Driss im Hôtel particulier, Philippe in der Banlieue"],
+    richtig: 1,
+    erklaerung: "Philippe im Hôtel particulier (Stadtpalais), Driss in einer HLM-Wohnung in der Banlieue — das ist der soziale Kontrast des Films."
+  },
+  {
+    fr: "Quelle est la bonne façon de commencer un monologue intérieur de Driss ?",
+    de: "Wie beginnt man einen Monologue intérieur von Driss?",
+    antworten: ["Cher journal, aujourd'hui...", "Paris, le 15 novembre — Cher Philippe...", "Je n'en reviens pas ! Philippe vient de me dire que...", "Il était une fois dans la banlieue..."],
+    antworten_de: ["Cher journal, aujourd'hui...", "Paris, le 15 novembre — Cher Philippe...", "Je n'en reviens pas ! Philippe vient de me dire que...", "Il était une fois dans la banlieue..."],
+    richtig: 2,
+    erklaerung: "Kein Datum, keine Anrede — direkt mit einem spontanen Gedanken oder Ausruf anfangen."
+  }
+];
       let html = '<div class="sec-label">Quiz — Beantworte die Fragen auf Französisch</div><div class="quiz-wrap">';
       window._quizData.forEach((q, qi) => {
         let antwHTML = '';
