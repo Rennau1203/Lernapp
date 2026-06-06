@@ -688,8 +688,18 @@ function toggleTranslate(qi) {
   var btn   = document.getElementById('tbtn' + qi);
   if (!trans || !btn) return;
   var visible = trans.style.display === 'block';
+  var q = window._quizData[qi];
+
+  // Frage-Übersetzung
   trans.style.display = visible ? 'none' : 'block';
   btn.textContent = visible ? '🇩🇪 Übersetzen' : '🇩🇪 Ausblenden';
+
+  // Antworten umschalten
+  for (var i = 0; i < q.antworten.length; i++) {
+    var abtn = document.getElementById('qb' + qi + '_' + i);
+    if (!abtn) continue;
+    abtn.textContent = visible ? q.antworten[i] : q.antworten_de[i];
+  }
 }
 </script>
 </body>
